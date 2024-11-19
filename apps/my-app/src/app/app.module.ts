@@ -10,6 +10,9 @@ import { BListComponent } from './apps/my-app/src/app/pages/component-b/b-list/b
 import { NavbarComponent } from './apps/my-app/src/app/components/ui/navbar/navbar.component';
 import { RouterModule } from '@angular/router'; // Zorg ervoor dat dit is geïmporteerd
 import { AppRoutingModule } from './app-routing.module'; // Zorg ervoor dat je AppRoutingModule importeert als je er een hebt
+import { AColumnsComponent } from './apps/my-app/src/app/pages/component-a/a-columns.component';
+import { ADetailsComponent } from './apps/my-app/src/app/pages/component-a/a-details/a-details.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -20,9 +23,11 @@ import { AppRoutingModule } from './app-routing.module'; // Zorg ervoor dat je A
         FooterComponent,
         AListComponent,
         BListComponent,
-        NavbarComponent
+        NavbarComponent,
+        AColumnsComponent,
+        ADetailsComponent
     ],
-    imports: [BrowserModule, RouterModule, AppRoutingModule],
+    imports: [BrowserModule, RouterModule, AppRoutingModule, HttpClientModule],
     providers: [],
     bootstrap: [AppComponent]
 })
