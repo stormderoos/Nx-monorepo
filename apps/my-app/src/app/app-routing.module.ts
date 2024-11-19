@@ -14,7 +14,7 @@ const routes : Routes = [
         component : AColumnsComponent, 
         children : [{path: "a-details", component : ADetailsComponent}]
     },
-    { path: 'details/:id', component: ADetailsComponent },
+    { path: 'component-a/:id', component: ADetailsComponent }
 
 ];
 @NgModule({
