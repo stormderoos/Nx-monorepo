@@ -11,4 +11,9 @@ export class User{
     emailAdress: string = '';
     role: UserRole = UserRole.guest;
     
+    constructor(firstName = '', lastName = '', emailAdress = ''){
+        this.firstName = firstName;
+        this.lastName = lastName,
+        this.emailAdress = emailAdress;
+    }
 }
