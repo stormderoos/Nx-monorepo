@@ -19,8 +19,11 @@
                     "apps/my-app/src/favicon.ico",
                     "apps/my-app/src/assets"
                 ],
-                "styles": ["apps/my-app/src/styles.css"],
-                "scripts": []
+                "styles": ["apps/my-app/src/styles.css",
+                "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+                "scripts": [  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
             },
             "configurations": {
                 "production": {

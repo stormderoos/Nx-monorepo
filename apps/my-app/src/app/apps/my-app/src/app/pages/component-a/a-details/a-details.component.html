@@ -1,0 +1,11 @@
+<div *ngIf="user; else noUser">
+    <h2>Gebruikersdetails</h2>
+    <p><strong>ID:</strong> {{ user.id }}</p>
+    <p><strong>Naam:</strong> {{ user.firstName }} {{ user.lastName }}</p>
+    <p><strong>Email:</strong> {{ user.emailAdress }}</p>
+    <p><strong>Rol:</strong> {{ user.role }}</p>
+  </div>
+  
+  <ng-template #noUser>
+    <p>Geen gebruiker gevonden met dit ID.</p>
+  </ng-template>
