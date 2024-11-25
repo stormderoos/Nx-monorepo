@@ -32,20 +32,20 @@ export class UserService {
     async findOneByEmail(email: string): Promise<IUserInfo | null> {
         this.logger.log(`Finding user by email ${email}`);
         const item = this.userModel
-            .findOne({ emailAddress: email })
+            .findOne({ email: email })
             .select('-password')
             .exec();
         return item;
     }
 
     async create(user: CreateUserDto): Promise<IUserInfo> {
-        this.logger.log(`Create user ${user.name}`);
+        this.logger.log(`Create user ${user.username}`);
         const createdItem = this.userModel.create(user);
         return createdItem;
     }
 
     async update(_id: string, user: UpdateUserDto): Promise<IUserInfo | null> {
-        this.logger.log(`Update user ${user.name}`);
+        this.logger.log(`Update user ${user.username}`);
         return this.userModel.findByIdAndUpdate({ _id }, user);
     }
 }
