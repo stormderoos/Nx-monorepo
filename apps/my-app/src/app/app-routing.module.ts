@@ -1,12 +1,15 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AListComponent } from "./apps/my-app/src/app/pages/component-a/a-list/a-list.component";
-import { BListComponent } from "./apps/my-app/src/app/pages/component-b/b-list/b-list.component";
+import { AppComponent } from "./app.component";
+import { AboutComponent } from "./apps/my-app/src/app/components/about/about/about.component";
+import { UserListComponent } from "@avans-nx-workshop/frontend/features/features";
 
 const routes : Routes = [
-    {path: "", redirectTo: "component-a", pathMatch: "full"},
-    {path: 'component-a', component : AListComponent},
-    {path: 'component-b', component : BListComponent}
+    {path: "", redirectTo: "userlist", pathMatch: "full"},
+    {path: "userlist", component: UserListComponent},
+    {path: "about", component: AboutComponent},
+    {path: 'app-component', component: AppComponent},
+    // {path: 'component-a', component : AListComponent},
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

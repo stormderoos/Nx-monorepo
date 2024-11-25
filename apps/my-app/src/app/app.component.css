@@ -1,0 +1,16 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: flex-start; 
+    background-color: #000;
+    background-image: url('/assets/pexels-markusspiske-104675.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+}
+header{
+    padding:60px;
+}
+

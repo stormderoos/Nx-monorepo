@@ -27,7 +27,7 @@ export class AuthService {
     async validateUser(credentials: IUserCredentials): Promise<any> {
         this.logger.log('validateUser');
         const user = await this.userModel.findOne({
-            emailAddress: credentials.emailAddress
+            emailAddress: credentials.email
         });
         if (user && user.password === credentials.password) {
             return user;
@@ -36,10 +36,10 @@ export class AuthService {
     }
 
     async login(credentials: IUserCredentials): Promise<IUserIdentity> {
-        this.logger.log('login ' + credentials.emailAddress);
+        this.logger.log('login ' + credentials.email);
         return await this.userModel
             .findOne({
-                emailAddress: credentials.emailAddress
+                emailAddress: credentials.email
             })
             .select('+password')
             .exec()
@@ -50,8 +50,8 @@ export class AuthService {
                     };
                     return {
                         _id: user._id,
-                        name: user.name,
-                        emailAddress: user.emailAddress,
+                        name: user.username,
+                        emailAddress: user.email,
                         profileImgUrl: user.profileImgUrl,
                         token: this.jwtService.sign(payload)
                     };
@@ -67,8 +67,8 @@ export class AuthService {
     }
 
     async register(user: CreateUserDto): Promise<IUserIdentity> {
-        this.logger.log(`Register user ${user.name}`);
-        if (await this.userModel.findOne({ emailAddress: user.emailAddress })) {
+        this.logger.log(`Register user ${user.username}`);
+        if (await this.userModel.findOne({ emailAddress: user.email})) {
             this.logger.debug('user exists');
             throw new ConflictException('User already exist');
         }
