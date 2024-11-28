@@ -4,7 +4,7 @@ export const environment: IEnvironment = {
     production: true,
 
     ROOT_DOMAIN_URL: 'https://nxworkshop.azurewebsites.net',
-    dataApiUrl: 'https://nxworkshop.azurewebsites.net/api',
+    dataApiUrl: 'https://nxworkshop.azurewebsites.net/',
 
     MONGO_DB_CONNECTION_STRING: 'mongodb+srv://swderoos:swWelkom01!@footballdbcluster.vsocs.mongodb.net/'
 };
