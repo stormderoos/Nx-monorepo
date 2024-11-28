@@ -1,51 +1,52 @@
-import { IEntity } from 'libs/share-a-meal/common/src/lib/entity/entity.model';
-import { IMeal } from './meal.interface';
-import { IToken, IUserRegistration } from './auth.interface';
 import { Id } from './id.type';
 
+/**
+ * Rol van de gebruiker (bijvoorbeeld fan of clubbeheerder)
+ */
 export enum UserRole {
-    Guest = 'Guest',
-    Admin = 'Admin',
-    Unknown = 'Unknown'
+  Fan = 'Fan',
+  ClubManager = 'Clubbeheerder',
 }
 
-export enum UserGender {
-    Male = 'Male',
-    Female = 'Female',
-    None = 'None',
-    Unknown = 'Unknown'
-}
-
-/**
- * Minimal user information
- */
-
-export interface IUserIdentity extends IEntity {
-    name: string;
-    emailAddress: string;
-    profileImgUrl: string;
-    role: UserRole;
-    token?: string;
+export enum UserGender{
+  Male = 'Men',
+  Female = 'female',
+  Unknown = ''
 }
 
 /**
- * All user information, excl. domain entities
+ * Informatie over een gebruiker
  */
-export interface IUserInfo extends IUserRegistration {
-    _id: Id;
-    profileImgUrl: string;
-    role: UserRole;
-    gender: UserGender;
-    isActive: boolean;
+export interface IUser {
+  id: Id; // Unieke identifier
+  username: string; // Gebruikersnaam
+  email: string; // E-mailadres
+  password: string; // Versleuteld wachtwoord
+  role: UserRole; // Rol van de gebruiker
+  gender: UserGender;
+  profileImgUrl: string;
 }
 
 /**
- * All user information, incl. domain entities
+ * Minimale informatie over een gebruiker
  */
-export interface IUser extends IUserInfo {
-    meals: IMeal[];
+export interface IUserIdentity {
+  username: string; // Gebruikersnaam
+  email: string; // E-mailadres
+  role: UserRole; // Rol
 }
 
-export type ICreateUser = Pick<IUser, 'name' | 'password' | 'emailAddress'>;
-export type IUpdateUser = Partial<Omit<IUser, 'id'>>;
-export type IUpsertUser = IUser;
+/**
+ * Data Transfer Object voor het aanmaken van een gebruiker
+ */
+export type ICreateUser = Pick<IUser, 'username' | 'email' | 'password' | 'role'>;
+
+/**
+ * Data Transfer Object voor het bijwerken van een gebruiker
+ */
+export type IUpdateUser = Partial<Omit<IUser, 'id' >>;
+
+/**
+ * Data Transfer Object voor het ophalen van alle gegevens van een gebruiker
+ */
+export type IUserInfo = IUser;

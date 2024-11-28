@@ -1,1 +1,3 @@
-export * from './lib/frontend-features-features.module';
+export * from './lib/features.module';
+export * from './lib/user-list/user-list.component'
+export * from './lib/user/user-edit.component'

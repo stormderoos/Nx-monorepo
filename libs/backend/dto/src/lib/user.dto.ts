@@ -2,18 +2,16 @@ import { IsNotEmpty, IsString, IsBoolean, IsOptional } from 'class-validator';
 import {
     // ICreateUser,
     IUpdateUser,
-    IUpsertUser,
     IUserRegistration,
     Id,
+    UserRole,
     UserGender,
-    UserRole
 } from '@avans-nx-workshop/shared/api';
-import { Meal } from '@avans-nx-workshop/backend/features';
 
 export class CreateUserDto implements IUserRegistration {
     @IsString()
     @IsNotEmpty()
-    name!: string;
+    username!: string;
 
     @IsString()
     @IsNotEmpty()
@@ -21,15 +19,15 @@ export class CreateUserDto implements IUserRegistration {
 
     @IsString()
     @IsNotEmpty()
-    emailAddress!: string;
+    email!: string;
 }
 
-export class UpsertUserDto implements IUpsertUser {
+export class UpsertUserDto implements IUpdateUser {
     _id!: Id;
 
     @IsString()
     @IsNotEmpty()
-    name!: string;
+    username!: string;
 
     @IsString()
     @IsNotEmpty()
@@ -37,11 +35,7 @@ export class UpsertUserDto implements IUpsertUser {
 
     @IsString()
     @IsNotEmpty()
-    emailAddress!: string;
-
-    @IsBoolean()
-    @IsNotEmpty()
-    isActive!: boolean;
+    email!: string;
 
     @IsString()
     @IsNotEmpty()
@@ -49,21 +43,38 @@ export class UpsertUserDto implements IUpsertUser {
 
     @IsString()
     @IsNotEmpty()
-    meals: Meal[] = [];
-
-    @IsString()
-    @IsNotEmpty()
-    role: UserRole = UserRole.Unknown;
+    role: UserRole = UserRole.Fan;
 
     @IsString()
     @IsNotEmpty()
     gender: UserGender = UserGender.Unknown;
+
 }
 
 export class UpdateUserDto implements IUpdateUser {
-    _id?: string | undefined;
+    _id!: Id;
 
     @IsString()
-    @IsOptional()
-    name!: string;
+    @IsNotEmpty()
+    username!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    password!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    email!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    profileImgUrl = '';
+
+    @IsString()
+    @IsNotEmpty()
+    role: UserRole = UserRole.Fan;
+
+    @IsString()
+    @IsNotEmpty()
+    gender: UserGender = UserGender.Unknown;
 }

@@ -1,13 +1,19 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AListComponent } from "./apps/my-app/src/app/pages/component-a/a-list/a-list.component";
-import { BListComponent } from "./apps/my-app/src/app/pages/component-b/b-list/b-list.component";
+import { AppComponent } from "./app.component";
+import { AboutComponent } from "./apps/my-app/src/app/components/about/about/about.component";
+import { UserEditComponent, UserListComponent } from "@avans-nx-workshop/frontend/features/features";
+import { HomeComponent } from "./apps/my-app/src/app/components/home/home.component";
 
-const routes : Routes = [
-    {path: "", redirectTo: "component-a", pathMatch: "full"},
-    {path: 'component-a', component : AListComponent},
-    {path: 'component-b', component : BListComponent}
-];
+const routes: Routes = [
+    { path: 'home', component: HomeComponent },
+    { path: 'userlist', component: UserListComponent },
+    { path: 'about', component: AboutComponent },
+    { path: 'useredit', component: UserEditComponent},
+    { path: 'useredit/:id', component: UserEditComponent },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+  ];
+  
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports:[RouterModule]
