@@ -4,6 +4,7 @@ import { User, UserService } from "./user.service";
 @Component({
     selector: 'avans-nx-workshop-user-list',
     templateUrl: './user-list.component.html',
+    styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit{
     users: User[] = []; // Array om gebruikers op te slaan

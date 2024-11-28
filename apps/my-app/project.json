@@ -42,6 +42,12 @@
                     "outputHashing": "all"
                 },
                 "development": {
+                    "fileReplacements": [
+                        {
+                            "replace": "libs/shared/until-env/src/lib/environment.ts",
+                            "with": "libs/shared/until-env/src/lib/environment.production.ts"
+                        }
+                    ],
                     "buildOptimizer": false,
                     "optimization": false,
                     "vendorChunk": true,

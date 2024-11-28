@@ -1,0 +1,67 @@
+/* User List Container */
+.user-list-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 1200px; /* Max breedte voor het grid */
+    margin: 0 auto;
+}
+
+/* Grid Layout for User Cards */
+.user-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 25%)); /* Kleinere kolommen */
+    gap: 15px; /* Ruimte tussen de kaarten */
+}
+
+/* User Card Style */
+.user-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px; /* Minder padding */
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 200px;
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Image */
+.user-img {
+    border-radius: 50%; /* Rond maken */
+    width: 60px; /* Kleinere profielfoto */
+    height: 60px;
+    object-fit: cover;
+    margin-bottom: 8px;
+}
+
+/* User Details */
+.user-details h3 {
+    margin: 8px 0 5px;
+    font-size: 16px; /* Kleinere titel */
+    color: #333;
+    text-align: center;
+}
+
+.user-details p {
+    margin: 0;
+    font-size: 12px; /* Kleinere tekst */
+    color: #555;
+}
+
+.user-edit {
+    margin-top: 5px;
+    padding: 3px 8px; /* Kleinere badge */
+    font-size: 10px; /* Kleinere tekst */
+    color: #fff;
+    background: #007bff;
+    border-radius: 12px;
+}

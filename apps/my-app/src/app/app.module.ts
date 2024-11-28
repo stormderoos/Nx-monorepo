@@ -9,6 +9,7 @@ import { NavbarComponent } from './apps/my-app/src/app/components/ui/navbar/navb
 import { RouterModule } from '@angular/router'; // Zorg ervoor dat dit is geïmporteerd
 import { AppRoutingModule } from './app-routing.module'; // Zorg ervoor dat je AppRoutingModule importeert als je er een hebt
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './apps/my-app/src/app/components/home/home.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
         HeaderComponent,
         FooterComponent,
         NavbarComponent,
+        HomeComponent
     ],
     imports: [BrowserModule, RouterModule, AppRoutingModule, HttpClientModule],
     providers: [],

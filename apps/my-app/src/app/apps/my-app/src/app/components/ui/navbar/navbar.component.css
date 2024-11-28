@@ -1,28 +1,28 @@
-.links{
+.links {
     display: flex;
     align-items: center;
     padding: 20px 15px;
     border-radius: 12px;
     background-color: #fff;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-}
-
-li{
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  li {
     list-style: none;
     margin: 0 100px;
-}
-
-li a{
+  }
+  
+  li a {
     position: relative;
     color: #000;
     font-size: 1.5rem;
     font-weight: bold;
     padding: 6px 0;
     text-decoration: none;
-}
-
-li a:before{
-    content:'';
+  }
+  
+  li a:before {
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -30,9 +30,13 @@ li a:before{
     width: 0%;
     background: green;
     transition: all 0.4s ease;
-}
-
-li a:hover:before{
+  }
+  
+  li a:hover:before,
+  li a.active:before {
     width: 100%;
-}
-
+  }
+  
+  li a.active {
+    color: green; /* Optionele tekstkleurverandering voor actieve links */
+  }

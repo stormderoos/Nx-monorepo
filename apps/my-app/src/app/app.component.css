@@ -9,8 +9,24 @@ body {
     background-size: cover;
     background-position: center;
     margin: 0;
+    overflow-y: auto;
 }
-header{
-    padding:60px;
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 20px 60px;
 }
 
+main {
+    flex: 1;
+    width: 100%; 
+    margin-top: 400px;
+    background-color: white;
+    padding: 20px;  /* Voeg wat padding toe zodat de content niet tegen de rand zit */
+}
+
+main.user-edit-active {
+    margin-top: 0;  /* Geen margin-top als je user-edit hebt */
+    height: 100vh;  /* Zorg ervoor dat het de volledige hoogte van het scherm neemt */
+}

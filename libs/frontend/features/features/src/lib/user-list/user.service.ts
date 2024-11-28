@@ -3,25 +3,36 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
 export interface User {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  profileImgUrl: string;
+    _id: string;
+    username: string;
+    email: string;
+    password: string; // Include password field
+    role: string;
+    gender: string;   // Include gender field
+    profileImgUrl: string;
 }
 
 @Injectable({
-  providedIn: 'root', // Zorgt ervoor dat de service globaal beschikbaar is
+  providedIn: 'root', // Global availability
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/api/users'; // De API URL voor de backend
+  private apiUrl = 'http://localhost:3000/api/users'; // Your API URL
 
   constructor(private http: HttpClient) {}
 
-  // Haal de gebruikers op en map de results naar de juiste array
+  // Fetch all users
   getUsers(): Observable<User[]> {
     return this.http.get<{ results: User[] }>(this.apiUrl).pipe(
-      map(response => response.results) // Mappen naar de 'results' array
+      map(response => response.results) // Map the results array from the response
     );
+  }
+
+  // Fetch a single user by ID
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`); // Fetch user by email
+  }
+
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${user._id}`, user); // Zorg dat dit overeenkomt met je backend API
   }
 }
