@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { UserService, User } from '../user-list/user.service';
+import { UserService, User } from '../user.service';
 
 @Component({
   selector: 'avans-nx-workshop-user-edit',

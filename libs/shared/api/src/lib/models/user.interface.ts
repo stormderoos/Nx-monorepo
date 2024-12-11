@@ -1,4 +1,3 @@
-import { Id } from './id.type';
 
 /**
  * Rol van de gebruiker (bijvoorbeeld fan of clubbeheerder)
@@ -18,7 +17,7 @@ export enum UserGender{
  * Informatie over een gebruiker
  */
 export interface IUser {
-  id: Id; // Unieke identifier
+  id: string; // Unieke identifier
   username: string; // Gebruikersnaam
   email: string; // E-mailadres
   password: string; // Versleuteld wachtwoord

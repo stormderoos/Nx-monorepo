@@ -29,7 +29,9 @@ export class UserService {
 
   // Fetch a single user by ID
   getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`); // Fetch user by email
+    return this.http.get<{ results: User }>(`${this.apiUrl}/${id}`).pipe(
+      map((response) => response.results) // Transformeer de response als deze een 'data'-object bevat
+    );
   }
 
   updateUser(user: User): Observable<User> {
