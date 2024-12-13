@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatchService } from '../match.service';
 import { ClubService } from '../club.service';
+import { Router } from '@angular/router';
 import { IMatch, IClub } from '@avans-nx-workshop/shared/api';
 
 @Component({
@@ -14,7 +15,11 @@ export class MatchListComponent implements OnInit {
   loading = false;
   error: string | null = null;
 
-  constructor(private matchService: MatchService, private clubService: ClubService) {}
+  constructor(
+    private matchService: MatchService,
+    private clubService: ClubService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchMatches();
@@ -59,14 +64,28 @@ export class MatchListComponent implements OnInit {
     return club ? club.name : 'Unknown Club';
   }
 
+  getClubLogoById(clubId: string): string {
+    const club = this.clubs.find(c => c._id === clubId);
+    return club ? club.logoUrl : 'default-logo-url'; // Geef een default logo terug als het logo niet beschikbaar is
+  }
+
   editMatch(matchId: string): void {
     // Voeg logica toe om een wedstrijd te bewerken
     console.log('Editing match with ID:', matchId);
   }
 
+  getClubLocationById(clubId: string): string {
+    const club = this.clubs.find(c => c._id === clubId);
+    return club ? club.location : 'Unknown Location';
+  }
+
+
+  addMatch(): void {
+    this.router.navigate(['/matches/create']); // Navigeer naar de pagina voor match creatie
+  }
+  
   deleteMatch(matchId: string): void {
     // Voeg logica toe om een wedstrijd te verwijderen
-    console.log('Deleting match with ID:', matchId);
     this.matchService.deleteMatch(matchId).subscribe(() => {
       this.fetchMatches(); // Laad opnieuw de lijst met wedstrijden na verwijdering
     });

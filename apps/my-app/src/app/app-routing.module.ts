@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AboutComponent } from "./apps/my-app/src/app/components/about/about/about.component";
-import { ClubCreateComponent, ClubDetailComponent, ClubListComponent, MatchListComponent, PlayerCreateComponent, PlayerDetailComponent, PlayerListComponent, UserEditComponent, UserListComponent } from "@avans-nx-workshop/frontend/features/features";
+import { ClubCreateComponent, ClubDetailComponent, ClubListComponent, MatchCreateComponent, MatchListComponent, PlayerCreateComponent, PlayerDetailComponent, PlayerListComponent, UserEditComponent, UserListComponent } from "@avans-nx-workshop/frontend/features/features";
 import { HomeComponent } from "./apps/my-app/src/app/components/home/home.component";
 
 const routes: Routes = [
@@ -18,6 +18,7 @@ const routes: Routes = [
     { path: 'players/:id', component: PlayerDetailComponent }, // Nieuw: spelerdetails
     { path: 'clubs/:id', component: ClubDetailComponent }, // Detailpagina voor clubs
     { path: 'matches', component : MatchListComponent},
+    { path: 'matchcreate', component: MatchCreateComponent}
   ];
   
 @NgModule({

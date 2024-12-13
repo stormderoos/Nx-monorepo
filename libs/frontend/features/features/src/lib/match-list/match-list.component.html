@@ -1,34 +1,53 @@
 <div *ngIf="loading" class="loading-spinner">
-    <p>Loading matches...</p>
+  <p>Loading matches...</p>
+</div>
+
+<div *ngIf="error" class="error-message">
+  <p>{{ error }}</p>
+</div>
+
+<div *ngIf="!loading && !error">
+  <h2 class="match-list-title">Match List</h2>
+
+  <!-- Add Match Button -->
+  <div class="add-match-button-container">
+    <button routerLink="/matchcreate">Add Match</button>
   </div>
-  
-  <div *ngIf="error" class="error-message">
-    <p>{{ error }}</p>
-  </div>
-  
-  <div *ngIf="!loading && !error">
-    <h2>Match List</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Home Club</th>
-          <th>Away Club</th>
-          <th>Date</th>
-          <th>Score</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let match of matches">
-          <td>{{ getClubNameById(match.home_club_id) }}</td>
-          <td>{{ getClubNameById(match.away_club_id) }}</td>
-          <td>{{ match.date | date: 'short' }}</td>
-          <td>{{ match.score_home }} - {{ match.score_away }}</td>
-          <td>
-            <button (click)="editMatch(match._id.toString())">Edit</button>
-            <button (click)="deleteMatch(match._id.toString())">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
+  <table class="match-table">
+    <thead>
+      <tr>
+        <th>Clubs</th>
+        <th>Location</th>
+        <th>Date</th>
+        <th>Score</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let match of matches">
+        <td class="clubs-cell">
+          <!-- Home Club and Away Club displayed side by side -->
+          <div class="clubs">
+            <div class="club-info">
+              <img [src]="getClubLogoById(match.home_club_id)" alt="Home Club Logo" class="club-logo" />
+              <span class="club-name">{{ getClubNameById(match.home_club_id) }}</span>
+            </div>
+            <span class="separator"> - </span>
+            <div class="club-info">
+              <img [src]="getClubLogoById(match.away_club_id)" alt="Away Club Logo" class="club-logo" />
+              <span class="club-name">{{ getClubNameById(match.away_club_id) }}</span>
+            </div>
+          </div>
+        </td>
+        <td>{{ match.location }}</td>
+        <td>{{ match.date | date: 'short' }}</td>
+        <td>{{ match.score_home }} - {{ match.score_away }}</td>
+        <td>
+          <button (click)="editMatch(match._id.toString())">Edit</button>
+          <button (click)="deleteMatch(match._id.toString())">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

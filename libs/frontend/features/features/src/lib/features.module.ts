@@ -12,6 +12,7 @@ import { PlayerCreateComponent } from './player-create/player-create.component';
 import { ClubDetailComponent } from './club-detail/club-detail.component';
 import { PlayerDetailComponent } from './player-detail/player-detail.component';
 import { MatchListComponent } from './match-list/match-list.component';
+import { MatchCreateComponent } from './match-create/match-create.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MatchListComponent } from './match-list/match-list.component';
     ClubDetailComponent,
     PlayerDetailComponent,
     MatchListComponent,
+    MatchCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { MatchListComponent } from './match-list/match-list.component';
     PlayerListComponent,
     PlayerCreateComponent,
     MatchListComponent,
+    MatchCreateComponent,
   ],
 })
 export class FeaturesModule {}

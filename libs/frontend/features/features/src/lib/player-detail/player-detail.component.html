@@ -1,12 +1,17 @@
 <div class="player-detail-container">
-    <div *ngIf="loading" class="loader">Loading player details...</div>
-    <div *ngIf="error" class="error-message">{{ error }}</div>
-  
-    <div *ngIf="player && !loading" class="player-detail">
+  <div *ngIf="loading" class="loader">Loading player details...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="player && !loading" class="player-detail">
+    <div class="player-header">
       <h1>{{ player.firstName }} {{ player.lastName }}</h1>
-      <p>Position: {{ player.position }}</p>
-      <p>Birthdate: {{ player.birthdate | date }}</p>
-      <p *ngIf="player.clubId">Club ID: {{ player.clubId }}</p>
-      <p *ngIf="!player.clubId">Not assigned to any club.</p>
+      <p class="position"><i class="fas fa-futbol"></i> Position: <strong>{{ player.position }}</strong></p>
+    </div>
+
+    <div class="player-info">
+      <p><i class="fas fa-calendar-alt"></i> <strong>Birthdate:</strong> {{ player.birthdate | date: 'longDate' }}</p>
+      <p *ngIf="player.clubId"><i class="fas fa-users"></i> <strong>Club ID:</strong> {{ player.clubId }}</p>
+      <p *ngIf="!player.clubId"><i class="fas fa-ban"></i> Not assigned to any club.</p>
     </div>
   </div>
+</div>

@@ -1,39 +1,107 @@
 .club-detail-container {
-    text-align: center;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .club-logo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-  }
-  
-  .club-name {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .club-location {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .loading {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #007bff;
-  }
-  
-  .error {
-    text-align: center;
-    font-size: 1.2rem;
-    color: red;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+  background-color: #f0f4f8;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.loader {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: red;
+  background-color: #f8d7da;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 500px;
+  margin: 20px 0;
+}
+
+.club-detail {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+.club-header {
+  margin-bottom: 20px;
+}
+
+.club-logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.club-name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.club-location {
+  font-size: 1.2rem;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+
+.club-location i {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.player-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.player-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player-item {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.player-item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.no-players {
+  font-size: 1.1rem;
+  color: #888;
+  font-style: italic;
+}

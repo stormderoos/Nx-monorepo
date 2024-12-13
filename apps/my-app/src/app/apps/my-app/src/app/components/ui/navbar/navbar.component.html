@@ -1,53 +1,47 @@
 <ul class="links">
-    <li>
-      <a href="#">Web Football</a>
-    </li>
-    <li>
-      <a 
-        routerLink="/home"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >Home</a
-      >
-    </li>
-    <li>
-      <a 
-        routerLink="/clublist"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >Club</a
-      >
-    </li>
-    <li>
-      <a 
-        routerLink="/matches"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >matches</a
-      >
-    </li>
-    <li>
-      <a 
-        routerLink="/players"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >players</a
-      >
-    </li>
-    <li>
-      <a 
-        routerLink="/userlist"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >Users</a
-      >
-    </li>
-    <li>
-      <a 
-        routerLink="/about"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >About</a
-      >
-    </li>
-  </ul>
+  <li class="logo">
+    <a href="#"><img src="/assets/WebFootballLogo.png" alt="Web Football Logo" /></a>
+  </li>
+  <li>
+    <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+  </li>
+
+  <!-- Combined Dropdown for Clubs, Matches, and Players -->
+  <li class="dropdown">
+    <a href="#" class="dropbtn">
+      Manage
+      <span class="dropdown-arrow">&#9662;</span> <!-- Downward arrow for dropdown indicator -->
+    </a>
+    <div class="dropdown-content">
+      <a routerLink="/clublist">Clubs</a>
+      <a routerLink="/matches">Matches</a>
+      <a routerLink="/players">Players</a>
+    </div>
+  </li>
+
+  <li>
+    <a 
+      routerLink="/userlist"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >Users</a
+    >
+  </li>
+
+  <!-- Search bar -->
+  <li class="search-bar">
+    <input type="text" placeholder="Search..." class="search-input" />
+  </li>
+
+  <!-- User icon and dropdown -->
+  <li class="user-dropdown">
+    <a href="#" class="user-icon">
+      <img src="/assets/user-icon.png" alt="User Icon" />
+    </a>
+    <div class="dropdown-content">
+      <a routerLink="/profile">Profile</a>
+      <a routerLink="/settings">Settings</a>
+      <a routerLink="/logout">Logout</a>
+    </div>
+  </li>
+</ul>
