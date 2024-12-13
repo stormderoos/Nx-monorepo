@@ -12,24 +12,38 @@ export class ClubService {
 
   constructor(private http: HttpClient) {}
 
-  createClub(club: Omit<IClub, 'id'>): Observable<IClub> {
+  createClub(club: Omit<IClub, '_id'>): Observable<IClub> {
     return this.http.post<IClub>(`${this.baseUrl}/clubs`, club);
   }
 
-  addPlayerToClub(player: Omit<IPlayer, 'id'>): Observable<IPlayer> {
-    return this.http.post<IPlayer>(`${this.baseUrl}/players`, player);
+  getPlayers(): Observable<IPlayer[]> {
+    return this.http.get<{results : IPlayer[]}>(`${this.baseUrl}/players`).pipe
+      (map(response => response.results));
   }
+
+  addPlayerToClub(player: Omit<IPlayer, 'id'>): Observable<IPlayer> {
+    return this.http.post<{result : IPlayer}>(`${this.baseUrl}/players`, player).pipe
+      (map(response => response.result));
+  }
+
   getClubs(): Observable<IClub[]> {
     return this.http.get<{results : IClub[]}>(`${this.baseUrl}/clubs`).pipe(
       map(response => response.results ));
   }
 
-  getClubById(id: number): Observable<IClub> {
-    return this.http.get<IClub>(`${this.baseUrl}/clubs/${id}`);
+  getClubById(id: string): Observable<IClub> {
+    return this.http.get<{results : IClub}>(`${this.baseUrl}/clubs/${id}`).pipe(
+      map(response => response.results));
   }
 
-  getPlayersByClub(clubId: number): Observable<IPlayer[]> {
-    return this.http.get<IPlayer[]>(`${this.baseUrl}/clubs/${clubId}/players`);
+  getPlayersByClub(clubId: string): Observable<IPlayer[]> {
+    return this.http.get<{results : IPlayer[]}>(`${this.baseUrl}/clubs/${clubId}/players`).pipe(
+      map(response => response.results));
+  }
+
+  getPlayerById(playerId: string): Observable<IPlayer> {
+    return this.http.get<{results : IPlayer}>(`${this.baseUrl}/players/${playerId}`).pipe(
+      map(response => response.results));
   }
 
   updateClub(id: number, updatedClub: Partial<IClub>): Observable<IClub> {

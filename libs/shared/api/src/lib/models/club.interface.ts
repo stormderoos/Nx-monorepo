@@ -1,8 +1,15 @@
+import { IPlayer } from "./player.interface";
+
 export interface IClub {
-    id: number; // Unieke identifier
+    _id: string; // Unieke identifier
     name: string; // Naam van de club
     location: string; // Stad waar de club is gevestigd
     logoUrl: string;
+    players: string[] | undefined;
 }
 
-export type ICreateClub = Pick<IClub, 'name' | 'location' | 'logoUrl'>;
+export type IFindClub = Pick<IClub, 'name' | 'location' | 'logoUrl'| 'players'>;
+
+export type ICreateClub = Pick<IClub, 'name' | 'location' | 'logoUrl'| 'players'>;
+
+

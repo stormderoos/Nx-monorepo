@@ -1,5 +1,4 @@
-import { IsString, IsBoolean, IsInt, IsOptional, IsMongoId } from 'class-validator';
-
+import { IsString, IsOptional, IsArray, IsMongoId } from 'class-validator';
 
 export class CreateClubDto {
   @IsString()
@@ -11,17 +10,26 @@ export class CreateClubDto {
   @IsOptional()
   @IsString()
   logoUrl?: string;
+
+  @IsOptional()
+  @IsArray()
+  players?: string[]; 
 }
 
 export class UpdateClubDto {
-    @IsString()
-    name!: string;
-  
-    @IsString()
-    location!: string;
-  
-  
-    @IsOptional()
-    @IsString()
-    logoUrl?: string;
-  }
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsString()
+  location?: string;
+
+  @IsOptional()
+  @IsString()
+  logoUrl?: string;
+
+  @IsOptional()
+  @IsArray()
+  players?: string[];
+}

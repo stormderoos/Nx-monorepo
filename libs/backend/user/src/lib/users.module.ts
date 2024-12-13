@@ -6,6 +6,12 @@ import { User, UserSchema } from './user/user.schema';
 import { ClubController } from './club/club.controller';
 import { ClubService } from './club/club.service';
 import { Club, ClubSchema } from './club/club.schema';
+import { Player, PlayerSchema } from './player/player.schema';
+import { PlayerController } from './player/player.controller';
+import { PlayerService } from './player/player.service';
+import { Match, MatchSchema } from './match/match.schema';
+import { MatchController } from './match/match.controller';
+import { MatchService } from './match/match.service';
 // import { Meal, MealSchema } from '@avans-nx-workshop/backend/features';
 
 @Module({
@@ -14,10 +20,15 @@ import { Club, ClubSchema } from './club/club.schema';
             { name: User.name, schema: UserSchema },
             
             { name: Club.name, schema: ClubSchema },
+
+            { name: Player.name, schema: PlayerSchema },
+
+            { name: Match.name, schema: MatchSchema },
+
         ])
     ],
-    controllers: [UserController, ClubController],
-    providers: [UserService, ClubService],
-    exports: [UserService, ClubService]
+    controllers: [UserController, ClubController, PlayerController, MatchController],
+    providers: [UserService, ClubService, PlayerService, MatchService],
+    exports: [UserService, ClubService, PlayerService, MatchService]
 })
 export class UsersModule {}

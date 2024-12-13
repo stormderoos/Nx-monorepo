@@ -1,8 +1,9 @@
-<div class="container">
+<div class="club-create-container">
   <h2>Create New Club</h2>
   <form [formGroup]="clubForm" (ngSubmit)="onSubmit()">
+    <!-- Club Name -->
     <div class="form-group">
-      <label for="name">Name</label>
+      <label for="name">Club Name</label>
       <input
         id="name"
         formControlName="name"
@@ -15,6 +16,7 @@
       </div>
     </div>
 
+    <!-- Club Location -->
     <div class="form-group">
       <label for="location">Location</label>
       <input
@@ -29,6 +31,7 @@
       </div>
     </div>
 
+    <!-- Club Logo -->
     <div class="form-group">
       <label for="logoUrl">Logo URL</label>
       <input
@@ -44,7 +47,38 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="clubForm.invalid">
+    <div class="form-group">
+      <label for="playerSelect">Add Player</label>
+      <select
+        id="playerSelect"
+        class="form-control"
+        formControlName="selectedPlayerId"
+      >
+      <option value="" disabled>Select a player</option>
+      <option *ngFor="let player of players" [value]="player._id">
+        {{ player.firstName }} {{ player.lastName }}
+      </option>
+    </select>
+    </div>
+
+    <button type="button" class="btn btn-secondary" (click)="addPlayerToClub()">
+      Add Player to Club
+    </button>
+
+    <!-- Display added players -->
+    <div *ngIf="addedPlayersDetails.length > 0" class="added-players mt-3">
+      <h4>Added Players</h4>
+      <ul>
+        <li *ngFor="let player of addedPlayersDetails">
+          {{ player.firstName }} {{ player.lastName }}
+          <button type="button" class="btn btn-danger btn-sm" (click)="removePlayerFromClub(player.id)">
+            Remove
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="clubForm.invalid || addedPlayersDetails.length === 0">
       Create Club
     </button>
   </form>

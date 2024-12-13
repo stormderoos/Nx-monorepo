@@ -1,0 +1,39 @@
+.club-detail-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .club-logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  .club-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .club-location {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #007bff;
+  }
+  
+  .error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: red;
+  }

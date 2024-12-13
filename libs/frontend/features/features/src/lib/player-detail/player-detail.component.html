@@ -1,0 +1,12 @@
+<div class="player-detail-container">
+    <div *ngIf="loading" class="loader">Loading player details...</div>
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+  
+    <div *ngIf="player && !loading" class="player-detail">
+      <h1>{{ player.firstName }} {{ player.lastName }}</h1>
+      <p>Position: {{ player.position }}</p>
+      <p>Birthdate: {{ player.birthdate | date }}</p>
+      <p *ngIf="player.clubId">Club ID: {{ player.clubId }}</p>
+      <p *ngIf="!player.clubId">Not assigned to any club.</p>
+    </div>
+  </div>

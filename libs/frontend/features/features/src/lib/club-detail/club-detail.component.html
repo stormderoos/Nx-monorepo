@@ -1,0 +1,21 @@
+<div class="club-detail-container">
+    <div *ngIf="loading" class="loader">Loading club details...</div>
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+  
+    <div *ngIf="club" class="club-detail">
+      <img [src]="club.logoUrl" alt="{{ club.name }} logo" class="club-logo" />
+      <h1>{{ club.name }}</h1>
+      <p>Location: {{ club.location }}</p>
+      <h2>Players</h2>
+  
+      <ul *ngIf="players.length > 0" class="player-list">
+        <li *ngFor="let player of players">
+          <span class="player-name" (click)="goToPlayerDetails(player._id)" style="cursor: pointer;">
+            {{ player.firstName }} {{ player.lastName }}
+          </span> - {{ player.position }}
+        </li>
+      </ul>
+  
+      <p *ngIf="players.length === 0">No players added to this club.</p>
+    </div>
+  </div>
