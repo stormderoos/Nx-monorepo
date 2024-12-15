@@ -1,0 +1,36 @@
+.fanclub-list {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .fanclub-list h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .fanclub-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .fanclub-list .fanclub-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: white;
+  }
+  
+  .fanclub-list .fanclub-item h2 {
+    margin: 0 0 10px;
+    color: #007bff;
+  }
+  
+  .fanclub-list .fanclub-item p {
+    margin: 5px 0;
+    color: #555;
+  }

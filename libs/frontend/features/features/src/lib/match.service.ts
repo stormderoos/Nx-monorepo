@@ -18,17 +18,17 @@ export class MatchService {
   }
 
   getMatchById(id: string): Observable<IMatch> {
-    return this.http.get<IMatch>(`${this.baseUrl}/matches/${id}`);
+    return this.http.get<{results :IMatch}>(`${this.baseUrl}/matches/${id}`).pipe(
+      map(response => response.results));
   }
 
   createMatch(match: Omit<IMatch, 'id'>): Observable<IMatch> {
     return this.http.post<IMatch>(`${this.baseUrl}/matches`, match);
   }
 
-  updateMatch(id: string, match: Partial<IMatch>): Observable<IMatch> {
-    return this.http.put<IMatch>(`${this.baseUrl}/matches/${id}`, match);
+  updateMatch(match: IMatch): Observable<IMatch> {
+    return this.http.put<IMatch>(`${this.baseUrl}/matches/${match._id}`, match);
   }
-
   deleteMatch(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/matches/${id}`);
   }

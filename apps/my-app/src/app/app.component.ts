@@ -11,7 +11,6 @@ export class AppComponent {
   isUserEditPage = false;
 
   constructor(private router: Router) {
-    // Luister naar routewijzigingen en controleer of de actieve route 'useredit' is
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {

@@ -1,0 +1,17 @@
+<form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
+    <label for="firstName">First Name: </label>
+    <input id="firstName" formControlName="firstName" type="text" required>
+  
+    <label for="lastName">Last Name:</label>
+    <input id="lastName" formControlName="lastName" type="text" required>
+  
+    <label for="position">Position:</label>
+    <select id="position" formControlName="position" required>
+      <option *ngFor="let position of positions" [value]="position">{{ position }}</option>
+    </select>
+  
+    <label for="birthdate">Birthdate:</label>
+    <input id="birthdate" formControlName="birthdate" type="date" required>
+  
+    <button type="submit" [disabled]="loading || playerForm.invalid">Update Player</button>
+  </form>

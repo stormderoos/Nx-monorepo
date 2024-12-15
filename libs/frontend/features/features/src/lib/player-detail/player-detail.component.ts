@@ -16,7 +16,7 @@ export class PlayerDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private clubService: ClubService) {}
 
   ngOnInit(): void {
-    const playerId = this.route.snapshot.paramMap.get('id');
+    const playerId = this.route.snapshot.paramMap.get('_id');
     if (playerId) {
       this.fetchPlayerDetails(playerId);
     } else {

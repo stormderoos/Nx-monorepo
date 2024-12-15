@@ -38,7 +38,7 @@ export class ClubService {
     this.logger.log(`Creating club ${club.name}`);
     const createdClub = new this.clubModel(club);
     const savedClub = await createdClub.save();
-    return savedClub.toObject(); // Gebruik .toObject() voor consistentie
+    return savedClub.toObject();
   }
 
   async update(_id: string, club: UpdateClubDto): Promise<IFindClub | null> {

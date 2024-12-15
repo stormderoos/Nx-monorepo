@@ -7,15 +7,15 @@ import { User, UserService } from "../user.service";
     styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit{
-    users: User[] = []; // Array om gebruikers op te slaan
-    loading = true; // Laadstatus
+    users: User[] = [];
+    loading = true; 
     
     constructor(private userService: UserService) {}
   
     ngOnInit(): void {
         this.userService.getUsers().subscribe({
           next: (data) => {
-            console.log('Users:', data);  // Toegevoegd voor debugging
+            console.log('Users:', data);  
             this.users = data;
             this.loading = false;
           },

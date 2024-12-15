@@ -13,7 +13,6 @@
       <div class="user-details">
         <h3>{{ user.username }}</h3>
         <p>{{ user.email }}</p>
-        <!-- Update this to pass the user ID to the edit page -->
         <button 
           *ngIf="user._id" 
           [routerLink]="['/useredit', user._id]" 

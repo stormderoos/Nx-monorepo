@@ -44,7 +44,9 @@
         <td>{{ match.date | date: 'short' }}</td>
         <td>{{ match.score_home }} - {{ match.score_away }}</td>
         <td>
-          <button (click)="editMatch(match._id.toString())">Edit</button>
+          <button       
+            [routerLink]="['/matchedit', match._id]" 
+          >Edit</button>
           <button (click)="deleteMatch(match._id.toString())">Delete</button>
         </td>
       </tr>

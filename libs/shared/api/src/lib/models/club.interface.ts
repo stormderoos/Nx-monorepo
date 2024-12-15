@@ -1,9 +1,9 @@
 import { IPlayer } from "./player.interface";
 
 export interface IClub {
-    _id: string; // Unieke identifier
-    name: string; // Naam van de club
-    location: string; // Stad waar de club is gevestigd
+    _id: string; 
+    name: string; 
+    location: string; 
     logoUrl: string;
     players: string[] | undefined;
 }

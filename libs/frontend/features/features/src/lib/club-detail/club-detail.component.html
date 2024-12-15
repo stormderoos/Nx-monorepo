@@ -9,6 +9,12 @@
       <p class="club-location"><i class="fas fa-map-marker-alt"></i> Location: {{ club.location }}</p>
     </div>
 
+    <button
+      *ngIf="club"
+      class="edit-btn"
+      [routerLink]="['/clubedit', club._id]" 
+    >Edit Club</button>
+
     <h2 class="player-title">Players</h2>
     <ul *ngIf="players.length > 0" class="player-list">
       <li *ngFor="let player of players" class="player-item">

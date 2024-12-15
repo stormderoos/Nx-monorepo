@@ -13,7 +13,6 @@ export class PlayerExistGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const player = context.switchToHttp().getRequest().body;
 
-    // Controleer of een speler met dezelfde naam en geboortedatum al bestaat
     return this.playerModel
       .findOne({ firstName: player.firstName, lastName: player.lastName, birthdate: player.birthdate })
       .then((existingPlayer) => {

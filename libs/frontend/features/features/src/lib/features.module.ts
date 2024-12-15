@@ -13,6 +13,11 @@ import { ClubDetailComponent } from './club-detail/club-detail.component';
 import { PlayerDetailComponent } from './player-detail/player-detail.component';
 import { MatchListComponent } from './match-list/match-list.component';
 import { MatchCreateComponent } from './match-create/match-create.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { PlayerEditComponent } from './player-edit/player-edit.component';
+import { ClubEditComponent } from './club-edit/club-edit.component';
+import { MatchEditComponent } from './match-edit/match-edit.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,11 @@ import { MatchCreateComponent } from './match-create/match-create.component';
     PlayerDetailComponent,
     MatchListComponent,
     MatchCreateComponent,
+    LoginComponent,
+    RegisterComponent,
+    PlayerEditComponent,
+    ClubEditComponent,
+    MatchEditComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +53,11 @@ import { MatchCreateComponent } from './match-create/match-create.component';
     PlayerCreateComponent,
     MatchListComponent,
     MatchCreateComponent,
+    LoginComponent,
+    RegisterComponent,
+    PlayerEditComponent,
+    ClubEditComponent,
+    MatchEditComponent,
   ],
 })
 export class FeaturesModule {}

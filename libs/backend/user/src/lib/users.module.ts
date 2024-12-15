@@ -12,7 +12,6 @@ import { PlayerService } from './player/player.service';
 import { Match, MatchSchema } from './match/match.schema';
 import { MatchController } from './match/match.controller';
 import { MatchService } from './match/match.service';
-// import { Meal, MealSchema } from '@avans-nx-workshop/backend/features';
 
 @Module({
     imports: [

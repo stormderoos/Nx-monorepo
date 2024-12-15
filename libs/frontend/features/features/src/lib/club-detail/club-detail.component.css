@@ -105,3 +105,22 @@
   color: #888;
   font-style: italic;
 }
+
+.edit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.edit-btn:disabled {
+  background-color: #d6d6d6;
+  cursor: not-allowed;
+}

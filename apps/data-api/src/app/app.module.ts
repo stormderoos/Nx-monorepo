@@ -11,7 +11,6 @@ import { Logger } from '@nestjs/common';
         MongooseModule.forRoot(environment.MONGO_DB_CONNECTION_STRING, {
             connectionFactory: (connection) => {
                 connection.on('connected', () => {
-                    // console.log('is connected');
                     Logger.verbose(
                         `Mongoose db connected to ${environment.MONGO_DB_CONNECTION_STRING}`
                     );

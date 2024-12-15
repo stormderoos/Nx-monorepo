@@ -5,13 +5,30 @@
   <div *ngIf="player && !loading" class="player-detail">
     <div class="player-header">
       <h1>{{ player.firstName }} {{ player.lastName }}</h1>
-      <p class="position"><i class="fas fa-futbol"></i> Position: <strong>{{ player.position }}</strong></p>
+      <p class="position">
+        <i class="fas fa-futbol"></i> Position: <strong>{{ player.position }}</strong>
+      </p>
     </div>
 
     <div class="player-info">
-      <p><i class="fas fa-calendar-alt"></i> <strong>Birthdate:</strong> {{ player.birthdate | date: 'longDate' }}</p>
-      <p *ngIf="player.clubId"><i class="fas fa-users"></i> <strong>Club ID:</strong> {{ player.clubId }}</p>
-      <p *ngIf="!player.clubId"><i class="fas fa-ban"></i> Not assigned to any club.</p>
+      <p>
+        <i class="fas fa-calendar-alt"></i>
+        <strong>Birthdate:</strong> {{ player.birthdate | date: 'longDate' }}
+      </p>
+      <p *ngIf="player.clubId">
+        <i class="fas fa-users"></i>
+        <strong>Club ID:</strong> {{ player.clubId }}
+      </p>
+      <p *ngIf="!player.clubId">
+        <i class="fas fa-ban"></i> Not assigned to any club.
+      </p>
     </div>
+
+    <button
+      class="edit-button"
+      [routerLink]="['/playeredit', player._id]" 
+      >
+      Edit Player
+    </button>
   </div>
 </div>

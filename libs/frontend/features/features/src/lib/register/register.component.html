@@ -1,0 +1,58 @@
+<div class="register-container">
+    <h2>Registreren</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Gebruikersnaam</label>
+        <input
+          id="username"
+          formControlName="username"
+          type="text"
+          placeholder="Voer je gebruikersnaam in"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">E-mailadres</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          placeholder="Voer je e-mailadres in"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Wachtwoord</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder="Kies een wachtwoord"
+        />
+      </div>
+      <div class="form-group">
+        <label for="profileImgUrl">Profielfoto URL</label>
+        <input
+          id="profileImgUrl"
+          formControlName="profileImgUrl"
+          type="text"
+          placeholder="Voer een URL in voor je profielfoto"
+        />
+      </div>
+      <div class="form-group">
+        <label for="role">Rol</label>
+        <select id="role" formControlName="role">
+          <option [value]="'Fan'">Fan</option>
+          <option [value]="'Clubbeheerder'">Clubbeheerder</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="gender">Geslacht</label>
+        <select id="gender" formControlName="gender">
+          <option [value]="'Men'">Man</option>
+          <option [value]="'Female'">Vrouw</option>
+          <option [value]="'Unknown'">Onbekend</option>
+        </select>
+      </div>
+      <button type="submit">Registreren</button>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </form>
+  </div>

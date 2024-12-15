@@ -12,7 +12,7 @@ export class MatchService {
 
   constructor(
     @InjectModel(Match.name) private matchModel: Model<MatchDocument>,
-    private readonly clubService: ClubService, // Om clubinformatie te verkrijgen
+    private readonly clubService: ClubService, 
   ) {}
 
   async findAll(): Promise<IFindMatch[]> {
@@ -29,7 +29,7 @@ export class MatchService {
     this.logger.log(`Creating match between ${match.home_club_id} and ${match.away_club_id}`);
     const createdMatch = new this.matchModel(match);
     const savedMatch = await createdMatch.save();
-    return savedMatch.toObject(); // Gebruik .toObject() voor consistentie
+    return savedMatch.toObject(); 
   }
 
   async update(_id: string, match: UpdateMatchDto): Promise<IFindMatch | null> {

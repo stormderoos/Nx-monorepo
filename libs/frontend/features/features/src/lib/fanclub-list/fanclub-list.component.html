@@ -1,0 +1,12 @@
+<div class="fanclub-list">
+    <h1>Fan Clubs</h1>
+    <ul>
+      <li *ngFor="let fanClub of fanClubs">
+        <div class="fanclub-item">
+          <h2>{{ fanClub.clubName }}</h2>
+          <p>Fan: {{ fanClub.userName }}</p>
+          <p>Joined At: {{ fanClub.joinedAt }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>

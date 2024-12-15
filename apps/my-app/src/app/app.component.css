@@ -23,10 +23,10 @@ main {
     width: 100%; 
     margin-top: 400px;
     background-color: white;
-    padding: 20px;  /* Voeg wat padding toe zodat de content niet tegen de rand zit */
+    padding: 20px;  
 }
 
 main.user-edit-active {
-    margin-top: 0;  /* Geen margin-top als je user-edit hebt */
-    height: 100vh;  /* Zorg ervoor dat het de volledige hoogte van het scherm neemt */
+    margin-top: 0;  
+    height: 100vh;  
 }

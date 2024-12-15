@@ -46,26 +46,23 @@ li {
   text-decoration: none;
   display: flex;
   align-items: center;
-  transition: all 0.3s ease; /* Smooth transition for dropdown button */
+  transition: all 0.3s ease; 
 }
 
 .dropdown-arrow {
   margin-left: 8px;
   font-size: 1.1rem;
-  transition: transform 0.3s ease; /* Animate the movement of the arrow */
+  transition: transform 0.3s ease; 
 }
 
-/* Show the dropdown content when hovering */
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-/* Animate the arrow when the dropdown is hovered */
 .dropdown:hover .dropdown-arrow {
-  transform: rotate(180deg); /* Rotate the arrow when dropdown is open */
+  transform: rotate(180deg);
 }
 
-/* Dropdown content styling */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -78,7 +75,6 @@ li {
   left: 0;
 }
 
-/* Dropdown links */
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -90,7 +86,6 @@ li {
   background-color: #ddd;
 }
 
-/* Styling for active link and hover underline */
 li a {
   position: relative;
   color: #000;
@@ -120,7 +115,6 @@ li a.active {
   color: green;
 }
 
-/* Search bar */
 .search-bar {
   margin-left: auto;
 }
@@ -132,7 +126,6 @@ li a.active {
   border: 1px solid #ddd;
 }
 
-/* User icon */
 .user-dropdown {
   position: relative;
 }
@@ -170,7 +163,6 @@ li a.active {
   background-color: #ddd;
 }
 
-/* Body and main content styling */
 body {
   height: 100vh;
   display: flex;

@@ -14,7 +14,7 @@ export class PlayerCreateComponent {
   error: string | null = null;
   positions = Object.values(PlayerPosition).filter(
     (pos) => pos !== PlayerPosition.Unknown
-  ); // Alleen geldige posities tonen
+  ); 
 
   constructor(
     private fb: FormBuilder,

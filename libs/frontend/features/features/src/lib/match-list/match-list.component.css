@@ -39,13 +39,13 @@ th {
 
 td {
   font-size: 14px;
-  vertical-align: middle; /* Zorgt ervoor dat de inhoud verticaal gecentreerd wordt */
+  vertical-align: middle;
 }
 
 
 .clubs {
   display: flex;
-  align-items: center; /* Zorgt ervoor dat de clubs in de rij staan */
+  align-items: center;
 }
 
 .club-info {
@@ -67,7 +67,7 @@ td {
 .separator {
   margin: 0 10px;
   font-size: 18px;
-  line-height: 30px; /* Zorgt ervoor dat de separator verticaal gecentreerd is */
+  line-height: 30px; 
 }
 
 button {

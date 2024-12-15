@@ -38,7 +38,7 @@ export interface IUserIdentity {
 /**
  * Data Transfer Object voor het aanmaken van een gebruiker
  */
-export type ICreateUser = Pick<IUser, 'username' | 'email' | 'password' | 'role'>;
+export type ICreateUser = Pick<IUser, 'username' | 'email' | 'password' | 'role' | 'profileImgUrl' | 'gender'>;
 
 /**
  * Data Transfer Object voor het bijwerken van een gebruiker

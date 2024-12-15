@@ -1,14 +1,14 @@
 export interface IPlayer {
-    _id: string; // Unieke identifier
-    firstName: string; // Naam van de speler
+    _id: string; 
+    firstName: string; 
     lastName: string;
-    position: PlayerPosition; // Voeg hier de posities toe
-    clubId?: string; // FK naar Club
-    birthdate: Date; // Geboortedatum
+    position: PlayerPosition; 
+    clubId?: string;
+    birthdate: Date; 
   }
 
   export type IFindPlayer = Pick<IPlayer, 'firstName' | 'lastName' | 'birthdate'> & {
-    position: string; // Hier wordt 'position' expliciet als string behandeld
+    position: string; 
   };
   export enum PlayerPosition{
     GK = 'GK',

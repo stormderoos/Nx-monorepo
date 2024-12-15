@@ -46,8 +46,8 @@ export class ClubService {
       map(response => response.results));
   }
 
-  updateClub(id: number, updatedClub: Partial<IClub>): Observable<IClub> {
-    return this.http.put<IClub>(`${this.baseUrl}/clubs/${id}`, updatedClub);
+  updateClub(updatedClub: IClub): Observable<IClub> {
+    return this.http.put<IClub>(`${this.baseUrl}/clubs/${updatedClub._id}`, updatedClub);
   }
 
   deleteClub(id: number): Observable<void> {

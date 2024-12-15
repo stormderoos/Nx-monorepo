@@ -33,15 +33,22 @@
     <input type="text" placeholder="Search..." class="search-input" />
   </li>
 
-  <!-- User icon and dropdown -->
+  <li>
+    <a 
+      routerLink="/about"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >about</a
+    >
+  </li>
+
   <li class="user-dropdown">
     <a href="#" class="user-icon">
       <img src="/assets/user-icon.png" alt="User Icon" />
     </a>
     <div class="dropdown-content">
-      <a routerLink="/profile">Profile</a>
-      <a routerLink="/settings">Settings</a>
-      <a routerLink="/logout">Logout</a>
+      <a routerLink="/register">register</a>
+      <a routerLink="/login">login</a>
     </div>
   </li>
 </ul>

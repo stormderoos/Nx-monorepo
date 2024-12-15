@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsString, IsBoolean, IsOptional } from 'class-validator';
 import {
-    // ICreateUser,
     IUpdateUser,
     IUserRegistration,
     Id,

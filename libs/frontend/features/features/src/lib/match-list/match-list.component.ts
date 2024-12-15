@@ -66,12 +66,7 @@ export class MatchListComponent implements OnInit {
 
   getClubLogoById(clubId: string): string {
     const club = this.clubs.find(c => c._id === clubId);
-    return club ? club.logoUrl : 'default-logo-url'; // Geef een default logo terug als het logo niet beschikbaar is
-  }
-
-  editMatch(matchId: string): void {
-    // Voeg logica toe om een wedstrijd te bewerken
-    console.log('Editing match with ID:', matchId);
+    return club ? club.logoUrl : 'default-logo-url'; 
   }
 
   getClubLocationById(clubId: string): string {
@@ -81,13 +76,12 @@ export class MatchListComponent implements OnInit {
 
 
   addMatch(): void {
-    this.router.navigate(['/matches/create']); // Navigeer naar de pagina voor match creatie
+    this.router.navigate(['/matches/create']); 
   }
   
   deleteMatch(matchId: string): void {
-    // Voeg logica toe om een wedstrijd te verwijderen
     this.matchService.deleteMatch(matchId).subscribe(() => {
-      this.fetchMatches(); // Laad opnieuw de lijst met wedstrijden na verwijdering
+      this.fetchMatches(); 
     });
   }
 }

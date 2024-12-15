@@ -14,8 +14,8 @@ export class ClubCreateComponent implements OnInit {
   error: string | null = null;
   players: IPlayer[] = [];
   selectedPlayerId: string | null = null;
-  addedPlayers: string[] = [];  // This stores player IDs
-  addedPlayersDetails: { id: string, firstName: string, lastName: string }[] = [];  // This stores detailed player info
+  addedPlayers: string[] = [];  
+  addedPlayersDetails: { id: string, firstName: string, lastName: string }[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -29,12 +29,11 @@ export class ClubCreateComponent implements OnInit {
         'https://cdn-icons-png.flaticon.com/512/219/219969.png',
         Validators.required,
       ],
-      selectedPlayerId: ['', Validators.required],  // Form control for selected player
+      selectedPlayerId: ['', Validators.required], 
     });
   }
 
   ngOnInit(): void {
-    // Load players from the service
     this.clubService.getPlayers().subscribe({
       next: (players) => {
         this.players = players;
@@ -51,7 +50,6 @@ export class ClubCreateComponent implements OnInit {
       return;
     }
 
-    // Prepare the club data including the list of added players
     const newClub: Omit<ICreateClub, 'id'> = {
       name: this.clubForm.value.name,
       location: this.clubForm.value.location,
@@ -59,7 +57,6 @@ export class ClubCreateComponent implements OnInit {
       players: this.addedPlayers,  // Send the list of added players
     };
 
-    // Send the club data to the service to create the club
     this.clubService.createClub(newClub).subscribe({
       next: () => {
         this.router.navigate(['/clubs']);
@@ -76,7 +73,6 @@ export class ClubCreateComponent implements OnInit {
   }
 
   addPlayerToClub(): void {
-    // Haal de geselecteerde player ID op uit het formulier
     const selectedPlayerId = this.clubForm.get('selectedPlayerId')?.value;
   
     if (!selectedPlayerId) {
@@ -88,16 +84,13 @@ export class ClubCreateComponent implements OnInit {
       this.error = 'player added';
     }
   
-    // Controleer of de speler al is toegevoegd
     if (this.addedPlayers.includes(selectedPlayerId)) {
       this.error = 'Player is already added to the club.';
       return;
     }
   
-    // Zoek de geselecteerde speler op in de `players` lijst
     const selectedPlayer = this.players.find((p) => p._id === selectedPlayerId);
     if (selectedPlayer) {
-      // Voeg de speler toe aan de lijsten
       this.addedPlayers.push(selectedPlayer._id);
       this.addedPlayersDetails.push({
         id: selectedPlayer._id,
@@ -108,13 +101,11 @@ export class ClubCreateComponent implements OnInit {
       this.error = 'Player not found. Please select a valid player.';
     }
   
-    // Reset het formulierveld voor de geselecteerde speler
     this.clubForm.get('selectedPlayerId')?.setValue(null);
-    this.error = null; // Wis eventuele foutmeldingen
+    this.error = null;
   }
 
   removePlayerFromClub(playerId: string): void {
-    // Remove the player from the added players list and details
     this.addedPlayers = this.addedPlayers.filter(id => id !== playerId);
     this.addedPlayersDetails = this.addedPlayersDetails.filter(player => player.id !== playerId);
   }
