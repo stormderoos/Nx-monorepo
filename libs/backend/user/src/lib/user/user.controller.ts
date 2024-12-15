@@ -8,11 +8,11 @@ import {
     UseGuards
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { IUserInfo, IUser } from '@avans-nx-workshop/shared/api';
+import { IUserInfo } from '@avans-nx-workshop/shared/api';
 import { CreateUserDto, UpdateUserDto } from '@avans-nx-workshop/backend/dto';
 import { UserExistGuard } from './user-exists.guard';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
@@ -29,7 +29,7 @@ export class UserController {
     // }
 
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<IUser | null> {
+    async findOne(@Param('id') id: string): Promise<IUserInfo | null> {
         return this.userService.findOne(id);
     }
 

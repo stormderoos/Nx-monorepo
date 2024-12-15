@@ -1,0 +1,35 @@
+.loading-spinner {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #007bff;
+}
+
+.error-message {
+  color: red;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 1rem;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+button[disabled] {
+  background-color: #ccc;
+}
+
+button {
+  margin-top: 15px;
+}

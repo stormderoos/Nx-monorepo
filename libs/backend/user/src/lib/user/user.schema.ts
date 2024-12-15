@@ -1,46 +1,31 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
-// import { v4 as uuid } from 'uuid';
-import isEmail from 'validator/lib/isEmail';
-import {
-    IMeal,
-    IUser,
-    UserGender,
-    UserRole
-} from '@avans-nx-workshop/shared/api';
-import { IsMongoId } from 'class-validator';
+import { Document } from 'mongoose';
+import { UserRole, UserGender } from '@avans-nx-workshop/shared/api';
+import { IsMongoId,} from 'class-validator';
 
 export type UserDocument = User & Document;
 
 @Schema()
-export class User implements IUser {
+export class User {
     @IsMongoId()
-    _id!: string;
+    id!: string;
+
+    @Prop({ required: true })
+    username!: string;
+
+    @Prop({ required: true, unique: true })
+    email!: string;
+
+    @Prop({ required: true, select: false })
+    password!: string;
 
     @Prop({
         required: true,
-        type: String
-    })
-    name!: string;
-
-    @Prop({
-        required: true,
-        select: false, // do not return password in select statements
-        type: String
-    })
-    password = '';
-
-    @Prop({
-        required: true,
+        enum: Object.values(UserRole),
+        default: UserRole.Fan,
         type: String,
-        select: true,
-        unique: true
-        // validate: {
-        //     validator: isEmail,
-        //     message: 'should be a valid email address'
-        // }
     })
-    emailAddress = '';
+    role!: UserRole;
 
     @Prop({
         required: false,
@@ -52,30 +37,10 @@ export class User implements IUser {
     @Prop({
         required: false,
         type: String,
-        default: UserRole.Guest
-    })
-    role: UserRole = UserRole.Guest;
-
-    @Prop({
-        required: false,
-        type: String,
-        default: UserGender.Unknown
+        default: UserGender
     })
     gender: UserGender = UserGender.Unknown;
 
-    @Prop({
-        required: false,
-        type: Boolean,
-        default: true
-    })
-    isActive = true;
-
-    @Prop({
-        default: [],
-        type: [MongooseSchema.Types.ObjectId],
-        ref: 'Meal'
-    })
-    meals: IMeal[] = [];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

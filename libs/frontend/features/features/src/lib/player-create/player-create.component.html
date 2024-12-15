@@ -1,0 +1,42 @@
+<h2>Create Player</h2>
+<form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="firstName">First Name</label>
+    <input id="firstName" formControlName="firstName" />
+    <div *ngIf="playerForm.get('firstName')?.invalid && playerForm.get('firstName')?.touched">
+      First Name is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="lastName">Last Name</label>
+    <input id="lastName" formControlName="lastName" />
+    <div *ngIf="playerForm.get('lastName')?.invalid && playerForm.get('lastName')?.touched">
+      Last Name is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="position">Position</label>
+    <select id="position" formControlName="position">
+      <option *ngFor="let pos of positions" [value]="pos">{{ pos }}</option>
+    </select>
+    <div *ngIf="playerForm.get('position')?.invalid && playerForm.get('position')?.touched">
+      Position is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="birthdate">Birthdate</label>
+    <input id="birthdate" type="date" formControlName="birthdate" />
+    <div *ngIf="playerForm.get('birthdate')?.invalid && playerForm.get('birthdate')?.touched">
+      Birthdate is required.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="playerForm.invalid">Create Player</button>
+</form>
+
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>

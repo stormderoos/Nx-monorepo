@@ -1,1 +1,77 @@
-<p>about works!</p>
+<main>
+    <section class="about">
+        <h2>About Me</h2>
+        <p><strong>Naam:</strong> Storm de Roos</p>
+        <p><strong>Studentnummer:</strong> 2203568</p>
+    </section>
+
+    <section class="description">
+        <h2>Casus Beschrijving</h2>
+        <p>
+            Mijn casus gaat over een applicatie voor het beheren van voetbalcompetities. 
+            Het biedt functionaliteiten zoals het beheren van clubs, spelers, wedstrijden en fanclubs. 
+            Gebruikers kunnen als beheerder teams en spelers toevoegen, uitslagen invoeren, en toekomstige wedstrijden plannen. 
+            Fans kunnen lid worden van een fanclub en de prestaties van hun favoriete teams volgen.
+        </p>
+    </section>
+
+    <section class="erd">
+        <h2>ERD - Datamodel</h2>
+        <img src="/assets/erd-voetbal.png" alt="ERD Voetbal" />
+        <p>
+            Het datamodel bestaat uit de volgende entiteiten:
+        </p>
+        <ul>
+            <li><strong>User:</strong> Gebruikers kunnen een beheerder zijn (voor clubs) of een fan (voor fanclubs).</li>
+            <li><strong>Club:</strong> Clubs worden beheerd door gebruikers en hebben spelers. Ze kunnen ook deelnemen aan wedstrijden.</li>
+            <li><strong>Player:</strong> Spelers behoren tot één club en hebben eigenschappen zoals marktwaarde en positie.</li>
+            <li><strong>Match:</strong> Wedstrijden verbinden twee clubs en registreren scores.</li>
+            <li><strong>FanClub:</strong> Verbindt gebruikers met clubs die ze volgen.</li>
+        </ul>
+    </section>
+
+    <section class="requirements">
+        <h2>Functionele Requirements</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User Story</th>
+                    <th>Acceptatiecriteria</th>
+                    <th>Prioriteit (MoSCoW)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Als beheerder wil ik teams kunnen toevoegen, zodat ik de competitie kan opzetten.</td>
+                    <td>Teams kunnen worden toegevoegd met naam, stad en stadioncapaciteit.</td>
+                    <td>Must Have</td>
+                </tr>
+                <tr>
+                    <td>Als beheerder wil ik spelers aan een team kunnen koppelen, zodat de teams compleet zijn.</td>
+                    <td>Spelers hebben eigenschappen zoals naam, geboortedatum, positie, en marktwaarde.</td>
+                    <td>Must Have</td>
+                </tr>
+                <tr>
+                    <td>Als gebruiker wil ik de ranglijst kunnen zien, zodat ik weet hoe teams presteren.</td>
+                    <td>De ranglijst toont punten, gewonnen wedstrijden, verloren wedstrijden en doelsaldo.</td>
+                    <td>Must Have</td>
+                </tr>
+                <tr>
+                    <td>Als beheerder wil ik wedstrijden kunnen plannen, zodat het schema overzichtelijk is.</td>
+                    <td>Wedstrijden kunnen worden toegevoegd met datum, locatie, en deelnemende teams.</td>
+                    <td>Must Have</td>
+                </tr>
+                <tr>
+                    <td>Als fan wil ik lid kunnen worden van een fanclub, zodat ik mijn favoriete team kan volgen.</td>
+                    <td>Fans kunnen clubs selecteren en een lidmaatschapsdatum wordt geregistreerd.</td>
+                    <td>Should Have</td>
+                </tr>
+                <tr>
+                    <td>Als gebruiker wil ik wedstrijdresultaten kunnen bekijken, zodat ik de uitslagen kan zien.</td>
+                    <td>De applicatie toont het aantal gescoorde doelpunten per team en de winnaar.</td>
+                    <td>Should Have</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>

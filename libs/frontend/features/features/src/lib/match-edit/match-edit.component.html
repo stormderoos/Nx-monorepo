@@ -1,0 +1,24 @@
+<div *ngIf="loading" class="loader">Loading match details...</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+<form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
+  <label for="homeTeamId">Home Team ID:</label>
+  <input id="homeTeamId" formControlName="homeTeamId" type="text" required>
+
+  <label for="awayTeamId">Away Team ID:</label>
+  <input id="awayTeamId" formControlName="awayTeamId" type="text" required>
+
+  <label for="homeScore">Home Score:</label>
+  <input id="homeScore" formControlName="homeScore" type="number" min="0" placeholder="Enter home score (or leave blank)">
+
+  <label for="awayScore">Away Score:</label>
+  <input id="awayScore" formControlName="awayScore" type="number" min="0" placeholder="Enter away score (or leave blank)">
+
+  <label for="location">Location:</label>
+  <input id="location" formControlName="location" type="text" required>
+
+  <label for="matchDate">Match Date and Time:</label>
+  <input id="matchDate" formControlName="matchDate" type="datetime-local" required>
+
+  <button type="submit" [disabled]="loading || matchForm.invalid">Update Match</button>
+</form>
