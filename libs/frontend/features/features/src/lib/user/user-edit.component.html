@@ -1,66 +1,37 @@
-<div *ngIf="loading">Laden...</div>
+<div *ngIf="loading" class="loading-spinner">
+  <p>Laden...</p>
+</div>
+
 <div *ngIf="!loading">
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="username">Gebruikersnaam</label>
-      <input
-        id="username"
-        formControlName="username"
-        type="text"
-        class="form-control"
-      />
+      <input id="username" formControlName="username" type="text" placeholder="Gebruikersnaam" />
     </div>
 
     <div class="form-group">
-      <label for="email">E-mail</label>
-      <input
-        id="email"
-        formControlName="email"
-        type="email"
-        class="form-control"
-      />
+      <label for="email">E-mailadres</label>
+      <input id="email" formControlName="email" type="email" placeholder="E-mailadres" />
     </div>
 
     <div class="form-group">
-      <label for="password">Wachtwoord</label>
-      <input
-        id="password"
-        formControlName="password"
-        type="password"
-        class="form-control"
-        placeholder="Laat leeg om niet te wijzigen"
-      />
+      <label for="password">Nieuw wachtwoord (optioneel)</label>
+      <input id="password" formControlName="password" type="password" placeholder="Laat leeg als je niet wilt aanpassen" />
+    </div>
+
+    <div class="form-group">
+      <label for="profileImgUrl">Profielfoto URL</label>
+      <input id="profileImgUrl" formControlName="profileImgUrl" type="text" placeholder="Voer de URL in" />
     </div>
 
     <div class="form-group">
       <label for="role">Rol</label>
-      <select id="role" formControlName="role" class="form-control">
-        <option value="admin">Admin</option>
+      <select id="role" formControlName="role">
         <option value="user">User</option>
+        <option value="clubowner">Club Owner</option>
       </select>
     </div>
-
-    <div class="form-group">
-      <label for="gender">Geslacht</label>
-      <select id="gender" formControlName="gender" class="form-control">
-        <option value="male">Man</option>
-        <option value="female">Vrouw</option>
-        <option value="other">Anders</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="profileImgUrl">Profiel Afbeelding URL</label>
-      <input
-        id="profileImgUrl"
-        formControlName="profileImgUrl"
-        type="text"
-        class="form-control"
-      />
-    </div>
-
-    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
-      Opslaan
-    </button>
+    
+    <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">Opslaan</button>
   </form>
 </div>

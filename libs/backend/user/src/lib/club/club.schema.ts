@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-import { Player } from '../player/player.schema';
+import { Document } from 'mongoose';
 
 export type ClubDocument = Club & Document;
 
@@ -18,8 +17,8 @@ export class Club {
   })
   logoUrl!: string;
 
-  @Prop()
-  players: string[] | undefined;
+  @Prop({ type: [String], default: [] })
+  players!: string[];
 }
 
 export const ClubSchema = SchemaFactory.createForClass(Club);

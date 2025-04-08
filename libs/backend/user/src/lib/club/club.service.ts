@@ -57,4 +57,14 @@ export class ClubService {
     }
     return this.playerModel.find({ _id: { $in: club.players } }).lean().exec();
   }
+
+  async canUserDeleteClub(userId: string, role: string, clubId: string): Promise<boolean> {
+    const club = await this.findOne(clubId);
+    if (!club) return false;
+  
+    if (role === 'Admin') return true;
+    if (role === 'Clubbeheerder') return true;
+  
+    return false;
+  }
 }

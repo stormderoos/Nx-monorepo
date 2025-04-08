@@ -1,0 +1,36 @@
+:host {
+    display: block;
+    padding: 20px;
+    max-width: 600px;
+    margin: 30px auto;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+  }
+  
+  .profile-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+  }
+  
+  .profile-card img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 3px solid #007bff;
+  }
+  
+  .profile-card h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-card p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  

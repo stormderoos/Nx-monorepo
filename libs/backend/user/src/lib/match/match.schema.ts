@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-import { Club } from '../club/club.schema';
+import { Document } from 'mongoose';
 
 export type MatchDocument = Match & Document;
 
@@ -12,17 +11,17 @@ export class Match {
   @Prop({ required: true })
   location!: string;
 
-  @Prop()
+  @Prop({ required: true })
   home_club_id!: string;
 
-  @Prop()
+  @Prop({ required: true })
   away_club_id!: string;
 
   @Prop({ required: false, default: null })
-  score_home: number | undefined;
+  score_home?: number;
 
   @Prop({ required: false, default: null })
-  score_away: number | undefined;
+  score_away?: number;
 }
 
 export const MatchSchema = SchemaFactory.createForClass(Match);

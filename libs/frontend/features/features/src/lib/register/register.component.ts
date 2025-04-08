@@ -22,23 +22,34 @@ export class RegisterComponent {
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      profileImgUrl: ['', [Validators.required, Validators.pattern('https?://.+')]],
-      role: [UserRole.Fan, Validators.required],
+      profileImgUrl: [''],
+      role: [UserRole.User, Validators.required],
       gender: ['Unknown', Validators.required], 
     });
   }
-
+  
   onSubmit(): void {
-    if (this.registerForm.valid) {
-      const user: ICreateUser = this.registerForm.value;
-
-      this.authService.register(user).subscribe({
-        next: () => this.router.navigate(['/login']),
-        error: (error) => {
-          console.error('Registration error:', error);
-          this.errorMessage = 'Registratie mislukt. Probeer opnieuw.';
-        },
+    if (this.registerForm.invalid) {
+      this.errorMessage = 'Vul alle velden correct in.';
+      this.registerForm.markAllAsTouched(); // Forceer validatie
+      return;
+    }
+  
+    // Als profielfoto leeg is, patch het veld met `undefined` zodat Mongoose de default gebruikt
+    if (!this.registerForm.value.profileImgUrl) {
+      this.registerForm.patchValue({
+        profileImgUrl: undefined
       });
     }
+  
+    const user: ICreateUser = this.registerForm.value;
+  
+    this.authService.register(user).subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: (error) => {
+        console.error('Registration error:', error);
+        this.errorMessage = 'Registratie mislukt. Probeer opnieuw.';
+      },
+    });
   }
 }

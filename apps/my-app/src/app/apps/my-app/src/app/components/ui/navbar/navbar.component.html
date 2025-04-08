@@ -47,8 +47,15 @@
       <img src="/assets/user-icon.png" alt="User Icon" />
     </a>
     <div class="dropdown-content">
-      <a routerLink="/register">register</a>
-      <a routerLink="/login">login</a>
+      <ng-container *ngIf="isLoggedIn(); else loggedOut">
+        <a routerLink="/profile">Profiel</a>
+        <a (click)="logout()">Uitloggen</a>
+      </ng-container>
+  
+      <ng-template #loggedOut>
+        <a routerLink="/register">Registreren</a>
+        <a routerLink="/login">Inloggen</a>
+      </ng-template>
     </div>
   </li>
 </ul>

@@ -1,8 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AboutComponent } from "./apps/my-app/src/app/components/about/about/about.component";
-import { ClubCreateComponent, ClubDetailComponent, ClubEditComponent, ClubListComponent, LoginComponent, MatchCreateComponent, MatchEditComponent, MatchListComponent, PlayerCreateComponent, PlayerDetailComponent, PlayerEditComponent, PlayerListComponent, RegisterComponent, UserEditComponent, UserListComponent } from "@avans-nx-workshop/frontend/features/features";
+import { ClubCreateComponent, UserProfileComponent, ClubDetailComponent, ClubEditComponent, ClubListComponent, LoginComponent, MatchCreateComponent, MatchEditComponent, MatchListComponent, PlayerCreateComponent, PlayerDetailComponent, PlayerEditComponent, PlayerListComponent, RegisterComponent, UserEditComponent, UserListComponent } from "@avans-nx-workshop/frontend/features/features";
 import { HomeComponent } from "./apps/my-app/src/app/components/home/home.component";
+import { AuthGuard } from "@avans-nx-workshop/frontend/features/features";
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
     { path: 'playeredit/:_id', component: PlayerEditComponent },
     { path: 'clubedit/:_id', component: ClubEditComponent },  
     { path: 'matchedit/:_id', component: MatchEditComponent },
+    { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] }
 
   ];
   

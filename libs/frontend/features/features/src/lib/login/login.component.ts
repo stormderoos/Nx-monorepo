@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -24,17 +25,24 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-        this.authService.login(this.loginForm.value).subscribe({
-            next: (response) => {
-                console.log('Logged in as:', response);
-                this.router.navigate(['/secure']); 
-            },
-            error: (error) => {
-                console.error('Login error:', error);
-                this.errorMessage = 'Login mislukt. Probeer opnieuw.';
-            },
-        });
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
     }
-}
+
+    this.loading = true;
+    this.errorMessage = null;
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (response) => {
+        console.log('Logged in as:', response);
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error('Login error:', error);
+        this.errorMessage = 'Login mislukt. Controleer je e-mailadres en wachtwoord.';
+        this.loading = false;
+      },
+    });
+  }
 }

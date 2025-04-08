@@ -18,9 +18,12 @@ import { RegisterComponent } from './register/register.component';
 import { PlayerEditComponent } from './player-edit/player-edit.component';
 import { ClubEditComponent } from './club-edit/club-edit.component';
 import { MatchEditComponent } from './match-edit/match-edit.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 
 @NgModule({
   declarations: [
+    UserProfileComponent,
     UserListComponent,
     UserEditComponent,
     ClubCreateComponent,
@@ -45,6 +48,7 @@ import { MatchEditComponent } from './match-edit/match-edit.component';
     RouterModule,
   ],
   exports: [
+    UserProfileComponent,
     UserListComponent,
     UserEditComponent,
     ClubCreateComponent, 

@@ -1,0 +1,10 @@
+<div *ngIf="user; else notLoggedIn">
+    <h2>Welkom, {{ user?.name }}</h2>
+    <p><strong>Email:</strong> {{ user?.email }}</p>
+    <p><strong>Rol:</strong> {{ user?.role }}</p>
+    <img [src]="user?.profileImgUrl" alt="Profielfoto" width="100" />
+  </div>
+  
+  <ng-template #notLoggedIn>
+    <p>Je bent niet ingelogd. Log in om je profiel te bekijken.</p>
+  </ng-template>

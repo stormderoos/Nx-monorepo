@@ -18,17 +18,27 @@ export class AuthService {
   }
 
   login(credentials: { email: string; password: string }): Observable<IUserIdentity> {
-    return this.http.post<{ token: string; user: IUserIdentity }>(`${this.apiUrl}/login`, credentials).pipe(
+    return this.http.post<{ results: IUserIdentity; info: any }>(`${this.apiUrl}/login`, credentials).pipe(
       tap((response) => {
-        localStorage.setItem(this.tokenKey, response.token);
-        localStorage.setItem('user', JSON.stringify(response.user)); 
+        localStorage.setItem(this.tokenKey, response.results.token);
+        localStorage.setItem('user', JSON.stringify(response.results));
       }),
-      map((response) => response.user) 
+      map((response) => response.results)
     );
   }
 
   getCurrentUser(): IUserIdentity | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
+  }
+
+  getUserRole(): string | null {
+    const user = this.getCurrentUser();
+    return user ? user.role : null;
+  }
+
+  logout(): void {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
   }
 }

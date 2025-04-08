@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClubService } from '../club.service';
 import { IClub } from '@avans-nx-workshop/shared/api';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'avans-nx-workshop-club-list',
@@ -10,13 +11,18 @@ import { IClub } from '@avans-nx-workshop/shared/api';
 })
 export class ClubListComponent implements OnInit {
   clubs: IClub[] = [];
+  userRole: string | null = null;
   loading = false;
   error: string | null = null;
-
-  constructor(private clubService: ClubService, private router: Router) {}
+  constructor(
+    private clubService: ClubService, 
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.fetchClubs();
+    this.userRole = this.authService.getUserRole();
   }
 
   fetchClubs(): void {

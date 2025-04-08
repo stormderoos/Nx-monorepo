@@ -14,6 +14,9 @@ export * from './lib/register/register.component'
 export * from './lib/player-edit/player-edit.component'
 export * from './lib/club-edit/club-edit.component'
 export * from './lib/match-edit/match-edit.component'
+export * from './lib/user-profile/user-profile.component'
+export * from './lib/auth.guard'
+export * from './lib/auth.service'
 
 
 

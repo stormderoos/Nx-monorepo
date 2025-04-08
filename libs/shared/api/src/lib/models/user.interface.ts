@@ -3,8 +3,8 @@
  * Rol van de gebruiker (bijvoorbeeld fan of clubbeheerder)
  */
 export enum UserRole {
-  Fan = 'Fan',
-  ClubManager = 'Clubbeheerder',
+  User = "user",
+  ClubOwner = "clubowner",
 }
 
 export enum UserGender{
@@ -30,11 +30,13 @@ export interface IUser {
  * Minimale informatie over een gebruiker
  */
 export interface IUserIdentity {
-  username: string; // Gebruikersnaam
-  email: string; // E-mailadres
-  role: UserRole; // Rol
+  id: string;
+  name: string;
+  email: string;
+  profileImgUrl?: string;
+  role: string;
+  token: string;
 }
-
 /**
  * Data Transfer Object voor het aanmaken van een gebruiker
  */

@@ -2,9 +2,7 @@
   <h1>Clubs</h1>
 
   <div class="actions">
-    <button class="btn btn-primary" routerLink="/clubcreate">
-      + Create New Club
-    </button>
+    <button *ngIf="userRole === 'admin'" routerLink="/clubcreate">Club aanmaken</button>
   </div>
 
   <div *ngIf="loading" class="loader">

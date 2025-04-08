@@ -4,6 +4,7 @@ import { IClub, IFindClub, IFindPlayer } from '@avans-nx-workshop/shared/api';
 import { CreateClubDto, UpdateClubDto } from '@avans-nx-workshop/backend/dto';
 import { ClubExistGuard } from './club-exists.guard';
 
+
 @Controller('clubs')
 export class ClubController {
   constructor(private readonly clubService: ClubService) {}
@@ -36,4 +37,5 @@ export class ClubController {
   async findPlayers(@Param('id') id: string): Promise<IFindPlayer[] | null> {
     return this.clubService.findPlayersByClub(id);
   }
+
 }

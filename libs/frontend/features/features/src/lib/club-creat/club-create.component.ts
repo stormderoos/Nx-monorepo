@@ -29,7 +29,7 @@ export class ClubCreateComponent implements OnInit {
         'https://cdn-icons-png.flaticon.com/512/219/219969.png',
         Validators.required,
       ],
-      selectedPlayerId: ['', Validators.required], 
+      selectedPlayerId: [''], 
     });
   }
 

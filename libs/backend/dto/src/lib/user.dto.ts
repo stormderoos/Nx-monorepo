@@ -42,7 +42,7 @@ export class UpsertUserDto implements IUpdateUser {
 
     @IsString()
     @IsNotEmpty()
-    role: UserRole = UserRole.Fan;
+    role: UserRole = UserRole.User;
 
     @IsString()
     @IsNotEmpty()
@@ -71,7 +71,7 @@ export class UpdateUserDto implements IUpdateUser {
 
     @IsString()
     @IsNotEmpty()
-    role: UserRole = UserRole.Fan;
+    role: UserRole = UserRole.User;
 
     @IsString()
     @IsNotEmpty()

@@ -18,7 +18,7 @@ export class MatchListComponent implements OnInit {
   constructor(
     private matchService: MatchService,
     private clubService: ClubService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
