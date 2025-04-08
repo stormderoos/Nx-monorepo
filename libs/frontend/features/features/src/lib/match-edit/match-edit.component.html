@@ -1,24 +1,60 @@
-<div *ngIf="loading" class="loader">Loading match details...</div>
+<div *ngIf="loadingClubs" class="loader">Loading clubs...</div>
+<div *ngIf="loadingPlayers" class="loader">Loading players...</div>
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
 <form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
-  <label for="homeTeamId">Home Team ID:</label>
-  <input id="homeTeamId" formControlName="homeTeamId" type="text" required>
+  <!-- Select Home Team -->
+  <div class="form-group">
+    <label for="homeTeamId">Home Team:</label>
+    <select id="homeTeamId" formControlName="homeTeamId" (change)="loadPlayersForTeam('home')" required>
+      <option *ngFor="let club of clubs" [value]="club._id">{{ club.name }}</option>
+    </select>
+  </div>
 
-  <label for="awayTeamId">Away Team ID:</label>
-  <input id="awayTeamId" formControlName="awayTeamId" type="text" required>
+  <!-- Select Away Team -->
+  <div class="form-group">
+    <label for="awayTeamId">Away Team:</label>
+    <select id="awayTeamId" formControlName="awayTeamId" (change)="loadPlayersForTeam('away')" required>
+      <option *ngFor="let club of clubs" [value]="club._id">{{ club.name }}</option>
+    </select>
+  </div>
 
-  <label for="homeScore">Home Score:</label>
-  <input id="homeScore" formControlName="homeScore" type="number" min="0" placeholder="Enter home score (or leave blank)">
+  <!-- Scores -->
+  <div class="form-group">
+    <label for="homeScore">Home Score:</label>
+    <input id="homeScore" formControlName="homeScore" type="number" min="0">
+  </div>
 
-  <label for="awayScore">Away Score:</label>
-  <input id="awayScore" formControlName="awayScore" type="number" min="0" placeholder="Enter away score (or leave blank)">
+  <div class="form-group">
+    <label for="awayScore">Away Score:</label>
+    <input id="awayScore" formControlName="awayScore" type="number" min="0">
+  </div>
 
-  <label for="location">Location:</label>
-  <input id="location" formControlName="location" type="text" required>
+  <!-- Select Scorers -->
+  <div class="form-group">
+    <label for="scorers">Select Scorers:</label>
+    <select id="scorers" formControlName="scorers" multiple (change)="onScorersChange($event)">
+      <option *ngFor="let player of homePlayers" [value]="player._id">
+        {{ player.firstName }} {{ player.lastName }}
+      </option>
+      <option *ngFor="let player of awayPlayers" [value]="player._id">
+        {{ player.firstName }} {{ player.lastName }}
+      </option>
+    </select>
+  </div>
 
-  <label for="matchDate">Match Date and Time:</label>
-  <input id="matchDate" formControlName="matchDate" type="datetime-local" required>
+  <!-- Select Assisters -->
+  <div class="form-group">
+    <label for="assisters">Select Assisters:</label>
+    <select id="assisters" formControlName="assisters" multiple (change)="onAssistersChange($event)">
+      <option *ngFor="let player of homePlayers" [value]="player._id">
+        {{ player.firstName }} {{ player.lastName }}
+      </option>
+      <option *ngFor="let player of awayPlayers" [value]="player._id">
+        {{ player.firstName }} {{ player.lastName }}
+      </option>
+    </select>
+  </div>
 
-  <button type="submit" [disabled]="loading || matchForm.invalid">Update Match</button>
+  <button type="submit" [disabled]="loadingPlayers || matchForm.invalid">Update Match</button>
 </form>

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClubService } from '../club.service';  // Assuming you have a ClubService
 import { IClub, IPlayer } from '@avans-nx-workshop/shared/api';  // Import IClub and IPlayer interfaces
 import { PlayerService } from '../player.service';  // Assuming you have a PlayerService to fetch players
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'avans-nx-workshop-club-edit',
@@ -47,7 +46,7 @@ export class ClubEditComponent implements OnInit {
           });
 
           // Fetch player details (to populate a dropdown or list of players)
-          this.clubService.getPlayersByClub(club._id).subscribe(
+          this.clubService.getPlayers().subscribe(
             (players: IPlayer[]) => {
               this.players = players;
               this.loading = false;

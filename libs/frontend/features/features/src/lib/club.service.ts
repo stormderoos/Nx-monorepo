@@ -37,8 +37,8 @@ export class ClubService {
   }
 
   getPlayersByClub(clubId: string): Observable<IPlayer[]> {
-    return this.http.get<{results : IPlayer[]}>(`${this.baseUrl}/clubs/${clubId}/players`).pipe(
-      map(response => response.results));
+    return this.http.get<{ results: IPlayer[]}>(`${this.baseUrl}/clubs/${clubId}/players`)
+      .pipe(map(response => response.results));
   }
 
   getPlayerById(playerId: string): Observable<IPlayer> {

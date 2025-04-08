@@ -2,44 +2,25 @@ import { IsNotEmpty, IsDate, IsOptional, IsString, IsDateString } from 'class-va
 import { Types } from 'mongoose';
 
 export class CreateMatchDto {
-  @IsNotEmpty()
-  @IsDateString()
-  date!: string;
-
-  @IsNotEmpty()
+  date!: Date;          
   location!: string;
-
-  @IsNotEmpty()
-  home_club_id!: Types.ObjectId;
-
-  @IsNotEmpty()
-  away_club_id!: Types.ObjectId;
-
-  @IsOptional()
+  home_club_id!: string;
+  away_club_id!: string;
+  
+  // Optionele scores
   score_home?: number;
-
-  @IsOptional()
   score_away?: number;
+
+  scorers?: string[];
+  assisters?: string[];
 }
-
 export class UpdateMatchDto {
-  @IsOptional()
-  @IsDate()
   date?: Date;
-
-  @IsOptional()
-  @IsString()
   location?: string;
-
-  @IsOptional()
-  home_club_id?: Types.ObjectId;
-
-  @IsOptional()
-  away_club_id?: Types.ObjectId;
-
-  @IsOptional()
+  home_club_id?: string;
+  away_club_id?: string;
   score_home?: number;
-
-  @IsOptional()
   score_away?: number;
+  scorers?: string[];
+  assisters?: string[];
 }

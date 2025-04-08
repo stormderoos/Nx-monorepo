@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { IMatch } from '@avans-nx-workshop/shared/api';
+import { IClub, IMatch } from '@avans-nx-workshop/shared/api';
 
 @Injectable({
   providedIn: 'root',

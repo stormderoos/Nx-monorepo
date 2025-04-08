@@ -26,9 +26,7 @@ export class MatchCreateComponent implements OnInit {
       home_club_id: ['', Validators.required],
       away_club_id: ['', Validators.required],
       location: ['', Validators.required],
-      date: ['', [Validators.required, this.dateValidator]],
-      score_home: [null, [Validators.min(0)]],  
-      score_away: [null, [Validators.min(0)]],  
+      date: ['', [Validators.required, this.dateValidator]],  
     });
   }
 

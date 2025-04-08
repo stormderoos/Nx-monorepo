@@ -22,9 +22,9 @@ const routes: Routes = [
     { path: 'matchcreate', component: MatchCreateComponent},
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
-    { path: 'playeredit/:_id', component: PlayerEditComponent },
+    { path: 'playeredit/:id', component: PlayerEditComponent },
     { path: 'clubedit/:_id', component: ClubEditComponent },  
-    { path: 'matchedit/:_id', component: MatchEditComponent },
+    { path: 'matchedit/:id', component: MatchEditComponent },
     { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] }
 
   ];

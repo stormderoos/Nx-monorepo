@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { Neo4JUserService } from './neo4j-users.service';
+import { Controller, Get, Param } from '@nestjs/common';
+import { Neo4JStatsService } from './neo4j-stats.service';
 
-@Controller('neo4j/users')
-export class Neo4JExampleController {
-  constructor(private readonly neo4jService: Neo4JUserService) {}
+@Controller('neo4j/stats')
+export class Neo4JStatsController {
+  constructor(private readonly neo4jStatsService: Neo4JStatsService) {}
 
-  @Get()
-  async getAllUsers(): Promise<any> {
-    return await this.neo4jService.findAll();
+  @Get('player/:playerId')
+  async getPlayerStats(@Param('playerId') playerId: string): Promise<{ goals: number; assists: number }> {
+    return await this.neo4jStatsService.getPlayerStats(playerId);
   }
 }

@@ -11,7 +11,6 @@ export class NavbarComponent {
 
   isLoggedIn(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    console.log('Current user:', currentUser);
     return !!currentUser;
   }
 

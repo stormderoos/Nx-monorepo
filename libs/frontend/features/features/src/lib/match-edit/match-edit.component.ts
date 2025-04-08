@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatchService } from '../match.service';
+import { PlayerService } from '../player.service';
+import { ClubService } from '../club.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatchService } from '../match.service';  // Assuming a MatchService exists
-import { IMatch } from '@avans-nx-workshop/shared/api';  // Import IMatch
+import { IMatch, IPlayer, IClub } from '@avans-nx-workshop/shared/api';
 
 @Component({
   selector: 'avans-nx-workshop-match-edit',
@@ -11,85 +13,145 @@ import { IMatch } from '@avans-nx-workshop/shared/api';  // Import IMatch
 })
 export class MatchEditComponent implements OnInit {
   matchForm: FormGroup;
-  loading = true;
-  errorMessage: string | null = null; // To hold error messages
+  clubs: IClub[] = [];
+  homePlayers: IPlayer[] = [];
+  awayPlayers: IPlayer[] = [];
+  loadingClubs = false;
+  loadingPlayers = false;
+  matchId: string | null = null;
+  match: IMatch | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private matchService: MatchService,  // Assuming you have a service for matches
+    private matchService: MatchService,
+    private playerService: PlayerService,
+    private clubService: ClubService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    // Initialize form with validation
     this.matchForm = this.fb.group({
       _id: [''],
       homeTeamId: ['', Validators.required],
       awayTeamId: ['', Validators.required],
-      homeScore: [null, [Validators.min(0)]], // home score can be null or a number
-      awayScore: [null, [Validators.min(0)]], // away score can be null or a number
+      homeScore: [null, [Validators.min(0)]],
+      awayScore: [null, [Validators.min(0)]],
       matchDate: ['', Validators.required],
-      location : ['', Validators.required]
+      location: ['', Validators.required],
+      scorers: [[], Validators.required],
+      assisters: [[], Validators.required],
     });
   }
 
   ngOnInit(): void {
-    const matchId = this.route.snapshot.paramMap.get('_id');
-    if (matchId) {
-      this.fetchMatchDetails(matchId);
+    this.matchId = this.route.snapshot.paramMap.get('id');
+    if (this.matchId) {
+      this.loadMatchData(this.matchId);
     } else {
-      this.errorMessage = 'Match ID is missing.';
-      this.loading = false;
+      console.error('Match ID is missing');
     }
   }
 
-  fetchMatchDetails(matchId: string): void {
-    this.loading = true;
+  loadMatchData(matchId: string): void {
     this.matchService.getMatchById(matchId).subscribe({
-      next: (match: IMatch) => {
+      next: (match) => {
+        this.match = match;
         this.matchForm.patchValue({
           _id: match._id,
           homeTeamId: match.home_club_id,
           awayTeamId: match.away_club_id,
-          homeScore: match.score_home ?? null, // Set to null if not available
-          awayScore: match.score_away ?? null, // Set to null if not available
+          homeScore: match.score_home ?? null,
+          awayScore: match.score_away ?? null,
           matchDate: match.date,
+          location: match.location,
+          scorers: match.scorers ?? [],
+          assisters: match.assisters ?? [],
         });
-        this.loading = false;
+
+        this.loadClubsAndPlayers();
       },
       error: (err) => {
-        console.error('Error fetching match details:', err);
-        this.errorMessage = 'Failed to load match details. Please try again later.';
-        this.loading = false;
-      },
+        console.error('Error loading match data:', err);
+      }
     });
   }
-  onSubmit(): void {
-    this.errorMessage = null;
-  
-    if (this.matchForm.valid && this.matchForm.value._id) {
-        const matchDate = new Date('2024-12-19T12:00:00Z');  // Dit is een Date instance
 
-        const updatedMatch: IMatch = {
-            _id: this.matchForm.value._id,
-            location: this.matchForm.value.location,
-            home_club_id: this.matchForm.value.homeTeamId,
-            away_club_id: this.matchForm.value.awayTeamId,
-            score_home: this.matchForm.value.homeScore,
-            score_away: this.matchForm.value.awayScore,
-            date: matchDate,
-        };
-    
-        this.matchService.updateMatch(updatedMatch).subscribe(
-            (response) => {
-            this.router.navigate(['/matches']);  // Navigate to the match list after update
-            },
-            (error) => {
-            this.errorMessage = this.matchForm.value.matchDate ;
-            }
-        );
+  loadClubsAndPlayers(): void {
+    this.loadingClubs = true;
+    this.clubService.getClubs().subscribe({
+      next: (clubs) => {
+        this.clubs = clubs;
+        this.loadingClubs = false;
+        this.loadPlayersForTeam('home');
+        this.loadPlayersForTeam('away');
+      },
+      error: (err) => {
+        console.error('Error loading clubs:', err);
+        this.loadingClubs = false;
+      }
+    });
+  }
+
+  loadPlayersForTeam(team: 'home' | 'away'): void {
+    const teamId = this.matchForm.get(`${team}TeamId`)?.value;
+    console.log(`Loading players for ${team} team with ID:`, teamId);
+    if (teamId) {
+      this.loadingPlayers = true;
+      this.playerService.getPlayersByClub(teamId).subscribe({
+        next: (players) => {
+          console.log(`Players loaded for ${team} team:`, players);
+          if (team === 'home') {
+            this.homePlayers = players;
+          } else {
+            this.awayPlayers = players;
+          }
+          this.loadingPlayers = false;
+        },
+        error: (err) => {
+          console.error(`Error loading ${team} players:`, err);
+          this.loadingPlayers = false;
+        }
+      });
     } else {
-      console.error('Form is invalid or ID is missing!');
-      this.errorMessage = 'Please fill out all required fields correctly.';
+      console.log(`Geen teamId aanwezig voor ${team} team.`);
     }
+  }
+
+  // Nieuwe methode voor scorers
+  onScorersChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValues = Array.from(selectElement.selectedOptions).map((option) => option.value);
+    this.matchForm.get('scorers')?.setValue(selectedValues);
+  }
+
+  // Nieuwe methode voor assisters
+  onAssistersChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValues = Array.from(selectElement.selectedOptions).map((option) => option.value);
+    this.matchForm.get('assisters')?.setValue(selectedValues);
+  }
+
+  onSubmit(): void {
+    if (this.matchForm.invalid) {
+      this.matchForm.markAllAsTouched();
+      return;
+    }
+
+    const formValue = { ...this.matchForm.value };
+    const updatedMatch: IMatch = {
+      ...formValue,
+      scorers: formValue.scorers,
+      assisters: formValue.assisters,
+    };
+
+    this.matchService.updateMatch(updatedMatch).subscribe({
+      next: (match) => {
+        console.log('Match updated:', match);
+        this.router.navigate(['/matches']);
+      },
+      error: (err) => {
+        console.error('Error updating match:', err);
+      }
+    });
   }
 }

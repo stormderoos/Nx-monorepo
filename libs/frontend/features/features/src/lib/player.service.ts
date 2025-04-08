@@ -24,6 +24,10 @@ export class PlayerService {
     );
   }
 
+  getPlayersByClub(clubId: string): Observable<IPlayer[]> {
+    return this.http.get<{ results: IPlayer[]}>(`http://localhost:3000/api/clubs/${clubId}/players`)
+      .pipe(map(response => response.results));
+  }
   addPlayer(player: Omit<IPlayer, 'id'>): Observable<IPlayer> {
     return this.http.post<IPlayer>(this.apiUrl, player);
   }
@@ -35,4 +39,6 @@ export class PlayerService {
   deletePlayer(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+
 }

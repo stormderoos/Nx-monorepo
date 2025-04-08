@@ -22,6 +22,13 @@ export class Match {
 
   @Prop({ required: false, default: null })
   score_away?: number;
+
+  // Nieuwe velden: array van player-ID’s als strings
+  @Prop({ type: [String], default: [] })
+  scorers!: string[];
+
+  @Prop({ type: [String], default: [] })
+  assisters!: string[];
 }
 
 export const MatchSchema = SchemaFactory.createForClass(Match);
