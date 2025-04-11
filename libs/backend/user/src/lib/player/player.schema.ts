@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 export type PlayerDocument = Player & Document;
 
@@ -17,11 +17,18 @@ export class Player {
   })
   position!: string;
 
-  @Prop()
+  @Prop({ required: false })
   clubId?: string;
 
   @Prop({ required: true })
   birthdate!: Date;
+
+  // Nieuwe velden voor stats
+  @Prop({ default: 0 })
+  goals!: number;
+
+  @Prop({ default: 0 })
+  assists!: number;
 }
 
 export const PlayerSchema = SchemaFactory.createForClass(Player);

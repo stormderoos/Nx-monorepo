@@ -33,7 +33,7 @@ export class ClubEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('_id');
+    const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.clubService.getClubById(id).subscribe(
         (club: IClub) => {

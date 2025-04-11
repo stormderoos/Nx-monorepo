@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserEditComponent } from './user/user-edit.component';
-import { ClubCreateComponent } from './club-creat/club-create.component'; 
-import { ClubListComponent } from './club-list/club-list.component'; 
+import { ClubCreateComponent } from './club-creat/club-create.component';
+import { ClubListComponent } from './club-list/club-list.component';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { PlayerCreateComponent } from './player-create/player-create.component';
 import { ClubDetailComponent } from './club-detail/club-detail.component';
@@ -20,14 +20,13 @@ import { ClubEditComponent } from './club-edit/club-edit.component';
 import { MatchEditComponent } from './match-edit/match-edit.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
-
 @NgModule({
   declarations: [
     UserProfileComponent,
     UserListComponent,
     UserEditComponent,
     ClubCreateComponent,
-    ClubListComponent,   
+    ClubListComponent,
     PlayerListComponent,
     PlayerCreateComponent,
     ClubDetailComponent,
@@ -51,8 +50,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     UserProfileComponent,
     UserListComponent,
     UserEditComponent,
-    ClubCreateComponent, 
-    ClubListComponent, 
+    ClubCreateComponent,
+    ClubListComponent,
     PlayerListComponent,
     PlayerCreateComponent,
     MatchListComponent,
@@ -64,4 +63,4 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MatchEditComponent,
   ],
 })
-export class FeaturesModule {}
+export class FeaturesModule { }

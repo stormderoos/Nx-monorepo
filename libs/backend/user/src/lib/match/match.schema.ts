@@ -3,6 +3,28 @@ import { Document } from 'mongoose';
 
 export type MatchDocument = Match & Document;
 
+/** Subschema voor scoregegevens per speler */
+@Schema()
+export class ScoreEntry {
+  @Prop({ required: true })
+  playerId!: string;
+
+  @Prop({ required: true, default: 1 })
+  goals!: number;
+}
+export const ScoreEntrySchema = SchemaFactory.createForClass(ScoreEntry);
+
+/** Subschema voor assistgegevens per speler */
+@Schema()
+export class AssistEntry {
+  @Prop({ required: true })
+  playerId!: string;
+
+  @Prop({ required: true, default: 1 })
+  assists!: number;
+}
+export const AssistEntrySchema = SchemaFactory.createForClass(AssistEntry);
+
 @Schema()
 export class Match {
   @Prop({ required: true })
@@ -23,12 +45,11 @@ export class Match {
   @Prop({ required: false, default: null })
   score_away?: number;
 
-  // Nieuwe velden: array van player-ID’s als strings
-  @Prop({ type: [String], default: [] })
-  scorers!: string[];
+  @Prop({ type: [ScoreEntrySchema], default: [] })
+  scorers!: ScoreEntry[];
 
-  @Prop({ type: [String], default: [] })
-  assisters!: string[];
+  @Prop({ type: [AssistEntrySchema], default: [] })
+  assisters!: AssistEntry[];
 }
 
 export const MatchSchema = SchemaFactory.createForClass(Match);

@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Player, PlayerDocument } from './player.schema';
@@ -39,5 +39,24 @@ export class PlayerService {
   async findByClub(clubId: string): Promise<Player[]> {
     this.logger.log(`Fetching players for club with ID: ${clubId}`);
     return this.playerModel.find({ clubId: clubId }).lean().exec();
+  }
+
+  async getPlayerStats(playerId: string): Promise<{ goals: number; assists: number }> {
+    const player = await this.playerModel.findById(playerId).lean().exec();
+    if (!player) {
+      throw new NotFoundException('Speler niet gevonden');
+    }
+    return {
+      goals: player.goals,
+      assists: player.assists,
+    };
+  }
+
+  async incrementGoals(playerId: string, numberOfGoals: number): Promise<void> {
+    await this.playerModel.findByIdAndUpdate(playerId, { $inc: { goals: numberOfGoals } });
+  }
+
+  async incrementAssists(playerId: string, numberOfAssists: number): Promise<void> {
+    await this.playerModel.findByIdAndUpdate(playerId, { $inc: { assists: numberOfAssists } });
   }
 }

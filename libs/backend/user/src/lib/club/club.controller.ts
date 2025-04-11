@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ClubService } from './club.service';
 import { IClub, IFindClub, IFindPlayer } from '@avans-nx-workshop/shared/api';
 import { CreateClubDto, UpdateClubDto } from '@avans-nx-workshop/backend/dto';
@@ -33,9 +33,17 @@ export class ClubController {
     return this.clubService.update(id, club);
   }
 
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteClub(@Param('id') id: string) {
+    await this.clubService.delete(id);
+  }
+
   @Get(':id/players')
   async findPlayers(@Param('id') id: string): Promise<IFindPlayer[] | null> {
     return this.clubService.findPlayersByClub(id);
   }
+
+
 
 }

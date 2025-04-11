@@ -13,7 +13,7 @@ export class PlayerController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Player | null> {
+  async findOne(@Param('id') id: string) {
     return this.playerService.findOne(id);
   }
 
@@ -35,5 +35,10 @@ export class PlayerController {
   @Get('club/:clubId')
   async findByClub(@Param('clubId') clubId: string): Promise<Player[]> {
     return this.playerService.findByClub(clubId);
+  }
+
+  @Get(':id/stats')
+  async getPlayerStats(@Param('id') id: string): Promise<{ goals: number; assists: number }> {
+    return this.playerService.getPlayerStats(id);
   }
 }

@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class Neo4JPlayerApiService {
+  private baseUrl = 'http://localhost:3000/api/neo4j';
+
+  constructor(private http: HttpClient) {}
+
+  getPlayers(): Observable<any[]> {
+    return this.http.get<{ results: any[] }>(`${this.baseUrl}/players`).pipe(
+      map(response => response.results)
+    );
+  }
+
+  getPlayerStats(playerId: string): Observable<{ goals: number; assists: number }> {
+    return this.http.get<{ results: { goals: number; assists: number } }>(`${this.baseUrl}/stats/player/${playerId}`).pipe(
+      map(response => response.results)
+    );
+  }
+}

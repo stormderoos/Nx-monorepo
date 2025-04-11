@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router'; // Zorg ervoor dat dit is geïmp
 import { AppRoutingModule } from './app-routing.module'; // Zorg ervoor dat je AppRoutingModule importeert als je er een hebt
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './apps/my-app/src/app/components/home/home.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { HomeComponent } from './apps/my-app/src/app/components/home/home.compon
         NavbarComponent,
         HomeComponent
     ],
-    imports: [BrowserModule, RouterModule, AppRoutingModule, HttpClientModule],
+    exports: [NavbarComponent],
+    imports: [BrowserModule, RouterModule, AppRoutingModule, HttpClientModule, CommonModule],
     providers: [],
     bootstrap: [AppComponent]
 })

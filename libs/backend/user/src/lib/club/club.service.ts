@@ -49,6 +49,17 @@ export class ClubService {
       .exec();
   }
 
+  async delete(_id: string): Promise<IFindClub | null> {
+    this.logger.log(`Deleting club with id ${_id}`);
+    const club = await this.clubModel.findByIdAndDelete(_id).lean().exec();
+    if (!club) {
+      this.logger.debug(`Club with id ${_id} not found, cannot delete`);
+      throw new HttpException('Club not found', 404);
+    }
+    return club;
+  }
+
+
   async findPlayersByClub(clubId: string): Promise<IFindPlayer[] | null> {
     this.logger.log(`Finding players for club with id ${clubId}`);
     const club = await this.clubModel.findById(clubId).exec();
@@ -67,4 +78,6 @@ export class ClubService {
   
     return false;
   }
+
+
 }

@@ -53,7 +53,6 @@ import {
       }
   
       const errMsg = 'Email not found or password invalid';
-      this.logger.debug(errMsg);
       throw new UnauthorizedException(errMsg);
     }
   

@@ -47,6 +47,7 @@
       </div>
     </div>
 
+    <!-- Player selection (alleen beschikbare spelers worden getoond) -->
     <div class="form-group">
       <label for="playerSelect">Add Player</label>
       <select
@@ -54,11 +55,11 @@
         class="form-control"
         formControlName="selectedPlayerId"
       >
-      <option value="" disabled>Select a player</option>
-      <option *ngFor="let player of players" [value]="player._id">
-        {{ player.firstName }} {{ player.lastName }}
-      </option>
-    </select>
+        <option value="" disabled>Select a player</option>
+        <option *ngFor="let player of availablePlayers" [value]="player._id">
+          {{ player.firstName }} {{ player.lastName }}
+        </option>
+      </select>
     </div>
 
     <button type="button" class="btn btn-secondary" (click)="addPlayerToClub()">

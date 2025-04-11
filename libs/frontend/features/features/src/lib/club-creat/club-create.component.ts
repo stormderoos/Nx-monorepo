@@ -13,7 +13,6 @@ export class ClubCreateComponent implements OnInit {
   clubForm: FormGroup;
   error: string | null = null;
   players: IPlayer[] = [];
-  selectedPlayerId: string | null = null;
   addedPlayers: string[] = [];  
   addedPlayersDetails: { id: string, firstName: string, lastName: string }[] = [];
 
@@ -45,16 +44,21 @@ export class ClubCreateComponent implements OnInit {
     });
   }
 
+  // Getter die alleen spelers retourneert zonder clubId (dus spelers die nog niet in een club zitten)
+  get availablePlayers(): IPlayer[] {
+    return this.players.filter(player => !player.clubId || player.clubId === '');
+  }
+
   onSubmit(): void {
     if (this.clubForm.invalid) {
       return;
     }
 
-    const newClub: Omit<ICreateClub, 'id'> = {
+    const newClub: Omit<ICreateClub, '_id'> = {
       name: this.clubForm.value.name,
       location: this.clubForm.value.location,
       logoUrl: this.clubForm.value.logoUrl,
-      players: this.addedPlayers,  // Send the list of added players
+      players: this.addedPlayers,  // De lijst van toegevoegde speler-ID's
     };
 
     this.clubService.createClub(newClub).subscribe({
@@ -68,10 +72,6 @@ export class ClubCreateComponent implements OnInit {
     });
   }
 
-  onPlayerChange(): void {
-    alert(`Selected Player ID: ${this.selectedPlayerId}`);
-  }
-
   addPlayerToClub(): void {
     const selectedPlayerId = this.clubForm.get('selectedPlayerId')?.value;
   
@@ -79,18 +79,23 @@ export class ClubCreateComponent implements OnInit {
       this.error = 'Please select a player.';
       return;
     }
-    
-    if (selectedPlayerId) {
-      this.error = 'player added';
-    }
   
-    if (this.addedPlayers.includes(selectedPlayerId)) {
-      this.error = 'Player is already added to the club.';
-      return;
-    }
-  
+    // Zoek de geselecteerde speler in de volledige spelerslijst
     const selectedPlayer = this.players.find((p) => p._id === selectedPlayerId);
     if (selectedPlayer) {
+      // Controleer of de speler al een club heeft
+      if (selectedPlayer.clubId && selectedPlayer.clubId !== '') {
+        this.error = 'Deze speler zit al in een club en kan niet worden toegevoegd.';
+        return;
+      }
+  
+      // Controleer nogmaals of de speler al is toegevoegd in de huidige club
+      if (this.addedPlayers.includes(selectedPlayer._id)) {
+        this.error = 'Player is already added to the club.';
+        return;
+      }
+  
+      // Voeg speler toe aan de arrays
       this.addedPlayers.push(selectedPlayer._id);
       this.addedPlayersDetails.push({
         id: selectedPlayer._id,
@@ -99,6 +104,7 @@ export class ClubCreateComponent implements OnInit {
       });
     } else {
       this.error = 'Player not found. Please select a valid player.';
+      return;
     }
   
     this.clubForm.get('selectedPlayerId')?.setValue(null);
