@@ -64,13 +64,21 @@ export class Neo4JPlayerService {
     const query = `
       MERGE (m:Match {id: $matchId})
       WITH m
-      UNWIND $scoredBy AS scorerId
-        MERGE (p1:Player {id: scorerId})
-        MERGE (m)-[:SCORED_BY]->(p1)
+      OPTIONAL MATCH (m)-[r1:SCORED_BY]->()
+      DELETE r1
       WITH m
+      OPTIONAL MATCH (m)-[r2:ASSISTED_BY]->()
+      DELETE r2
+      WITH m
+  
+      UNWIND $scoredBy AS scorerId
+        MATCH (p1:Player {id: scorerId})
+        CREATE (m)-[:SCORED_BY]->(p1)
+      WITH m
+  
       UNWIND $assistedBy AS assisterId
-        MERGE (p2:Player {id: assisterId})
-        MERGE (m)-[:ASSISTED_BY]->(p2)
+        MATCH (p2:Player {id: assisterId})
+        CREATE (m)-[:ASSISTED_BY]->(p2)
     `;
   
     await this.neo4jService.write(query, {

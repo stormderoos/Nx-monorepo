@@ -207,7 +207,6 @@ export class MatchEditComponent implements OnInit {
     this.match.awayAssisters.splice(index, 1);
   }
 
-  // Form submission
   onSubmit(matchForm: any): void {
     if (matchForm.valid && this.match._id) {
       const updatedMatch: IMatch = {
@@ -227,17 +226,7 @@ export class MatchEditComponent implements OnInit {
           ...this.match.awayAssisters
         ]
       };
-
-      this.matchService.updateMatch(updatedMatch).subscribe({
-        next: (response) => {
-          this.router.navigate(['/matches']);
-        },
-        error: (error) => {
-          console.error('Fout bij het updaten van de match:', error);
-          this.errorMessage = 'Het updaten van de match is mislukt. Probeer het later opnieuw.';
-        }
-      });
-
+  
       this.matchService.updateMatch(updatedMatch).subscribe({
         next: () => {
           this.matchService.syncMatchToNeo4j({
@@ -245,10 +234,12 @@ export class MatchEditComponent implements OnInit {
             scorers: updatedMatch.scorers ?? [],
             assisters: updatedMatch.assisters ?? [],
           }).subscribe({
-            next: () => this.router.navigate(['/matches']),
+            next: () => {
+              this.router.navigate(['/matches']); 
+            },
             error: (err) => {
               console.error('Neo4J sync mislukt:', err);
-              this.errorMessage = 'Match opgeslagen, maar sync naar Neo4j is mislukt.';
+              this.errorMessage = 'Match opgeslagen, maar synchronisatie naar Neo4j is mislukt.';
             }
           });
         },
@@ -257,12 +248,10 @@ export class MatchEditComponent implements OnInit {
           this.errorMessage = 'Het updaten van de match is mislukt. Probeer het later opnieuw.';
         }
       });
-
+  
     } else {
       console.error('Formulier is ongeldig of ID ontbreekt!');
       this.errorMessage = 'Vul alle verplichte velden correct in.';
     }
-
-    
   }
 }

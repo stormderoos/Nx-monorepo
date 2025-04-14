@@ -7,10 +7,10 @@ import { environment } from '@avans-nx-workshop/shared/util-env';
   imports: [
     NestNeo4jModule.forRoot({
       scheme: 'bolt',
-      host: environment.NEO4J_HOST,
-      port: environment.NEO4J_PORT,
-      username: environment.NEO4J_USERNAME,
-      password: environment.NEO4J_PASSWORD,
+      host: 'localhost',
+      port: '7687',
+      username: 'neo4j',
+      password: 'swWelkom01!',
     }),
   ],
   exports: [NestNeo4jModule], 
