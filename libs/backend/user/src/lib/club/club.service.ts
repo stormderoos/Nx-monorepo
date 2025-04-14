@@ -49,6 +49,7 @@ export class ClubService {
       .exec();
   }
 
+  
   async delete(_id: string): Promise<IFindClub | null> {
     this.logger.log(`Deleting club with id ${_id}`);
     const club = await this.clubModel.findByIdAndDelete(_id).lean().exec();

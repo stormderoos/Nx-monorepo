@@ -3,7 +3,6 @@ import { Document } from 'mongoose';
 
 export type MatchDocument = Match & Document;
 
-/** Subschema voor scoregegevens per speler */
 @Schema()
 export class ScoreEntry {
   @Prop({ required: true })
@@ -14,7 +13,6 @@ export class ScoreEntry {
 }
 export const ScoreEntrySchema = SchemaFactory.createForClass(ScoreEntry);
 
-/** Subschema voor assistgegevens per speler */
 @Schema()
 export class AssistEntry {
   @Prop({ required: true })

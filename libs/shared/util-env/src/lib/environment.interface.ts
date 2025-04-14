@@ -6,6 +6,10 @@ export interface IEnvironment {
 
     MONGO_DB_CONNECTION_STRING: string;
 
-    // Hier kun je meer environment
-    // variabelen zetten als dat nodig is
+    NEO4J_HOST: string;
+    NEO4J_PORT: number;
+    NEO4J_USERNAME: string;
+    NEO4J_PASSWORD: string;
+    NEO4J_QUERY_API_URL: string; // Nieuw veld voor de HTTP Query API
+
 }

@@ -12,6 +12,7 @@ import {
 } from '@avans-nx-workshop/backend/dto';
 import { AppModule } from './app/app.module';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+import { environment } from '@avans-nx-workshop/shared/util-env';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -26,7 +27,13 @@ async function bootstrap() {
 
     // General exception handling
     // app.useGlobalFilters(new HttpExceptionFilter());
-
+    const router = app.getHttpAdapter().getInstance()._router;
+    router.stack
+      .filter((r) => r.route)
+      .forEach((r) =>
+        Logger.log(`${Object.keys(r.route.methods)[0].toUpperCase()} ${r.route.path}`, 'Route'),
+      );
+    Logger.log('Running in production mode?', environment.production);
     const port = process.env.PORT || 3000;
     await app.listen(port);
     Logger.log(

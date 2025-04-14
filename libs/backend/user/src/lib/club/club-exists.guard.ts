@@ -13,7 +13,6 @@ export class ClubExistGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const club = context.switchToHttp().getRequest().body;
 
-    // Check if a club with the same name already exists
     return this.clubModel
       .findOne({ name: club.name })
       .then((existingClub) => !existingClub);

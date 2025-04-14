@@ -32,4 +32,51 @@ export class Neo4JPlayerService {
       assists: record.get('assists').toNumber(),
     };
   }
+
+  async addMatchWithStats(matchId: string, scoredBy: string[], assistedBy: string[]): Promise<void> {
+    const query = `
+      MERGE (m:Match {id: $matchId})
+      WITH m
+      UNWIND $scoredBy AS scorerId
+        MATCH (p1:Player {id: scorerId})
+        MERGE (m)-[:SCORED_BY]->(p1)
+      WITH m
+      UNWIND $assistedBy AS assisterId
+        MATCH (p2:Player {id: assisterId})
+        MERGE (m)-[:ASSISTED_BY]->(p2)
+    `;
+  
+    await this.neo4jService.write(query, {
+      matchId,
+      scoredBy,
+      assistedBy,
+    });
+  }
+
+  async syncMatchStats(match: {
+    id: string;
+    scorers: { playerId: string; goals: number }[];
+    assisters: { playerId: string; assists: number }[];
+  }): Promise<void> {
+    const scoredBy: string[] = match.scorers.flatMap(s => Array(s.goals).fill(s.playerId));
+    const assistedBy: string[] = match.assisters.flatMap(a => Array(a.assists).fill(a.playerId));
+  
+    const query = `
+      MERGE (m:Match {id: $matchId})
+      WITH m
+      UNWIND $scoredBy AS scorerId
+        MERGE (p1:Player {id: scorerId})
+        MERGE (m)-[:SCORED_BY]->(p1)
+      WITH m
+      UNWIND $assistedBy AS assisterId
+        MERGE (p2:Player {id: assisterId})
+        MERGE (m)-[:ASSISTED_BY]->(p2)
+    `;
+  
+    await this.neo4jService.write(query, {
+      matchId: match.id,
+      scoredBy,
+      assistedBy,
+    });
+  }
 }

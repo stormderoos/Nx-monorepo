@@ -14,7 +14,7 @@ export class MatchService {
   constructor(
     @InjectModel(Match.name) private matchModel: Model<MatchDocument>,
     private readonly clubService: ClubService, 
-    private readonly playerService: PlayerService, // nieuwe dependency
+    private readonly playerService: PlayerService, 
   ) {}
 
   async findAll(): Promise<IFindMatch[]> {
@@ -67,4 +67,6 @@ export class MatchService {
     this.logger.log(`Deleting match with id ${_id}`);
     await this.matchModel.findByIdAndDelete(_id).exec();
   }
+
+  
 }

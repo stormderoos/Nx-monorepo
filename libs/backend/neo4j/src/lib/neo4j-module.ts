@@ -1,17 +1,18 @@
 import { Global, Module } from '@nestjs/common';
 import { Neo4jModule as NestNeo4jModule } from 'nest-neo4j';
+import { environment } from '@avans-nx-workshop/shared/util-env'; 
 
 @Global()
 @Module({
   imports: [
     NestNeo4jModule.forRoot({
       scheme: 'bolt',
-      host: process.env['NEO4J_HOST'] || 'localhost',
-      port: Number(process.env['NEO4J_PORT']) || 7687,
-      username: process.env['NEO4J_USERNAME'] || 'neo4j',
-      password: process.env['NEO4J_PASSWORD'] || 'TTcFQDP_tZU5nglZ1RtyzM_5p4yY6X1tKdGGlNDmrOI',
+      host: environment.NEO4J_HOST,
+      port: environment.NEO4J_PORT,
+      username: environment.NEO4J_USERNAME,
+      password: environment.NEO4J_PASSWORD,
     }),
   ],
-  exports: [NestNeo4jModule],
+  exports: [NestNeo4jModule], 
 })
 export class Neo4jModule {}

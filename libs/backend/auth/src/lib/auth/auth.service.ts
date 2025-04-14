@@ -15,7 +15,7 @@ import {
     private readonly logger = new Logger(AuthService.name);
   
     constructor(
-      @InjectModel('User') private userModel: Model<any>, // <-- geen import meer van UserModel class
+      @InjectModel('User') private userModel: Model<any>, 
       private jwtService: JwtService
     ) {}
   
