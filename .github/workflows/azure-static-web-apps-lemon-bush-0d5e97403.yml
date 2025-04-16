@@ -72,30 +72,33 @@ jobs:
                   github_id_token: ${{ steps.idtoken.outputs.result }}
 
     deploy-data-api:
-        runs-on: ubuntu-latest
-        name: Deploy NestJs data-api backend
-        needs: build
-        environment:
-            name: 'Production'
-            url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      runs-on: ubuntu-latest
+      name: Deploy NestJs data-api backend
+      needs: build
+      environment:
+        name: 'Production'
 
-        steps:
-            - name: Download artifact from build job
-              uses: actions/download-artifact@v4
-              with:
-                  name: data-api
+      steps:
+        - name: Download artifact from build job
+          uses: actions/download-artifact@v4
+          with:
+            name: data-api
 
-            - name: Unzip artifact for deployment
-              run: unzip data-api-release.zip
+        - name: Unzip artifact for deployment
+          run: unzip data-api-release.zip
 
-            - name: Install dependencies
-              run: npm install --legacy-peer-deps
+        - name: Install production dependencies
+          run: npm install --legacy-peer-deps
 
-            - name: 'Deploy to Azure Web App'
-              id: deploy-to-webapp
-              uses: azure/webapps-deploy@v3
-              with:
-                  app-name: 'nx-worskhop-nestjs'
-                  slot-name: 'Production'
-                  publish-profile: ${{ secrets.DATA_API_PUBLISHPROFILE }}
-                  package: .
+        - name: Retry deploy to Azure Web App (max 3x bij 409 Conflict)
+          run: |
+            for i in {1..3}; do
+              echo " Attempt $i to deploy backend to Azure Web App..."
+              npx azure-webapps-deploy \
+                --app-name nx-worskhop-nestjs \
+                --slot-name Production \
+                --publish-profile '${{ secrets.DATA_API_PUBLISHPROFILE }}' \
+                --package . \
+                && break || (echo "⚠️ Conflict, retrying in 30s..." && sleep 30)
+            done
+          shell: bash
