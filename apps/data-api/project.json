@@ -45,12 +45,14 @@
                 "buildTarget": "data-api:build"
             },
             "configurations": {
-                "development": {
-                    "buildTarget": "data-api:build:development"
-                },
+
                 "production": {
                     "buildTarget": "data-api:build:production"
+                },
+                "development": {
+                    "buildTarget": "data-api:build:development"
                 }
+
             }
         },
         "lint": {
