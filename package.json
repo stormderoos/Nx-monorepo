@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
-        "start": "node dist/apps/data-api/main.js",
+        "start": "node main.js",
         "build:data-api": "nx build data-api",
         "build:my-app": "nx build my-app",
         "deploy": "nx run share-a-meal-web:build",
@@ -40,7 +40,6 @@
         "flowbite": "^2.0.0",
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.8.2",
-        "nest-neo4j": "^0.3.1",
         "ng-bootstrap": "^1.6.3",
         "passport": "^0.6.0",
         "passport-jwt": "^4.0.1",
