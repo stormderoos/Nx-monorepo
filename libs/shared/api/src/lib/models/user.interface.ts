@@ -13,22 +13,17 @@ export enum UserGender{
   Unknown = ''
 }
 
-/**
- * Informatie over een gebruiker
- */
 export interface IUser {
-  id: string; // Unieke identifier
-  username: string; // Gebruikersnaam
-  email: string; // E-mailadres
-  password: string; // Versleuteld wachtwoord
-  role: UserRole; // Rol van de gebruiker
+  id: string;
+  username: string; 
+  email: string; 
+  password: string; 
+  role: UserRole; 
   gender: UserGender;
   profileImgUrl: string;
 }
 
-/**
- * Minimale informatie over een gebruiker
- */
+
 export interface IUserIdentity {
   id: string;
   name: string;
@@ -37,17 +32,9 @@ export interface IUserIdentity {
   role: string;
   token: string;
 }
-/**
- * Data Transfer Object voor het aanmaken van een gebruiker
- */
+
 export type ICreateUser = Pick<IUser, 'username' | 'email' | 'password' | 'role' | 'profileImgUrl' | 'gender'>;
 
-/**
- * Data Transfer Object voor het bijwerken van een gebruiker
- */
 export type IUpdateUser = Partial<Omit<IUser, 'id' >>;
 
-/**
- * Data Transfer Object voor het ophalen van alle gegevens van een gebruiker
- */
 export type IUserInfo = IUser;
