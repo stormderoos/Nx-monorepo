@@ -1,114 +1,116 @@
-.club-list-container {
-  padding: 40px 80px;
-  background-color: #ffffff; /* achtergrond is nu wit */
-  min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+html, body {
+  background-color: #0f1f17;
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/* Titel */
+.club-list-container {
+  padding: 40px 80px;
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 h1 {
-  font-size: 32px;
-  color: #2d0066;
+  font-size: 2.5rem;
+  color: #3fd887;
   margin-bottom: 30px;
   text-align: center;
   font-weight: 800;
 }
 
-/* Actieknop (alleen zichtbaar voor admin) */
 .actions {
   margin-bottom: 20px;
   display: flex;
   justify-content: flex-end;
 }
 
-button {
+.actions button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #2d0066;
-  color: #fff;
+  background-color: #3fd887;
+  color: #0f1f17;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #4c0099;
+.actions button:hover {
+  background-color: #30b574;
 }
 
-/* Foutmeldingen */
 .error-message {
-  color: #721c24;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
+  color: #ff6b6b;
+  background-color: #2a1b1b;
+  border: 1px solid #bb4141;
   padding: 12px;
   border-radius: 6px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Loader */
 .loader {
   font-style: italic;
-  color: #007bff;
+  color: #3fd887;
   text-align: center;
 }
 
-/* Geen clubs gevonden */
 .no-clubs-message {
   text-align: center;
-  color: #999;
+  color: #bbb;
   font-style: italic;
   margin-top: 40px;
 }
 
-/* Grid met clubkaarten */
 .club-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 40px;
   justify-items: center;
   margin-top: 30px;
 }
 
-/* Kaart van een club */
 .club-card {
-  width: 120px;
-  height: 160px;
-  background-color: #f1f1f1; /* lichtgrijze kleur voor contrast op witte bg */
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  width: 200px;
+  height: 240px;
+  background-color: #1b2c24;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   text-align: center;
-  padding: 15px 10px;
+  padding: 20px 15px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .club-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
 }
 
 /* Clublogo */
 .club-logo {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 /* Clubinfo */
 .club-info h3 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  color: #2d0066;
+  color: #ffffff;
   margin: 0;
   text-transform: uppercase;
 }
 
 .club-info p {
-  font-size: 12px;
-  color: #666;
-  margin: 4px 0 0;
+  font-size: 13px;
+  color: #aaaaaa;
+  margin: 6px 0 0;
   text-transform: uppercase;
 }

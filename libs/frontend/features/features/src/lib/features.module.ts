@@ -19,9 +19,11 @@ import { PlayerEditComponent } from './player/player-edit/player-edit.component'
 import { ClubEditComponent } from './club/club-edit/club-edit.component';
 import { MatchEditComponent } from './match/match-edit/match-edit.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { HomePageComponent } from './homepage/home-page.component';
 
 @NgModule({
   declarations: [
+    HomePageComponent,
     UserProfileComponent,
     UserListComponent,
     UserEditComponent,
@@ -47,6 +49,7 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     RouterModule,
   ],
   exports: [
+    HomePageComponent,
     UserProfileComponent,
     UserListComponent,
     UserEditComponent,

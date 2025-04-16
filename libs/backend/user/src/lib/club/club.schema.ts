@@ -19,6 +19,9 @@ export class Club {
 
   @Prop({ type: [String], default: [] })
   players!: string[];
+
+  @Prop()
+  createdBy?: string;
 }
 
 export const ClubSchema = SchemaFactory.createForClass(Club);

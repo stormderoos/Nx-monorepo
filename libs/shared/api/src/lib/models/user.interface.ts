@@ -1,14 +1,11 @@
-
-/**
- * Rol van de gebruiker (bijvoorbeeld fan of clubbeheerder)
- */
 export enum UserRole {
   User = "user",
   ClubOwner = "clubowner",
+  Admin = "admin"
 }
 
 export enum UserGender{
-  Male = 'Men',
+  Male = 'male',
   Female = 'female',
   Unknown = ''
 }

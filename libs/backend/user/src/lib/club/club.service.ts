@@ -27,7 +27,6 @@ export class ClubService {
   async findOne(_id: string): Promise<IFindClub | null> {
     this.logger.log(`Finding club with id ${_id}`);
     
-    // Probeer de club te vinden
     const club = await this.clubModel.findOne({ _id }).lean().exec();
     
     if (!club) {
@@ -38,13 +37,29 @@ export class ClubService {
 
   async create(club: CreateClubDto): Promise<ICreateClub> {
     this.logger.log(`Creating club ${club.name}`);
-    const createdClub = new this.clubModel(club);
+  
+    const players = await this.playerModel.find({ _id: { $in: club.players } }).lean().exec();
+    for (const player of players) {
+      if (player.clubId && player.clubId !== '') {
+        throw new HttpException(`Speler ${player.firstName} ${player.lastName} zit al in een andere club`, 400);
+      }
+    }
+  
+    const createdClub = new this.clubModel(club); 
     const savedClub = await createdClub.save();
     return savedClub.toObject();
   }
 
   async update(_id: string, club: UpdateClubDto): Promise<IFindClub | null> {
     this.logger.log(`Updating club with id ${_id}`);
+  
+    const players = await this.playerModel.find({ _id: { $in: club.players } }).lean().exec();
+    for (const player of players) {
+      if (player.clubId && player.clubId !== _id) {
+        throw new HttpException(`Speler ${player.firstName} ${player.lastName} zit al in een andere club`, 400);
+      }
+    }
+  
     return this.clubModel
       .findByIdAndUpdate(_id, club, { new: true })
       .lean()

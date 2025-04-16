@@ -7,21 +7,20 @@
 </div>
 
 <div *ngIf="!loading && !error">
-  <h2 class="match-list-title">Wedstrijden</h2>
+  <h2 class="match-list-title">Matches</h2>
 
-  <!-- Add Match Button -->
   <div class="add-match-button-container" *ngIf="userRole === 'admin' || userRole === 'clubbeheerder'">
-    <button routerLink="/matchcreate">Wedstrijd toevoegen</button>
+    <button routerLink="/matchcreate"> + Add Match</button>
   </div>
 
-  <!-- Matches Grid -->
   <div class="match-grid">
     <div class="match-card" *ngFor="let match of matches">
       <div class="match-date">
-        {{ match.date | date:'EEE d MMMM yyyy' | uppercase }}
+        {{ match.date | date:'EEE d MMM yyyy' | uppercase }}
       </div>
+
       <div class="match-body">
-        <div class="club club-left">
+        <div class="club">
           <img [src]="getClubLogoById(match.home_club_id)" alt="Home Logo" />
           <span>{{ getClubNameById(match.home_club_id) }}</span>
         </div>
@@ -30,7 +29,7 @@
           {{ match.score_home }} - {{ match.score_away }}
         </div>
 
-        <div class="club club-right">
+        <div class="club">
           <img [src]="getClubLogoById(match.away_club_id)" alt="Away Logo" />
           <span>{{ getClubNameById(match.away_club_id) }}</span>
         </div>

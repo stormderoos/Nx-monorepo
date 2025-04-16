@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AboutComponent } from "./apps/my-app/src/app/components/about/about/about.component";
-import { ClubCreateComponent, UserProfileComponent, ClubDetailComponent, ClubEditComponent, ClubListComponent, LoginComponent, MatchCreateComponent, MatchEditComponent, MatchListComponent, PlayerCreateComponent, PlayerDetailComponent, PlayerEditComponent, PlayerListComponent, RegisterComponent, UserEditComponent, UserListComponent } from "@avans-nx-workshop/frontend/features/features";
+import { ClubCreateComponent, UserProfileComponent, ClubDetailComponent, ClubEditComponent, ClubListComponent, LoginComponent, MatchCreateComponent, MatchEditComponent, MatchListComponent, PlayerCreateComponent, PlayerDetailComponent, PlayerEditComponent, PlayerListComponent, RegisterComponent, UserEditComponent, UserListComponent, HomePageComponent } from "@avans-nx-workshop/frontend/features/features";
 import { HomeComponent } from "./apps/my-app/src/app/components/home/home.component";
 import { AuthGuard } from "@avans-nx-workshop/frontend/features/features";
 
@@ -10,7 +10,7 @@ const routes: Routes = [
     { path: 'userlist', component: UserListComponent },
     { path: 'about', component: AboutComponent },
     { path: 'useredit/:_id', component: UserEditComponent },
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: '', redirectTo: '/homepage', pathMatch: 'full' },
     { path: 'clublist', component: ClubListComponent},
     { path: 'clubs', component: ClubListComponent },
     { path: 'clubcreate', component: ClubCreateComponent },
@@ -25,8 +25,8 @@ const routes: Routes = [
     { path: 'playeredit/:id', component: PlayerEditComponent },
     { path: 'clubedit/:id', component: ClubEditComponent },  
     { path: 'matchedit/:_id', component: MatchEditComponent },
-    { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] }
-
+    { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+    { path: 'homepage', component: HomePageComponent},
   ];
   
 @NgModule({

@@ -53,13 +53,14 @@ export class UserService {
     if (!currentUser) {
       return null;
     }
-    if (updateUserDto.password) {
-      currentUser.password = updateUserDto.password;
-    }
+  
+    if (updateUserDto.password) currentUser.password = updateUserDto.password;
     if (updateUserDto.username) currentUser.username = updateUserDto.username;
     if (updateUserDto.email) currentUser.email = updateUserDto.email;
     if (updateUserDto.profileImgUrl) currentUser.profileImgUrl = updateUserDto.profileImgUrl;
-
+    if (updateUserDto.role) currentUser.role = updateUserDto.role;
+    if (updateUserDto.gender !== undefined) currentUser.gender = updateUserDto.gender;
+  
     await currentUser.save();
     return this.mapUser(currentUser.toObject());
   }

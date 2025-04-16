@@ -6,6 +6,7 @@ export interface IClub {
     location: string; 
     logoUrl: string;
     players: string[] | undefined;
+    createdBy?: string;
 }
 
 export type IFindClub = Pick<IClub, 'name' | 'location' | 'logoUrl'| 'players'>;

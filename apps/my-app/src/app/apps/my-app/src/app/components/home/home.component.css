@@ -1,37 +1,50 @@
 .home-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    text-align: center;
-    background-color: #f4f4f4;
-    padding: 20px;
-  }
-  
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #666;
-  }
-  
-  .cta-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: green;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .cta-button:hover {
-    background-color: darkgreen;
-  }
+  padding: 2rem;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #666;
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+.home-info {
+  margin-top: 2rem;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.home-info li {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}

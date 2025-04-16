@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../user.service'; // Angular service voor API-calls
+import { UserService } from '../user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -25,6 +25,7 @@ export class UserEditComponent implements OnInit {
       password: [''], 
       profileImgUrl: [''],
       role: [''],
+      gender: [''],
     });
   }
 
@@ -40,6 +41,7 @@ export class UserEditComponent implements OnInit {
           email: user.email,
           profileImgUrl: user.profileImgUrl,
           role: user.role,
+          gender: user.gender,
         });
         this.loading = false; 
       },
@@ -65,7 +67,7 @@ export class UserEditComponent implements OnInit {
     this.userService.updateUser(this.userId, formValue).subscribe({
       next: (updatedUser) => {
         console.log('User updated:', updatedUser);
-        this.router.navigate(['/profile']); 
+        this.router.navigate(['/userlist']); 
       },
       error: (error) => {
         console.error('User update error:', error);

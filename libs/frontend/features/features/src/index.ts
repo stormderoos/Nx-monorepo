@@ -18,6 +18,7 @@ export * from './lib/user/user-profile/user-profile.component'
 export * from './lib/auth.guard'
 export * from './lib/auth.service'
 export * from './lib/player/player.service'
+export * from './lib/homepage/home-page.component';
 
 
 

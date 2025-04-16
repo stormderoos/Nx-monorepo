@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 export class PlayerEditComponent implements OnInit {
     playerForm: FormGroup;
     loading = true;
-    errorMessage: string | null = null;  // Add this line to handle errors
-    positions = Object.values(PlayerPosition); // Get all positions from the PlayerPosition enum
+    errorMessage: string | null = null;
+    positions = Object.values(PlayerPosition);
   
     constructor(
       private fb: FormBuilder,

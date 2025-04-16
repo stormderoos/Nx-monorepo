@@ -11,14 +11,13 @@
   z-index: 1000;
 }
 
-/* Logo styling */
 .logo a {
   display: inline-block;
   width: 50px;
 }
 
 .logo a:hover:before {
-  width: 0%; /* Prevent the underline from appearing */
+  width: 0%; 
 }
 
 .logo img {
@@ -26,13 +25,11 @@
   height: auto;
 }
 
-/* List items styling */
 li {
   list-style: none;
   margin: 0 20px;
 }
 
-/* Dropdown styling for Clubs, Matches, and Players */
 .dropdown {
   position: relative;
   display: inline-block;

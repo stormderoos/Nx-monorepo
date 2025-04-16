@@ -28,7 +28,7 @@ export class ClubEditComponent implements OnInit {
       name: ['', Validators.required],
       location: ['', Validators.required],
       logoUrl: ['', Validators.required],
-      players: [[]], // array of player IDs
+      players: [[]], 
     });
   }
 
@@ -69,6 +69,13 @@ export class ClubEditComponent implements OnInit {
     }
   }
 
+  get filteredPlayers(): IPlayer[] {
+    const currentClubId = this.clubForm.get('id')?.value;
+    return this.players.filter(player =>
+      !player.clubId || player.clubId === currentClubId
+    );
+  }
+
   onSubmit(): void {
     this.errorMessage = null;
 
@@ -83,7 +90,6 @@ export class ClubEditComponent implements OnInit {
 
       this.clubService.updateClub(updatedClub).subscribe({
         next: () => {
-          // Update clubId voor elke geselecteerde speler
           updatedClub.players?.forEach((playerId: string) => {
             this.clubService.updatePlayerClubId(playerId, updatedClub._id).subscribe({
               error: (err) =>

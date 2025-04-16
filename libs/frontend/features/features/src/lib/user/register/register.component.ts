@@ -35,7 +35,6 @@ export class RegisterComponent {
       return;
     }
   
-    // Als profielfoto leeg is, patch het veld met `undefined` zodat Mongoose de default gebruikt
     if (!this.registerForm.value.profileImgUrl) {
       this.registerForm.patchValue({
         profileImgUrl: undefined

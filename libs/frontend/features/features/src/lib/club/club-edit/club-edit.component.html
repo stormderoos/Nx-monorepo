@@ -1,4 +1,5 @@
-<form [formGroup]="clubForm" (ngSubmit)="onSubmit()">
+<div class="club-edit-container">
+  <form [formGroup]="clubForm" (ngSubmit)="onSubmit()">
     <label for="name">Club Name:</label>
     <input id="name" formControlName="name" type="text" required>
   
@@ -10,10 +11,13 @@
   
     <label for="players">Players:</label>
     <select id="players" formControlName="players" multiple>
-      <option *ngFor="let player of players" [value]="player._id">{{ player.firstName }} {{ player.lastName }}</option>
+      <option *ngFor="let player of filteredPlayers" [value]="player._id">
+        {{ player.firstName }} {{ player.lastName }}
+      </option>
     </select>
   
     <button type="submit" [disabled]="loading || clubForm.invalid">Update Club</button>
   </form>
   
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+</div>

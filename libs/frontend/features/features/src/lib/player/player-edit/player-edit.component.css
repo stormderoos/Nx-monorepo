@@ -1,84 +1,87 @@
 .player-edit-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .player-edit-title {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  input,
-  select {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  input:focus,
-  select:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  button:disabled {
-    background-color: #aaa;
-    cursor: not-allowed;
-  }
-  
-  .error-message {
-    color: #d9534f;
-    background-color: #f2dede;
-    padding: 10px;
-    border: 1px solid #ebccd1;
-    border-radius: 4px;
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .success-message {
-    color: #3c763d;
-    background-color: #dff0d8;
-    padding: 10px;
-    border: 1px solid #d6e9c6;
-    border-radius: 4px;
-    margin-top: 10px;
-    text-align: center;
-  }
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #1b2c24;
+  border-radius: 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+}
+
+.player-edit-title {
+  font-size: 2rem;
+  color: #3fd887;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #ccc;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  background-color: #0f1f17;
+  color: #fff;
+  border: 1px solid #3fd887;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: 0.2s ease;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #55e3a0;
+  box-shadow: 0 0 6px rgba(63, 216, 135, 0.6);
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #3fd887;
+  color: #0f1f17;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background-color: #30b574;
+}
+
+button:disabled {
+  background-color: #666;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.95rem;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.success-message {
+  color: #3fd887;
+  font-size: 1rem;
+  margin-top: 15px;
+  text-align: center;
+}

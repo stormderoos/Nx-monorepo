@@ -14,6 +14,10 @@ export class CreateClubDto {
   @IsOptional()
   @IsArray()
   players?: string[]; 
+
+  @IsString()
+  createdBy?: string;
+
 }
 
 export class UpdateClubDto {

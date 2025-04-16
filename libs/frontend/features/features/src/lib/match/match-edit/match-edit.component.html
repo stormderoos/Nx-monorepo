@@ -1,5 +1,4 @@
 <form #matchForm="ngForm" (ngSubmit)="onSubmit(matchForm)">
-  <!-- Algemene matchgegevens -->
   <div class="general-section">
     <h2>Match Details</h2>
     <div class="form-row">
@@ -34,21 +33,19 @@
     </div>
 
     <div class="form-row">
-      <label for="matchDate">Datum en tijd:</label>
+      <label for="matchDate">Date en time:</label>
       <input id="matchDate" name="matchDate" type="datetime-local" [(ngModel)]="match.matchDate" required>
     </div>
 
     <div class="form-row">
-      <label for="location">Locatie:</label>
+      <label for="location">Location:</label>
       <input id="location" name="location" type="text" [(ngModel)]="match.location" required>
     </div>
   </div>
 
   <hr />
 
-  <!-- Dynamische lijsten voor scorers en assisters per team -->
   <div class="team-details">
-    <!-- Home team details -->
     <div class="team-column">
       <h3>Home Team Details</h3>
 
@@ -85,7 +82,6 @@
       </div>
     </div>
 
-    <!-- Away team details -->
     <div class="team-column">
       <h3>Away Team Details</h3>
 

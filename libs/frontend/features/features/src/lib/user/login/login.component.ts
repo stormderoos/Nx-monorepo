@@ -36,7 +36,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
         console.log('Logged in as:', response);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/homepage']);
       },
       error: (error) => {
         console.error('Login error:', error);

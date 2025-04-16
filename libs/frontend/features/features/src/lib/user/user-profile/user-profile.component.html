@@ -1,10 +1,18 @@
-<div *ngIf="user; else notLoggedIn">
-    <h2>Welkom, {{ user?.name }}</h2>
-    <p><strong>Email:</strong> {{ user?.email }}</p>
-    <p><strong>Rol:</strong> {{ user?.role }}</p>
-    <img [src]="user?.profileImgUrl" alt="Profielfoto" width="100" />
+<div *ngIf="user; else notLoggedIn" class="profile-container">
+  <div class="profile-card">
+    <div class="profile-image">
+      <img [src]="user?.profileImgUrl || '/assets/footballplayer.png'" alt="Profile picture" />
+    </div>
+    <div class="profile-info">
+      <h2>{{ user?.name }}</h2>
+      <p><span>Email:</span> {{ user?.email }}</p>
+      <p><span>Role:</span> {{ user?.role }}</p>
+    </div>
   </div>
-  
-  <ng-template #notLoggedIn>
-    <p>Je bent niet ingelogd. Log in om je profiel te bekijken.</p>
-  </ng-template>
+</div>
+
+<ng-template #notLoggedIn>
+  <div class="profile-card not-logged-in">
+    <p>You are not logged in. Please log in to view your profile.</p>
+  </div>
+</ng-template>

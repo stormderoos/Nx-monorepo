@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClubService } from '../club.service';
 import { ICreateClub, IPlayer } from '@avans-nx-workshop/shared/api';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'avans-nx-workshop-club-create',
@@ -19,7 +20,8 @@ export class ClubCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private clubService: ClubService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
   ) {
     this.clubForm = this.fb.group({
       name: ['', Validators.required],
@@ -44,7 +46,6 @@ export class ClubCreateComponent implements OnInit {
     });
   }
 
-  // Getter die alleen spelers retourneert zonder clubId (dus spelers die nog niet in een club zitten)
   get availablePlayers(): IPlayer[] {
     return this.players.filter(player => !player.clubId || player.clubId === '');
   }
@@ -52,26 +53,28 @@ export class ClubCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.clubForm.invalid) return;
   
-    const newClub: Omit<ICreateClub, '_id'> = {
+    const userId = this.authService.getCurrentUser()?.id; 
+  
+    const newClub: any = {
       name: this.clubForm.value.name,
       location: this.clubForm.value.location,
       logoUrl: this.clubForm.value.logoUrl,
       players: this.addedPlayers,
+      createdBy: userId,
     };
   
     this.clubService.createClub(newClub).subscribe({
       next: (createdClub) => {
-        // Update elke speler met de clubId
         this.addedPlayers.forEach((playerId) => {
           this.clubService.updatePlayerClubId(playerId, createdClub._id).subscribe({
             error: (err) => console.error(`Failed to update player ${playerId}:`, err),
           });
         });
-  
+      
         this.router.navigate(['/clubs']);
       },
       error: (err) => {
-        this.error = 'Failed to create club. Please try again.';
+        this.error = err.error?.message || 'Failed to create club. Please try again.';
         console.error(err);
       },
     });
@@ -87,22 +90,18 @@ export class ClubCreateComponent implements OnInit {
       return;
     }
   
-    // Zoek de geselecteerde speler in de volledige spelerslijst
     const selectedPlayer = this.players.find((p) => p._id === selectedPlayerId);
     if (selectedPlayer) {
-      // Controleer of de speler al een club heeft
       if (selectedPlayer.clubId && selectedPlayer.clubId !== '') {
         this.error = 'Deze speler zit al in een club en kan niet worden toegevoegd.';
         return;
       }
   
-      // Controleer nogmaals of de speler al is toegevoegd in de huidige club
       if (this.addedPlayers.includes(selectedPlayer._id)) {
         this.error = 'Player is already added to the club.';
         return;
       }
   
-      // Voeg speler toe aan de arrays
       this.addedPlayers.push(selectedPlayer._id);
       this.addedPlayersDetails.push({
         id: selectedPlayer._id,

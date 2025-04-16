@@ -1,7 +1,6 @@
 <div class="club-create-container">
   <h2>Create New Club</h2>
   <form [formGroup]="clubForm" (ngSubmit)="onSubmit()">
-    <!-- Club Name -->
     <div class="form-group">
       <label for="name">Club Name</label>
       <input
@@ -16,7 +15,6 @@
       </div>
     </div>
 
-    <!-- Club Location -->
     <div class="form-group">
       <label for="location">Location</label>
       <input
@@ -31,7 +29,6 @@
       </div>
     </div>
 
-    <!-- Club Logo -->
     <div class="form-group">
       <label for="logoUrl">Logo URL</label>
       <input
@@ -47,7 +44,6 @@
       </div>
     </div>
 
-    <!-- Player selection (alleen beschikbare spelers worden getoond) -->
     <div class="form-group">
       <label for="playerSelect">Add Player</label>
       <select
@@ -66,7 +62,6 @@
       Add Player to Club
     </button>
 
-    <!-- Display added players -->
     <div *ngIf="addedPlayersDetails.length > 0" class="added-players mt-3">
       <h4>Added Players</h4>
       <ul>

@@ -6,8 +6,8 @@ import { AboutComponent } from './apps/my-app/src/app/components/about/about/abo
 import { HeaderComponent } from './apps/my-app/src/app/components/ui/header/header/header.component';
 import { FooterComponent } from './apps/my-app/src/app/components/ui/footer/footer/footer.component';
 import { NavbarComponent } from './apps/my-app/src/app/components/ui/navbar/navbar.component';
-import { RouterModule } from '@angular/router'; // Zorg ervoor dat dit is geïmporteerd
-import { AppRoutingModule } from './app-routing.module'; // Zorg ervoor dat je AppRoutingModule importeert als je er een hebt
+import { RouterModule } from '@angular/router'; 
+import { AppRoutingModule } from './app-routing.module'; 
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './apps/my-app/src/app/components/home/home.component';
 import { CommonModule } from '@angular/common';

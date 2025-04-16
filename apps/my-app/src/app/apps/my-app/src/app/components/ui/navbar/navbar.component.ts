@@ -15,7 +15,7 @@ export class NavbarComponent {
   }
 
   logout(): void {
-    this.authService.logout(); // als je een aparte logout-methode hebt
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

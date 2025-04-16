@@ -21,7 +21,6 @@ interface AssistEntry {
   styleUrls: ['./match-edit.component.css']
 })
 export class MatchEditComponent implements OnInit {
-  // Match-object met algemene gegevens en dynamische arrays voor scorers/assisters
   match: any = {
     _id: '',
     homeTeamId: '',
@@ -36,9 +35,7 @@ export class MatchEditComponent implements OnInit {
     awayAssisters: [] as AssistEntry[]
   };
 
-  // Deze property houdt de complete array van scorers zoals opgehaald uit de backend
   private allScorers: ScoreEntry[] = [];
-  // Eveneens de complete array voor assisters (optioneel, als je deze ook wilt splitsen)
   private allAssisters: AssistEntry[] = [];
 
   clubs: IClub[] = [];
@@ -71,7 +68,6 @@ export class MatchEditComponent implements OnInit {
     this.matchService.getMatchById(matchId).subscribe({
       next: (matchData: IMatch) => {
         const formattedDate = new Date(matchData.date).toISOString().slice(0, 16);
-        // Converteer de array-elementen indien nodig naar het juiste objectformaat
         this.allScorers = (matchData.scorers || []).map(scorer =>
           typeof scorer === 'string' ? { playerId: scorer, goals: 1 } : scorer
         );
@@ -79,7 +75,6 @@ export class MatchEditComponent implements OnInit {
           typeof assister === 'string' ? { playerId: assister, assists: 1 } : assister
         );
   
-        // Stel de match algemene gegevens in
         this.match = {
           _id: matchData._id,
           homeTeamId: matchData.home_club_id,
@@ -88,14 +83,12 @@ export class MatchEditComponent implements OnInit {
           awayScore: matchData.score_away ?? 0,
           matchDate: formattedDate,
           location: matchData.location,
-          // Stel de gesplitste arrays als lege arrays in; deze vullen we na het laden van de spelers
           homeScorers: [] as ScoreEntry[],
           awayScorers: [] as ScoreEntry[],
           homeAssisters: [] as AssistEntry[],
           awayAssisters: [] as AssistEntry[]
         };
         
-        // Laad spelers voor beide teams en split daarna de arrays
         this.loadPlayersForTeam(matchData.home_club_id, 'home');
         this.loadPlayersForTeam(matchData.away_club_id, 'away');
         this.loading = false;
@@ -117,7 +110,6 @@ export class MatchEditComponent implements OnInit {
         } else if (side === 'away') {
           this.awayPlayers = players;
         }
-        // Zodra beide spelerslijsten zijn geladen, gaan we proberen de scorers (en assisters) te splitsen.
         if ((this.homePlayers && this.homePlayers.length) && (this.awayPlayers && this.awayPlayers.length)) {
           this.splitScorers();
           this.splitAssisters();
@@ -140,7 +132,6 @@ export class MatchEditComponent implements OnInit {
     });
   }
 
-  // Splits de complete scorers-array in home en away, op basis van de speler-lidmaatschappen
   private splitScorers(): void {
     const home: ScoreEntry[] = [];
     const away: ScoreEntry[] = [];
@@ -152,7 +143,6 @@ export class MatchEditComponent implements OnInit {
       } else if (inAway) {
         away.push(scorer);
       } else {
-        // Als de speler in geen van beide lijsten wordt teruggevonden, kun je kiezen voor een default (bv. home)
         home.push(scorer);
       }
     }
@@ -160,7 +150,6 @@ export class MatchEditComponent implements OnInit {
     this.match.awayScorers = away;
   }
 
-  // Optioneel: Splits de complete assisters-array in home en away op dezelfde manier
   private splitAssisters(): void {
     const home: AssistEntry[] = [];
     const away: AssistEntry[] = [];
@@ -179,7 +168,6 @@ export class MatchEditComponent implements OnInit {
     this.match.awayAssisters = away;
   }
 
-  // Dynamische methodes voor scorers (Home/Away)
   addHomeScorer(): void {
     this.match.homeScorers.push({ playerId: '', goals: 1 });
   }
@@ -193,7 +181,6 @@ export class MatchEditComponent implements OnInit {
     this.match.awayScorers.splice(index, 1);
   }
 
-  // Dynamische methodes voor assisters (Home/Away)
   addHomeAssister(): void {
     this.match.homeAssisters.push({ playerId: '', assists: 1 });
   }
