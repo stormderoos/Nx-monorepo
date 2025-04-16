@@ -1,4 +1,4 @@
-name: Build and deploy a Node.js app and an Angular app to an Azure
+name: Build and deploy a Node.js app and an Angular app to Azure
 
 on:
   push:
@@ -39,14 +39,14 @@ jobs:
 
       - name: Install production dependencies in data-api
         run: |
-            cd dist/apps/data-api
-            npm install --omit=dev
-        
-      - name: Zip NestJS backend for deployment
-        run: |
-            cd dist/apps/data-api
-            zip -r ../../../data-api-release.zip .
+          cd dist/apps/data-api
+          npm install --omit=dev
 
+      - name: Upload data-api artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-api
+          path: dist/apps/data-api
 
       - name: Zip Angular frontend for deployment
         run: |
@@ -87,7 +87,7 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.ANGULAR_PUBLISHTOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: 'upload'
-          app_location: '/' 
+          app_location: '/'
           api_location: ''
           output_location: 'dist/apps/my-app'
 
@@ -110,8 +110,13 @@ jobs:
       - name: Wait before deploy to avoid SCM conflict
         run: sleep 15
 
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: data-api
+          path: .
+      
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'nx-worskhop-nestjs'
