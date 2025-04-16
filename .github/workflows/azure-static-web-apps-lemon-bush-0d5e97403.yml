@@ -28,11 +28,8 @@ jobs:
 
       - name: Zip NestJS backend for deployment
         run: |
-            mkdir data-api-deploy
-            cp -r dist/apps/data-api/* data-api-deploy/
-            cp apps/data-api/package.json data-api-deploy/
-            cd data-api-deploy
-            zip -r ../data-api-release.zip .
+          cd ${GITHUB_WORKSPACE}
+          zip -r data-api-release.zip dist/apps/data-api package.json
 
       - name: Zip Angular frontend for deployment
         run: |
