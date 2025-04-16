@@ -6,14 +6,10 @@ import {
   ApiResponseInterceptor,
 } from '@avans-nx-workshop/backend/dto';
 import { AppModule } from './app/app.module';
-import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { environment } from '@avans-nx-workshop/shared/util-env';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
-
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+  const app = await NestFactory.create(AppModule);
 
   app.enableCors({
     origin: [
@@ -24,6 +20,7 @@ async function bootstrap() {
     credentials: true,
   });
 
+  app.setGlobalPrefix('api');
   app.useGlobalInterceptors(new ApiResponseInterceptor());
   app.useGlobalPipes(new ValidationPipe());
 
@@ -33,7 +30,7 @@ async function bootstrap() {
   await app.listen(port);
 
   const appUrl = await app.getUrl();
-  Logger.log(`🚀 DATA-API server is running on: ${appUrl}/${globalPrefix}`);
+  Logger.log(`🚀 DATA-API server is running on: ${appUrl}/api`);
 }
 
 bootstrap();
