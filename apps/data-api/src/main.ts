@@ -18,7 +18,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:4200',
-      'https://jolly-meadow-00d0ed103.5.azurestaticapps.net', // voeg hier je frontend toe
+      'https://jolly-meadow-00d0ed103.5.azurestaticapps.net',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
