@@ -37,10 +37,16 @@ jobs:
             }
           }' > dist/apps/data-api/package.json
 
+      - name: Install production dependencies in data-api
+        run: |
+            cd dist/apps/data-api
+            npm install --omit=dev
+        
       - name: Zip NestJS backend for deployment
         run: |
             cd dist/apps/data-api
             zip -r ../../../data-api-release.zip .
+
 
       - name: Zip Angular frontend for deployment
         run: |
