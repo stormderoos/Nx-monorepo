@@ -15,11 +15,14 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
-  const corsOptions: CorsOptions = {
-    origin: 'http://localhost:4200',
+  app.enableCors({
+    origin: [
+      'http://localhost:4200',
+      'https://jolly-meadow-00d0ed103.5.azurestaticapps.net', // voeg hier je frontend toe
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-  };
-  app.enableCors(corsOptions);
+  });
 
   app.useGlobalInterceptors(new ApiResponseInterceptor());
   app.useGlobalPipes(new ValidationPipe());
