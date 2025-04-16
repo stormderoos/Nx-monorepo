@@ -25,15 +25,27 @@ jobs:
         run: |
           npm run build:data-api
           npm run build:my-app
+          
+      - name: Create package.json for Azure
+        run: |
+          echo '{
+            "name": "data-api",
+            "version": "0.0.1",
+            "main": "main.js",
+            "scripts": {
+              "start": "node main.js"
+            }
+          }' > dist/apps/data-api/package.json
 
       - name: Zip NestJS backend for deployment
         run: |
-          cd ${GITHUB_WORKSPACE}
-          zip -r data-api-release.zip dist/apps/data-api package.json
+            cd dist/apps/data-api
+            zip -r ../../../data-api-release.zip .
 
       - name: Zip Angular frontend for deployment
         run: |
           cd dist/apps/my-app
+          cp ../../../../package.json .
           zip -r ../../my-app-release.zip .
 
       - name: Upload my-app artifact for deployment job
