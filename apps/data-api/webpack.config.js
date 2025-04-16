@@ -5,7 +5,7 @@ module.exports = composePlugins(withNx(), (config) => {
   config.output = {
     ...config.output,
     filename: 'main.js',
-    path: path.resolve(__dirname, '../..//apps/data-api'),
+    path: path.resolve(__dirname, '../../dist/apps/data-api'),
   };
 
   return config;
