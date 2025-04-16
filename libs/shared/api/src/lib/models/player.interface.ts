@@ -1,12 +1,14 @@
 export interface IPlayer {
-    _id: string; 
-    firstName: string; 
-    lastName: string;
-    position: PlayerPosition; 
-    clubId?: string;
-    birthdate: Date; 
-  }
-
+  _id: string; 
+  firstName: string; 
+  lastName: string;
+  position: PlayerPosition; 
+  clubId?: string;
+  profileImageUrl?: string;
+  birthdate: Date;
+  goals?: number;    
+  assists?: number;   
+}
   export type IFindPlayer = Pick<IPlayer, 'firstName' | 'lastName' | 'birthdate'> & {
     position: string; 
   };

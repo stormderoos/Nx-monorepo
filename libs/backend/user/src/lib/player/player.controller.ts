@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Delete, Patch } from '@nestjs/common';
 import { PlayerService } from './player.service';
 import { CreatePlayerDto, UpdatePlayerDto } from '@avans-nx-workshop/backend/dto';
 import { Player } from './player.schema';
@@ -40,5 +40,13 @@ export class PlayerController {
   @Get(':id/stats')
   async getPlayerStats(@Param('id') id: string): Promise<{ goals: number; assists: number }> {
     return this.playerService.getPlayerStats(id);
+  }
+
+  @Patch(':id')
+  async patchClubId(
+    @Param('id') id: string,
+    @Body() body: { clubId?: string }
+  ): Promise<Player | null> {
+    return this.playerService.update(id, { clubId: body.clubId });
   }
 }

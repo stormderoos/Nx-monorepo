@@ -15,6 +15,7 @@ export class PlayerCreateComponent {
   positions = Object.values(PlayerPosition).filter(
     (pos) => pos !== PlayerPosition.Unknown
   ); 
+  defaultImage = '/assets/footballplayer.png';
 
   constructor(
     private fb: FormBuilder,
@@ -26,20 +27,20 @@ export class PlayerCreateComponent {
       lastName: ['', Validators.required],
       position: ['', Validators.required],
       birthdate: ['', Validators.required],
+      profileImageUrl: [''] 
     });
   }
 
   onSubmit(): void {
-    if (this.playerForm.invalid) {
-      return;
-    }
-
-    const newPlayer = this.playerForm.value;
-
+    if (this.playerForm.invalid) return;
+  
+    const newPlayer = {
+      ...this.playerForm.value,
+      profileImageUrl: '/assets/footballplayer.png'
+    };
+  
     this.playerService.addPlayer(newPlayer).subscribe({
-      next: () => {
-        this.router.navigate(['/players']);
-      },
+      next: () => this.router.navigate(['/players']),
       error: (err) => {
         this.error = 'Failed to create player. Please try again.';
         console.error(err);

@@ -12,6 +12,9 @@
   
     <label for="birthdate">Birthdate:</label>
     <input id="birthdate" formControlName="birthdate" type="date" required>
+
+    <label for="profileImageUrl">Afbeeldings-URL</label>
+    <input id="profileImageUrl" formControlName="profileImageUrl" />
   
     <button type="submit" [disabled]="loading || playerForm.invalid">Update Player</button>
   </form>

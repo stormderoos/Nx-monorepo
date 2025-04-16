@@ -1,53 +1,50 @@
+<div *ngIf="loading" class="loading-indicator">
+  Spelers worden geladen...
+</div>
+
+<div class="actions" *ngIf="userRole === 'admin' || userRole === 'Clubbeheerder'">
+  <button routerLink="/playercreate">+ Speler toevoegen</button>
+</div>
+
+<!-- Zoekbalk -->
 <div class="search-bar">
   <input
     type="text"
     [(ngModel)]="searchTerm"
-    placeholder="Search by player name"
-    (keyup.enter)="onSearch()"
+    placeholder="Zoek op spelernaam"
   />
-  <button (click)="onSearch()">Search</button>
+  <button (click)="searchTerm = ''">Reset</button>
 </div>
 
-<!-- Weergeven van spelerstatistieken indien beschikbaar -->
-<div *ngIf="selectedPlayer" class="player-stats">
-  <h2>Stats for {{ selectedPlayer.firstName }} {{ selectedPlayer.lastName }}</h2>
-  <p>Goals: {{ selectedPlayerStats?.goals }}</p>
-  <p>Assists: {{ selectedPlayerStats?.assists }}</p>
-</div>
+<!-- Spelerlijst -->
+<div class="player-table-wrapper" *ngIf="filteredPlayers.length > 0">
+  <div class="player-table-header">
+    <span>Naam</span>
+    <span>Club</span>
+    <span>Positie</span>
+    <span>Goals</span>
+    <span>Assists</span>
+  </div>
 
-<!-- Overige code voor de player list -->
-<div class="player-list-container">
-  <h1>Players</h1>
-  <div class="actions">
-    <button class="btn btn-primary" routerLink="/playercreate">
-      + Create New Player
-    </button>
-  </div>
-  
-  <div *ngIf="loading" class="loader">
-    Loading players...
-  </div>
-  
-  <div *ngIf="error" class="error-message">
-    {{ error }}
-  </div>
-  
-  <div *ngIf="!loading && !error && players.length === 0" class="no-players-message">
-    No players found. Add a new player to get started!
-  </div>
-  
-  <div *ngIf="!loading && !error && players.length > 0" class="player-grid">
-    <div
-      class="player-card"
-      *ngFor="let player of players"
-      (click)="goToPlayerDetails(player._id)"
-    >
-      <div class="player-info">
-        <h3>{{ player.firstName }} {{ player.lastName }}</h3>
-        <p>Position: {{ player.position }}</p>
-        <p>Club ID: {{ player.clubId }}</p>
-        <p>Birthdate: {{ player.birthdate | date }}</p>
+  <div
+    class="player-row"
+    *ngFor="let player of filteredPlayers"
+    (click)="goToPlayerDetails(player._id)"
+  >
+    <div class="player-info">
+      <img [src]="player.profileImageUrl || defaultImage" alt="Spelerfoto" />
+      <div>
+        <strong>{{ player.firstName }} {{ player.lastName }}</strong><br />
+        <small>{{ player.position }}</small>
       </div>
     </div>
+    <span>{{ getClubNameById(player.clubId || '') }}</span>
+    <span>{{ player.position }}</span>
+    <span>{{ player.goals || 0 }}</span>
+    <span>{{ player.assists || 0 }}</span>
   </div>
+</div>
+
+<div *ngIf="!loading && filteredPlayers.length === 0" class="no-players-message">
+  Geen spelers gevonden.
 </div>

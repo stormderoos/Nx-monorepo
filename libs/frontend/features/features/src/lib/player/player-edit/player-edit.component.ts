@@ -29,11 +29,12 @@ export class PlayerEditComponent implements OnInit {
         position: ['', Validators.required],
         clubId: [''],
         birthdate: ['', Validators.required],
+        profileImageUrl: [''] 
       });
     }
   
     ngOnInit(): void {
-      const id = this.route.snapshot.paramMap.get('_id');
+      const id = this.route.snapshot.paramMap.get('id');
       if (id) {
         this.playerService.getPlayerById(id).subscribe(
           (player: IPlayer) => {
@@ -43,7 +44,8 @@ export class PlayerEditComponent implements OnInit {
               lastName: player.lastName,
               position: player.position,
               clubId: player.clubId || '',
-              birthdate: player.birthdate.toISOString().split('T')[0], // Format date
+              birthdate: new Date(player.birthdate).toISOString().split('T')[0],
+              profileImageUrl: player.profileImageUrl || '',
             });
             this.loading = false;
           },
@@ -70,6 +72,7 @@ export class PlayerEditComponent implements OnInit {
           position: this.playerForm.value.position as PlayerPosition,
           clubId: this.playerForm.value.clubId,
           birthdate: new Date(this.playerForm.value.birthdate),
+          profileImageUrl: this.playerForm.value.profileImageUrl,
         };
   
         this.playerService.updatePlayer(updatedPlayer).subscribe(

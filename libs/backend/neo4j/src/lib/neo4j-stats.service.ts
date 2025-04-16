@@ -58,10 +58,12 @@ export class Neo4JPlayerService {
     scorers: { playerId: string; goals: number }[];
     assisters: { playerId: string; assists: number }[];
   }): Promise<void> {
-    const scoredBy: string[] = match.scorers.flatMap(s => Array(s.goals).fill(s.playerId));
-    const assistedBy: string[] = match.assisters.flatMap(a => Array(a.assists).fill(a.playerId));
+    const scoredBy = match.scorers.flatMap(s => Array(s.goals).fill(s.playerId));
+    const assistedBy = match.assisters.flatMap(a => Array(a.assists).fill(a.playerId));
   
-    const query = `
+    this.logger.log(`Syncing match ${match.id} with ${scoredBy.length} goals and ${assistedBy.length} assists`);
+  
+    await this.neo4jService.write(`
       MERGE (m:Match {id: $matchId})
       WITH m
       OPTIONAL MATCH (m)-[r1:SCORED_BY]->()
@@ -69,19 +71,18 @@ export class Neo4JPlayerService {
       WITH m
       OPTIONAL MATCH (m)-[r2:ASSISTED_BY]->()
       DELETE r2
-      WITH m
+    `, { matchId: match.id });
   
+    await this.neo4jService.write(`
+      MATCH (m:Match {id: $matchId})
       UNWIND $scoredBy AS scorerId
         MATCH (p1:Player {id: scorerId})
         CREATE (m)-[:SCORED_BY]->(p1)
       WITH m
-  
       UNWIND $assistedBy AS assisterId
         MATCH (p2:Player {id: assisterId})
         CREATE (m)-[:ASSISTED_BY]->(p2)
-    `;
-  
-    await this.neo4jService.write(query, {
+    `, {
       matchId: match.id,
       scoredBy,
       assistedBy,

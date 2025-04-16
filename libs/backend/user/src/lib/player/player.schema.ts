@@ -23,7 +23,12 @@ export class Player {
   @Prop({ required: true })
   birthdate!: Date;
 
-  // Nieuwe velden voor stats
+  @Prop({
+    required: false,
+    default: '/assets/footballplayer.png',
+  })
+  profileImageUrl?: string;
+
   @Prop({ default: 0 })
   goals!: number;
 

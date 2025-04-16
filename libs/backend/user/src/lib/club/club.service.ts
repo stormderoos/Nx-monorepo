@@ -6,6 +6,7 @@ import { IFindClub, ICreateClub } from '@avans-nx-workshop/shared/api';
 import { CreateClubDto, UpdateClubDto } from '@avans-nx-workshop/backend/dto';
 import { PlayerDocument, Player } from '../player/player.schema';
 import { IFindPlayer } from '@avans-nx-workshop/shared/api';
+import { Match, MatchDocument } from '../match/match.schema';
 
 
 @Injectable()
@@ -14,7 +15,8 @@ export class ClubService {
 
   constructor(
     @InjectModel(ClubModel.name) private clubModel: Model<ClubDocument>,
-    @InjectModel(Player.name) private playerModel: Model<PlayerDocument>, // Injecteer het Player-model
+    @InjectModel(Player.name) private playerModel: Model<PlayerDocument>, 
+    @InjectModel(Match.name) private matchModel: Model<MatchDocument>,
   ) {}
 
   async findAll(): Promise<IFindClub[]> {
@@ -80,5 +82,9 @@ export class ClubService {
     return false;
   }
 
-
+  async findMatchesByClub(clubId: string): Promise<Match[]> {
+    return this.matchModel.find({
+      $or: [{ home_club_id: clubId }, { away_club_id: clubId }],
+    }).lean().exec();
+  }
 }

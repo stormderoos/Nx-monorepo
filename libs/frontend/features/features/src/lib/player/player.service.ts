@@ -41,9 +41,14 @@ export class PlayerService {
   deletePlayer(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/players/${id}`);
   }
-  getPlayerStatsFromNeo4J(playerId: string): Observable<{ goals: number; assists: number }> {
-    return this.http.get<{ results: { goals: number; assists: number } }>(`http://localhost:3000/api/neo4j/stats/player/${playerId}`).pipe(
+  getPlayerStats(playerId: string): Observable<{ goals: number; assists: number }> {
+    return this.http.get<{ results: { goals: number; assists: number } }>(`${this.baseUrl}/players/${playerId}/stats`).pipe(
       map(response => response.results)
     );
+  }
+
+  getClubs(): Observable<{ _id: string; name: string }[]> {
+    return this.http.get<{ results: { _id: string; name: string }[] }>(`${this.baseUrl}/clubs`)
+      .pipe(map(response => response.results));
   }
 }

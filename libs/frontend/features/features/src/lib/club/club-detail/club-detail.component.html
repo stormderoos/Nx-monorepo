@@ -1,29 +1,83 @@
-<div class="club-detail-container">
-  <div *ngIf="loading" class="loader">Loading club details...</div>
-  <div *ngIf="error" class="error-message">{{ error }}</div>
+<div *ngIf="loading" class="loader">Clubgegevens worden geladen...</div>
+<div *ngIf="error" class="error-message">{{ error }}</div>
 
-  <div *ngIf="club" class="club-detail">
-    <div class="club-header">
-      <img [src]="club.logoUrl" alt="{{ club.name }} logo" class="club-logo" />
-      <h1 class="club-name">{{ club.name }}</h1>
-      <p class="club-location"><i class="fas fa-map-marker-alt"></i> Location: {{ club.location }}</p>
-    </div>
+<!-- Club banner -->
+<div *ngIf="club" class="club-banner">
+  <img [src]="club.logoUrl" alt="{{ club.name }} logo" class="club-banner-logo" />
+  <div class="club-banner-info">
+    <h1>{{ club.name }}</h1>
+    <p><strong>Locatie:</strong> {{ club.location }}</p>
+  </div>
+</div>
 
-    <button
-      *ngIf="club"
-      class="edit-btn"
-      [routerLink]="['/clubedit', club._id]" 
-    >Edit Club</button>
+<!-- Tab knoppen -->
+<div class="tabs">
+  <button [class.active]="activeTab === 'team'" (click)="setTab('team')">Team</button>
+  <button [class.active]="activeTab === 'matches'" (click)="setTab('matches')">Wedstrijden</button>
+</div>
 
-    <h2 class="player-title">Players</h2>
-    <ul *ngIf="players.length > 0" class="player-list">
-      <li *ngFor="let player of players" class="player-item">
-        <span class="player-name" (click)="goToPlayerDetails(player._id)" style="cursor: pointer;">
-          {{ player.firstName }} {{ player.lastName }}
-        </span> - {{ player.position }}
-      </li>
-    </ul>
+<!-- Team Tab -->
+<div *ngIf="activeTab === 'team'">
+  <button 
+    class="edit-btn" 
+    [routerLink]="['/clubedit', club?._id]" 
+    *ngIf="userRole === 'admin' || userRole === 'clubbeheerder'"
+  >
+    Bewerk Club
+  </button>
 
-    <p *ngIf="players.length === 0" class="no-players">No players added to this club.</p>
+  <div *ngIf="players.length > 0">
+    <ng-container *ngFor="let group of positionGroups">
+      <div class="position-header">{{ group.label }}</div>
+      <div class="player-grid">
+        <ng-container *ngFor="let player of players">
+          <ng-container *ngIf="group.positions.includes(player.position)">
+            <div class="player-card">
+              <img [src]="player.profileImageUrl || '/assets/footballplayer.png'" alt="Foto van {{ player.firstName }} {{ player.lastName }}" />
+              <div class="player-info">
+                <strong>{{ player.firstName }} {{ player.lastName }}</strong>
+                <p>{{ player.position }}</p>
+                <button (click)="goToPlayerDetails(player._id)">Details</button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+
+  <p *ngIf="players.length === 0" class="no-players">
+    Er zijn nog geen spelers toegevoegd aan deze club.
+  </p>
+</div>
+
+<div *ngIf="activeTab === 'matches'">
+  <h2 class="match-list-title">Wedstrijden</h2>
+
+  <div *ngIf="matches.length === 0" class="no-players">
+    Er zijn nog geen wedstrijden.
+  </div>
+
+  <div class="match-grid" *ngIf="matches.length > 0">
+    <div class="match-card" *ngFor="let match of matches">
+      <div class="match-date">
+        {{ match.date | date: 'EEE d MMMM yyyy' | uppercase }}
+      </div>
+
+      <div class="match-body">
+        <div class="club club-left">
+          <img [src]="getClubLogoById(match.home_club_id)" alt="Home Club Logo" />
+          <span>{{ getClubName(match.home_club_id) }}</span>
+        </div>
+
+        <div class="score">
+          {{ match.score_home ?? '-' }} - {{ match.score_away ?? '-' }}
+        </div>
+
+        <div class="club club-right">
+          <img [src]="getClubLogoById(match.away_club_id)" alt="Away Club Logo" />
+          <span>{{ getClubName(match.away_club_id) }}</span>
+        </div>
+      </div>
   </div>
 </div>

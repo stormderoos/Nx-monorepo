@@ -229,26 +229,14 @@ export class MatchEditComponent implements OnInit {
   
       this.matchService.updateMatch(updatedMatch).subscribe({
         next: () => {
-          this.matchService.syncMatchToNeo4j({
-            id: updatedMatch._id,
-            scorers: updatedMatch.scorers ?? [],
-            assisters: updatedMatch.assisters ?? [],
-          }).subscribe({
-            next: () => {
-              this.router.navigate(['/matches']); 
-            },
-            error: (err) => {
-              console.error('Neo4J sync mislukt:', err);
-              this.errorMessage = 'Match opgeslagen, maar synchronisatie naar Neo4j is mislukt.';
-            }
-          });
+          console.log('Match succesvol opgeslagen');
+          this.router.navigate(['/matches']);
         },
         error: (error) => {
           console.error('Fout bij het updaten van de match:', error);
           this.errorMessage = 'Het updaten van de match is mislukt. Probeer het later opnieuw.';
         }
       });
-  
     } else {
       console.error('Formulier is ongeldig of ID ontbreekt!');
       this.errorMessage = 'Vul alle verplichte velden correct in.';

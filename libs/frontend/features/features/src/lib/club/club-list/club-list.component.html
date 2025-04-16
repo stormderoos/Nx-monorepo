@@ -21,13 +21,13 @@
       <div
         class="club-card"
         *ngFor="let club of clubs"
+        [routerLink]="['/clubs', club._id]"
         style="cursor: pointer;"
-        [routerLink]="['/clubs', club._id]" 
-        >
+      >
         <img [src]="club.logoUrl" alt="{{ club.name }} logo" class="club-logo" />
-        <div class="club-info" >
-          <h3>{{ club.name }}</h3>
-          <p>{{ club.location }}</p>
+        <div class="club-info">
+          <h3>{{ club.name.toUpperCase() }}</h3>
+          <p>{{ club.location.toUpperCase() }}</p>
         </div>
       </div>
     </div>

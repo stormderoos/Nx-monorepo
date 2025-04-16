@@ -38,9 +38,9 @@ export class MatchService {
 
   syncMatchToNeo4j(match: {
     id: string;
-    scorers: string[];
-    assisters: string[];
+    scorers: { playerId: string; goals: number }[];
+    assisters: { playerId: string; assists: number }[];
   }): Observable<void> {
-    return this.http.post<void>(`http://localhost:3000/api/neo4j/stats`, match);
+    return this.http.post<void>(`${this.baseUrl}/neo4j/stats`, match);
   }
 }

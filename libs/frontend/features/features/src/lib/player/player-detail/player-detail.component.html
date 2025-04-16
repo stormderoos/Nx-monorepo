@@ -1,34 +1,48 @@
-<div class="player-detail-container">
-  <div *ngIf="loading" class="loader">Loading player details...</div>
-  <div *ngIf="error" class="error-message">{{ error }}</div>
+<div *ngIf="loading" class="loader">Spelergegevens worden geladen...</div>
+<div *ngIf="error" class="error-message">{{ error }}</div>
 
-  <div *ngIf="player && !loading" class="player-detail">
-    <div class="player-header">
-      <h1>{{ player.firstName }} {{ player.lastName }}</h1>
-      <p class="position">
-        <i class="fas fa-futbol"></i> Position: <strong>{{ player.position }}</strong>
-      </p>
+<div *ngIf="player && !loading" class="profile-card">
+  <!-- Header -->
+  <div class="profile-header">
+    <!-- Achtergrondafbeelding -->
+    <img class="background-image" [src]="player.profileImageUrl || '/assets/footballplayer.png'" alt="Foto van {{ player.firstName }} {{ player.lastName }}" />
+    <div class="overlay"></div>
+
+    <!-- Inhoud bovenop afbeelding -->
+    <div class="profile-content">
+      <div class="back-label">#{{ player.position }}</div>
+
+      <div class="name-section">
+        <h2>{{ player.firstName }}</h2>
+        <h1>{{ player.lastName }}</h1>
+      </div>
+
+      <div class="club-name">
+        <img *ngIf="clubLogoUrl" [src]="clubLogoUrl" class="club-logo" alt="Clublogo" />
+        {{ clubName }}
+      </div>
+
+      <!-- Statistieken -->
+      <div class="stats-bar">
+        <div class="stat-box">
+          <div class="stat-value">{{ getAge(player.birthdate) }}</div>
+          <div class="stat-label">Leeftijd</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">{{ player.goals ?? 0 }}</div>
+          <div class="stat-label">Goals</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">{{ player.assists ?? 0 }}</div>
+          <div class="stat-label">Assists</div>
+        </div>
+      </div>
+
+      <div class="edit-button-container" *ngIf="userRole === 'admin' || userRole === 'clubbeheerder'">
+        <button class="edit-button" [routerLink]="['/playeredit', player._id]">
+          Speler bewerken
+        </button>
+      </div>
     </div>
-
-    <div class="player-info">
-      <p>
-        <i class="fas fa-calendar-alt"></i>
-        <strong>Birthdate:</strong> {{ player.birthdate | date: 'longDate' }}
-      </p>
-      <p *ngIf="player.clubId">
-        <i class="fas fa-users"></i>
-        <strong>Club ID:</strong> {{ player.clubId }}
-      </p>
-      <p *ngIf="!player.clubId">
-        <i class="fas fa-ban"></i> Not assigned to any club.
-      </p>
-    </div>
-
-    <button
-      class="edit-button"
-      [routerLink]="['/playeredit', player._id]" 
-      >
-      Edit Player
-    </button>
   </div>
 </div>

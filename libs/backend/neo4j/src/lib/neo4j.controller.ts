@@ -10,7 +10,7 @@ export class Neo4JStatsController {
     return await this.neo4jStatsService.getPlayerStats(playerId);
   }
 
-  @Post()
+  @Post('')
   async syncMatchStats(
     @Body()
     match: {

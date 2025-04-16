@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { IClub } from '@avans-nx-workshop/shared/api';
+import { IClub, IMatch } from '@avans-nx-workshop/shared/api';
 import { IPlayer } from '@avans-nx-workshop/shared/api';
 import { environment } from '@avans-nx-workshop/shared/util-env';
 
@@ -47,8 +47,18 @@ export class ClubService {
       map(response => response.results));
   }
 
+  updatePlayerClubId(playerId: string, clubId: string): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/players/${playerId}`, { clubId });
+  }
+
   updateClub(updatedClub: IClub): Observable<IClub> {
     return this.http.put<IClub>(`${this.baseUrl}/clubs/${updatedClub._id}`, updatedClub);
+  }
+
+  getMatchesByClub(clubId: string): Observable<IMatch[]> {
+    return this.http.get<{results : IMatch[]}>(`${this.baseUrl}/clubs/${clubId}/matches`).pipe(
+      map(response => response.results)
+    );
   }
 
   deleteClub(id: number): Observable<void> {

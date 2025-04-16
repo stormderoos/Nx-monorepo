@@ -48,18 +48,27 @@ export class MatchService {
       .lean()
       .exec();
 
+      if (existingMatch.scorers && existingMatch.scorers.length) {
+        for (const scorer of existingMatch.scorers) {
+          await this.playerService.incrementGoals(scorer.playerId, -(scorer.goals ?? 1));
+        }
+      }
+      if (existingMatch.assisters && existingMatch.assisters.length) {
+        for (const assister of existingMatch.assisters) {
+          await this.playerService.incrementAssists(assister.playerId, -(assister.assists ?? 1));
+        }
+      }
+      
       if (match.scorers && match.scorers.length) {
         for (const scorer of match.scorers) {
           await this.playerService.incrementGoals(scorer.playerId, scorer.goals ?? 1);
         }
       }
-      
       if (match.assisters && match.assisters.length) {
         for (const assister of match.assisters) {
           await this.playerService.incrementAssists(assister.playerId, assister.assists ?? 1);
         }
       }
-
     return updatedMatch;
   }
 

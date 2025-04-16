@@ -3,7 +3,7 @@ import { MatchService } from '../match.service';
 import { ClubService } from '../../club/club.service';
 import { Router } from '@angular/router';
 import { IMatch, IClub } from '@avans-nx-workshop/shared/api';
-
+import { AuthService } from '../../auth.service';
 @Component({
   selector: 'avans-nx-workshop-match',
   templateUrl: './match-list.component.html',
@@ -14,14 +14,18 @@ export class MatchListComponent implements OnInit {
   clubs: IClub[] = [];
   loading = false;
   error: string | null = null;
+  userRole: string | null = null;
+
 
   constructor(
     private matchService: MatchService,
     private clubService: ClubService,
     private router: Router,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
+    this.userRole = this.authService.getUserRole();
     this.fetchMatches();
     this.fetchClubs();
   }

@@ -14,12 +14,12 @@
         <h3>{{ user.username }}</h3>
         <p>{{ user.email }}</p>
         <button 
-          *ngIf="user.id" 
+          *ngIf="user.id && userRole === 'admin'" 
           [routerLink]="['/useredit', user.id]" 
           class="user-edit"
         >
           Edit
-        </button>    
+        </button>  
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ClubService } from './club.service';
-import { IClub, IFindClub, IFindPlayer } from '@avans-nx-workshop/shared/api';
+import { IClub, IFindClub, IFindPlayer, IFindMatch } from '@avans-nx-workshop/shared/api';
 import { CreateClubDto, UpdateClubDto } from '@avans-nx-workshop/backend/dto';
 import { ClubExistGuard } from './club-exists.guard';
 
@@ -44,6 +44,9 @@ export class ClubController {
     return this.clubService.findPlayersByClub(id);
   }
 
-
+  @Get(':id/matches')
+  getClubMatches(@Param('id') id: string): Promise<IFindMatch[]> {
+    return this.clubService.findMatchesByClub(id);
+  }
 
 }
