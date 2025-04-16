@@ -1,8 +1,12 @@
 const { composePlugins, withNx } = require('@nx/webpack');
+const path = require('path');
 
-// Nx plugins for webpack.
 module.exports = composePlugins(withNx(), (config) => {
-  // Update the webpack config as needed here.
-  // e.g. `config.plugins.push(new MyPlugin())`
+  config.output = {
+    ...config.output,
+    filename: 'main.js',
+    path: path.resolve(__dirname, '../../dist/apps/data-api'),
+  };
+
   return config;
 });

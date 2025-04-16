@@ -3,6 +3,9 @@
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
+        "start": "node dist/apps/data-api/main.js",
+        "build:data-api": "nx build data-api",
+        "build:my-app": "nx build my-app",
         "deploy": "nx run share-a-meal-web:build",
         "build": "nx run-many -t build",
         "test": "nx run-many -t test"

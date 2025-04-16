@@ -50,19 +50,24 @@ export class ClubCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.clubForm.invalid) {
-      return;
-    }
-
+    if (this.clubForm.invalid) return;
+  
     const newClub: Omit<ICreateClub, '_id'> = {
       name: this.clubForm.value.name,
       location: this.clubForm.value.location,
       logoUrl: this.clubForm.value.logoUrl,
-      players: this.addedPlayers,  // De lijst van toegevoegde speler-ID's
+      players: this.addedPlayers,
     };
-
+  
     this.clubService.createClub(newClub).subscribe({
-      next: () => {
+      next: (createdClub) => {
+        // Update elke speler met de clubId
+        this.addedPlayers.forEach((playerId) => {
+          this.clubService.updatePlayerClubId(playerId, createdClub._id).subscribe({
+            error: (err) => console.error(`Failed to update player ${playerId}:`, err),
+          });
+        });
+  
         this.router.navigate(['/clubs']);
       },
       error: (err) => {
@@ -71,6 +76,8 @@ export class ClubCreateComponent implements OnInit {
       },
     });
   }
+
+  
 
   addPlayerToClub(): void {
     const selectedPlayerId = this.clubForm.get('selectedPlayerId')?.value;
