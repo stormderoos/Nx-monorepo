@@ -15,7 +15,6 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
-  // ✅ Expliciete CORS settings voor localhost Angular frontend
   const corsOptions: CorsOptions = {
     origin: 'http://localhost:4200',
     credentials: true,

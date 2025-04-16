@@ -3,7 +3,6 @@ import { AuthModule } from '@avans-nx-workshop/backend/auth';
 import { UsersModule } from '@avans-nx-workshop/backend/user';
 import { MongooseModule } from '@nestjs/mongoose';
 import { environment } from '@avans-nx-workshop/shared/util-env';
-import { Neo4jBackendModule} from '@avans-nx-workshop/backend/neo4j'
 
 @Module({
   imports: [
@@ -16,7 +15,7 @@ import { Neo4jBackendModule} from '@avans-nx-workshop/backend/neo4j'
         return connection;
       },
     }),
-    UsersModule, Neo4jBackendModule
+    UsersModule
   ],
 })
 export class AppModule {}
