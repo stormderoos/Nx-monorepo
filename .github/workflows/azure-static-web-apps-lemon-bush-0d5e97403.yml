@@ -45,7 +45,6 @@ jobs:
       - name: Zip Angular frontend for deployment
         run: |
           cd dist/apps/my-app
-          cp ../../../../package.json .
           zip -r ../../my-app-release.zip .
 
       - name: Upload my-app artifact for deployment job
