@@ -1,4 +1,4 @@
-name: Build and deploy a Node.js app and an Angular app to Azure
+name: Build and deploy a Node.js app and an Angular app to an Azure
 
 on:
   push:
@@ -18,29 +18,48 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Install dependencies and build
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Angular and NestJS apps
         run: |
-          npm install --legacy-peer-deps
           npm run build:data-api
           npm run build:my-app
-
-      - name: Zip backend for deployment
+          
+      - name: Create package.json for Azure
         run: |
-          cd dist/apps/data-api
-          zip -r ../../../data-api-release.zip .
+          echo '{
+            "name": "data-api",
+            "version": "0.0.1",
+            "main": "main.js",
+            "scripts": {
+              "start": "node main.js"
+            }
+          }' > dist/apps/data-api/package.json
 
-      - name: Zip frontend for deployment
+      - name: Install production dependencies in data-api
+        run: |
+            cd dist/apps/data-api
+            npm install --omit=dev
+      
+      - name: Zip NestJS backend for deployment
+        run: |
+            cd dist/apps/data-api
+            zip -r ../../../data-api-release.zip .
+
+
+      - name: Zip Angular frontend for deployment
         run: |
           cd dist/apps/my-app
           zip -r ../../my-app-release.zip .
 
-      - name: Upload Angular artifact
+      - name: Upload my-app artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: my-app
-          path: my-app-release.zip
+          path: dist/my-app-release.zip
 
-      - name: Upload NestJS artifact
+      - name: Upload data-api artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: data-api
@@ -54,45 +73,47 @@ jobs:
       name: 'Production'
 
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
         with:
           name: my-app
 
-      - run: unzip my-app-release.zip
+      - name: Unzip artifact for deployment
+        run: unzip my-app-release.zip -d .
 
-      - name: Deploy Angular to Static Web App
+      - name: Deploy to static azure web app
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.ANGULAR_PUBLISHTOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: 'upload'
-          app_location: '/'
+          app_location: '/' 
           api_location: ''
           output_location: 'dist/apps/my-app'
 
   deploy-data-api:
-    runs-on: ubuntu-latest
-    name: Deploy NestJs data-api backend
-    needs: build
-    environment:
-      name: 'Production'
+            runs-on: ubuntu-latest
+            name: Deploy NestJs data-api backend
+            needs: build
+            environment:
+              name: 'Production'
       
-    steps:
-        - name: Download artifact from build job
-          uses: actions/download-artifact@v4
-          with:
-            name: data-api
+            steps:
+              - name: Download artifact from build job
+                uses: actions/download-artifact@v4
+                with:
+                  name: data-api
       
-        - name: Unzip artifact for deployment
-          run: unzip data-api-release.zip
+              - name: Unzip artifact for deployment
+                run: unzip data-api-release.zip
       
-        - name: Install dependencies
-          run: npm install --legacy-peer-deps
+              - name: Install dependencies
+                run: npm install --legacy-peer-deps
       
-        - name: Deploy to Azure Web App
-          uses: azure/webapps-deploy@v3
-          with:
-            app-name: 'nx-worskhop-nestjs'
-            slot-name: 'Production'
-            publish-profile: ${{ secrets.DATA_API_PUBLISHPROFILE }}
-            package: .
+              - name: Deploy to Azure Web App
+                uses: azure/webapps-deploy@v3
+                with:
+                  app-name: 'nx-worskhop-nestjs'
+                  slot-name: 'Production'
+                  publish-profile: ${{ secrets.DATA_API_PUBLISHPROFILE }}
+                  package: .
