@@ -47,7 +47,6 @@ export class UpsertUserDto implements IUpdateUser {
     @IsString()
     @IsNotEmpty()
     gender: UserGender = UserGender.Unknown;
-
 }
 
 export class UpdateUserDto implements IUpdateUser {
