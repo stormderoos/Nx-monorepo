@@ -19,11 +19,13 @@ export class AuthService {
   }
 
   login(credentials: { email: string; password: string }): Observable<IUserIdentity> {
-    return this.http.post<IUserIdentity>(`${this.apiUrl}/auth/login`, credentials)
-      .pipe(tap(resp => {
-        localStorage.setItem(this.tokenKey, resp.token);
-        localStorage.setItem('user', JSON.stringify(resp));
-      }));
+    return this.http.post<{ results: IUserIdentity; info: any }>(`${this.apiUrl}/auth/login`, credentials).pipe(
+      tap((response) => {
+        localStorage.setItem(this.tokenKey, response.results.token);
+        localStorage.setItem('user', JSON.stringify(response.results));
+      }),
+      map((response) => response.results)
+    );
   }
 
   getCurrentUser(): IUserIdentity | null {
