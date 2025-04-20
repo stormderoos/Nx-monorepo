@@ -72,8 +72,27 @@ export class MatchService {
     return updatedMatch;
   }
 
+
   async delete(_id: string): Promise<void> {
     this.logger.log(`Deleting match with id ${_id}`);
+
+    const existingMatch = await this.matchModel.findById(_id).lean().exec();
+    if (!existingMatch) {
+      throw new NotFoundException(`Match with id ${_id} not found`);
+    }
+
+    // Revert stats from deleted match
+    if (existingMatch.scorers && existingMatch.scorers.length) {
+      for (const scorer of existingMatch.scorers) {
+        await this.playerService.incrementGoals(scorer.playerId, -(scorer.goals ?? 1));
+      }
+    }
+    if (existingMatch.assisters && existingMatch.assisters.length) {
+      for (const assister of existingMatch.assisters) {
+        await this.playerService.incrementAssists(assister.playerId, -(assister.assists ?? 1));
+      }
+    }
+
     await this.matchModel.findByIdAndDelete(_id).exec();
   }
 
