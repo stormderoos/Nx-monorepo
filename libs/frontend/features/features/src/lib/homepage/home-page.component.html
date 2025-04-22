@@ -1,14 +1,14 @@
 <div class="home-container">
-  <h1 class="page-title"> BIJ <span>WEB FOOTBALL</span></h1>
-  <p class="intro">Ontdek clubs, spelers en wedstrijden in één platform</p>
+  <h1 class="page-title">AT <span>WEB FOOTBALL</span></h1>
+  <p class="intro">Discover clubs, players, and matches on one platform</p>
 
   <div class="hero-buttons">
-    <button routerLink="/matches">Bekijk wedstrijden</button>
-    <button routerLink="/clubs">Ontdek teams</button>
+    <button routerLink="/matches">View Matches</button>
+    <button routerLink="/clubs">Discover Teams</button>
   </div>
 
   <section class="section">
-    <h2>UITGELICHTE WEDSTRIJDEN</h2>
+    <h2>FEATURED MATCHES</h2>
     <div class="card-row">
       <a [routerLink]="'/matches'" class="match-card" *ngFor="let match of matches">
         <div class="match-teams">
@@ -31,11 +31,11 @@
   </section>
 
   <section class="section">
-    <h2>TOPSPELERS</h2>
+    <h2>TOP PLAYERS</h2>
     <div class="card-row">
       <a [routerLink]="['/players', player._id]" class="player-card" *ngFor="let player of topPlayers">
         <div class="player-image-wrapper">
-          <img [src]="player.profileImageUrl || defaultImage" alt="Player" />
+          <img [src]="player.profileImageUrl || defaultImage" alt="Player portrait" />
         </div>
         <div class="player-info">
           <h3>{{ player.firstName }} {{ player.lastName }}</h3>
