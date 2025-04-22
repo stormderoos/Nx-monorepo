@@ -34,9 +34,13 @@ export class ClubService {
     }
     return club;
   }
-
   async create(club: CreateClubDto): Promise<ICreateClub> {
     this.logger.log(`Creating club ${club.name}`);
+  
+    const existingClub = await this.clubModel.findOne({ createdBy: club.createdBy }).lean().exec();
+    if (existingClub) {
+      throw new HttpException('Je hebt al een club aangemaakt.', 400);
+    }
   
     const players = await this.playerModel.find({ _id: { $in: club.players } }).lean().exec();
     for (const player of players) {
@@ -101,5 +105,9 @@ export class ClubService {
     return this.matchModel.find({
       $or: [{ home_club_id: clubId }, { away_club_id: clubId }],
     }).lean().exec();
+  }
+
+  async findOneByUser(userId: string): Promise<IFindClub | null> {
+    return this.clubModel.findOne({ createdBy: userId }).lean().exec();
   }
 }

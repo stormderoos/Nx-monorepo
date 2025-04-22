@@ -19,6 +19,11 @@ export class ClubController {
     return this.clubService.findOne(id);
   }
 
+  @Get('users/:id')
+  getClubByUser(@Param('id') userId: string): Promise<IFindClub | null> {
+    return this.clubService.findOneByUser(userId);
+  }
+
   @Post('')
   @UseGuards(ClubExistGuard)
   create(@Body() club: CreateClubDto): Promise<IFindClub> {
