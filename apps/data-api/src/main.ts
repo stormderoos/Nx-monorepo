@@ -1,37 +1,36 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
-    AllExceptionsFilter,
-    HttpExceptionFilter,
-    ApiResponseInterceptor
+  AllExceptionsFilter,
+  HttpExceptionFilter,
+  ApiResponseInterceptor,
 } from '@avans-nx-workshop/backend/dto';
 import { AppModule } from './app/app.module';
-import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+import { environment } from '@avans-nx-workshop/shared/util-env';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-    const globalPrefix = 'api';
-    app.setGlobalPrefix(globalPrefix);
+  const app = await NestFactory.create(AppModule);
 
-    const corsOptions: CorsOptions = {};
-    app.enableCors(corsOptions);
+  app.enableCors({
+    origin: [
+      'http://localhost:4200',
+      'https://jolly-meadow-00d0ed103.5.azurestaticapps.net'
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
 
-    app.useGlobalInterceptors(new ApiResponseInterceptor());
-    app.useGlobalPipes(new ValidationPipe());
+  app.setGlobalPrefix('api');
+  app.useGlobalInterceptors(new ApiResponseInterceptor());
+  app.useGlobalPipes(new ValidationPipe());
 
-    // General exception handling
-    // app.useGlobalFilters(new HttpExceptionFilter());
+  Logger.log('Running in production mode?', environment.production);
 
-    const port = process.env.PORT || 3000;
-    await app.listen(port);
-    Logger.log(
-        `🚀 DATA-API server is running on: http://localhost:${port}/${globalPrefix}`
-    );
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+
+  const appUrl = await app.getUrl();
+  Logger.log(`🚀 DATA-API server is running on: ${appUrl}/api`);
 }
 
 bootstrap();

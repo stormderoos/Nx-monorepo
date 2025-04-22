@@ -1,18 +1,20 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
+    NotFoundException,
     Param,
     Post,
     Put,
     UseGuards
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { IUserInfo, IUser } from '@avans-nx-workshop/shared/api';
+import { IUserInfo } from '@avans-nx-workshop/shared/api';
 import { CreateUserDto, UpdateUserDto } from '@avans-nx-workshop/backend/dto';
 import { UserExistGuard } from './user-exists.guard';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
@@ -21,15 +23,8 @@ export class UserController {
         return this.userService.findAll();
     }
 
-    // this method should precede the general getOne method, otherwise it never matches
-    // @Get('self')
-    // async getSelf(@InjectToken() token: Token): Promise<IUser> {
-    //     const result = await this.userService.getOne(token.id);
-    //     return result;
-    // }
-
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<IUser | null> {
+    async findOne(@Param('id') id: string): Promise<IUserInfo | null> {
         return this.userService.findOne(id);
     }
 
@@ -44,6 +39,6 @@ export class UserController {
         @Param('id') id: string,
         @Body() user: UpdateUserDto
     ): Promise<IUserInfo | null> {
-        return this.userService.update(id, user);
+        return this.userService.updateUser(id, user);
     }
 }

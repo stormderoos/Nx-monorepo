@@ -1,58 +1,99 @@
-name: Azure Static Web Apps CI/CD
+name: Build and deploy frontend and backend app to Azure
 
 on:
   push:
     branches:
       - release
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - release
+  workflow_dispatch:
 
 jobs:
-  build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+  build:
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
-    permissions:
-       id-token: write
-       contents: read
+    name: Build and zip apps from /dist
     steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
-      - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client
-      - name: Get Id Token
-        uses: actions/github-script@v6
-        id: idtoken
-        with:
-           script: |
-               const coredemo = require('@actions/core')
-               return await coredemo.getIDToken()
-           result-encoding: string
-      - name: Build And Deploy
-        id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_LEMON_BUSH_0D5E97403 }}
-          action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "dits/apps/my-app" # Built app content directory - optional
-          github_id_token: ${{ steps.idtoken.outputs.result }}
-          ###### End of Repository/Build Configurations ######
+      - uses: actions/checkout@v4
 
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+      - name: Set up Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build Data‑API (prod)
+        run: npx nx build data-api --configuration=production
+
+      - name: Build Frontend (prod)
+        run: npx nx build my-app --configuration=production
+
+      - name: Zip artifacts for deployment
+        run: |
+          cd ${GITHUB_WORKSPACE}/dist/apps/data-api
+          zip -r ${GITHUB_WORKSPACE}/data-api-release.zip ./*
+          cd ${GITHUB_WORKSPACE}/dist/apps/my-app
+          zip -r ${GITHUB_WORKSPACE}/my-app-release.zip ./*
+
+      - name: Upload data-api artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-api
+          path: data-api-release.zip
+
+      - name: Upload my-app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-app
+          path: my-app-release.zip
+
+  deploy-my-app:
     runs-on: ubuntu-latest
-    name: Close Pull Request Job
+    needs: build
+    environment:
+      name: Production
+    name: Deploy Angular Frontend
     steps:
-      - name: Close Pull Request
-        id: closepullrequest
+      - name: Download my-app artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-app
+
+      - name: Unzip my-app artifact
+        run: unzip my-app-release.zip
+
+      - name: Deploy to Static Web App
         uses: Azure/static-web-apps-deploy@v1
         with:
-          action: "close"
+          azure_static_web_apps_api_token: ${{ secrets.ANGULAR_PUBLISHTOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: upload
+          app_location: '/'
+          api_location: ''
+          output_location: 'dist/apps/my-app'
+          github_id_token: ${{ steps.idtoken.outputs.result }}
+
+  deploy-data-api:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: Production
+    name: Deploy NestJS Data‑API
+    steps:
+      - name: Download data-api artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: data-api
+
+      - name: Unzip data-api artifact
+        run: unzip data-api-release.zip
+
+      - name: Install production dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: nx-worskhop-nestjs
+          slot-name: Production          
+          publish-profile: ${{ secrets.DATA_API_PUBLISHPROFILE }}
+          package: .   

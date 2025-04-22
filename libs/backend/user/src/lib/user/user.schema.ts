@@ -1,81 +1,53 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
-// import { v4 as uuid } from 'uuid';
-import isEmail from 'validator/lib/isEmail';
-import {
-    IMeal,
-    IUser,
-    UserGender,
-    UserRole
-} from '@avans-nx-workshop/shared/api';
-import { IsMongoId } from 'class-validator';
+import { CallbackError, Document } from 'mongoose';
+import { UserRole, UserGender } from '@avans-nx-workshop/shared/api';
+import * as bcrypt from 'bcrypt';
 
 export type UserDocument = User & Document;
 
 @Schema()
-export class User implements IUser {
-    @IsMongoId()
-    _id!: string;
+export class User {
+  @Prop({ required: true })
+  username!: string;
 
-    @Prop({
-        required: true,
-        type: String
-    })
-    name!: string;
+  @Prop({ required: true, unique: true })
+  email!: string;
 
-    @Prop({
-        required: true,
-        select: false, // do not return password in select statements
-        type: String
-    })
-    password = '';
+  @Prop({ required: true, select: false })
+  password!: string;
 
-    @Prop({
-        required: true,
-        type: String,
-        select: true,
-        unique: true
-        // validate: {
-        //     validator: isEmail,
-        //     message: 'should be a valid email address'
-        // }
-    })
-    emailAddress = '';
+  @Prop({
+    type: String,
+    required: true,
+    enum: Object.values(UserRole),
+    default: UserRole.User,
+  })
+  role!: UserRole;
 
-    @Prop({
-        required: false,
-        select: true,
-        default: 'https://cdn-icons-png.flaticon.com/512/219/219969.png'
-    })
-    profileImgUrl!: string;
+  @Prop({
+    required: false,
+    default: 'https://cdn-icons-png.flaticon.com/512/219/219969.png',
+  })
+  profileImgUrl!: string;
 
-    @Prop({
-        required: false,
-        type: String,
-        default: UserRole.Guest
-    })
-    role: UserRole = UserRole.Guest;
-
-    @Prop({
-        required: false,
-        type: String,
-        default: UserGender.Unknown
-    })
-    gender: UserGender = UserGender.Unknown;
-
-    @Prop({
-        required: false,
-        type: Boolean,
-        default: true
-    })
-    isActive = true;
-
-    @Prop({
-        default: [],
-        type: [MongooseSchema.Types.ObjectId],
-        ref: 'Meal'
-    })
-    meals: IMeal[] = [];
+  @Prop({
+    type: String,
+    required: false,
+    enum: Object.values(UserGender),
+    default: UserGender.Unknown,
+  })
+  gender!: UserGender;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.pre<UserDocument>('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  try {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err: any) {
+    next(err as CallbackError); 
+  }
+});

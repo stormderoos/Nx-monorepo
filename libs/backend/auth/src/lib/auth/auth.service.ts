@@ -1,79 +1,76 @@
-import { Injectable, Logger } from '@nestjs/common';
 import {
-    ConflictException,
-    UnauthorizedException
-} from '@nestjs/common/exceptions';
-import { HttpStatus } from '@nestjs/common/enums';
-import {
-    User as UserModel,
-    UserDocument
-} from '@avans-nx-workshop/backend/user';
+  ConflictException,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { IUserCredentials, IUserIdentity } from '@avans-nx-workshop/shared/api';
-import { CreateUserDto } from '@avans-nx-workshop/backend/dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
+
+import { IUserCredentials, IUserIdentity } from '@avans-nx-workshop/shared/api';
+import { CreateUserDto } from '@avans-nx-workshop/backend/dto';
 
 @Injectable()
 export class AuthService {
-    //
-    private readonly logger = new Logger(AuthService.name);
+  private readonly logger = new Logger(AuthService.name);
 
-    constructor(
-        @InjectModel(UserModel.name) private userModel: Model<UserDocument>,
-        private jwtService: JwtService
-    ) {}
+  constructor(
+    @InjectModel('User') private userModel: Model<any>,
+    private jwtService: JwtService
+  ) {}
 
-    async validateUser(credentials: IUserCredentials): Promise<any> {
-        this.logger.log('validateUser');
-        const user = await this.userModel.findOne({
-            emailAddress: credentials.emailAddress
-        });
-        if (user && user.password === credentials.password) {
-            return user;
-        }
-        return null;
+  async login(credentials: IUserCredentials): Promise<IUserIdentity> {
+    this.logger.log('login ' + credentials.email);
+
+    const user = await this.userModel
+      .findOne({ email: credentials.email })
+      .select('+password')
+      .exec();
+
+    if (user && await bcrypt.compare(credentials.password, user.password)) {
+      const payload = {
+        user_id: user._id,
+        role: user.role,
+      };
+
+      return {
+        id: user.id,
+        name: user.username,
+        email: user.email,
+        profileImgUrl: user.profileImgUrl,
+        role: user.role,
+        token: this.jwtService.sign(payload),
+      };
     }
 
-    async login(credentials: IUserCredentials): Promise<IUserIdentity> {
-        this.logger.log('login ' + credentials.emailAddress);
-        return await this.userModel
-            .findOne({
-                emailAddress: credentials.emailAddress
-            })
-            .select('+password')
-            .exec()
-            .then((user) => {
-                if (user && user.password === credentials.password) {
-                    const payload = {
-                        user_id: user._id
-                    };
-                    return {
-                        _id: user._id,
-                        name: user.name,
-                        emailAddress: user.emailAddress,
-                        profileImgUrl: user.profileImgUrl,
-                        token: this.jwtService.sign(payload)
-                    };
-                } else {
-                    const errMsg = 'Email not found or password invalid';
-                    this.logger.debug(errMsg);
-                    throw new UnauthorizedException(errMsg);
-                }
-            })
-            .catch((error) => {
-                return error;
-            });
+    throw new UnauthorizedException('Email not found or password invalid');
+  }
+
+  async register(dto: CreateUserDto): Promise<IUserIdentity> {
+    this.logger.log(`Register user ${dto.username}`);
+
+    const existing = await this.userModel.findOne({ email: dto.email });
+    if (existing) {
+      this.logger.debug('User already exists');
+      throw new ConflictException('User already exists');
     }
 
-    async register(user: CreateUserDto): Promise<IUserIdentity> {
-        this.logger.log(`Register user ${user.name}`);
-        if (await this.userModel.findOne({ emailAddress: user.emailAddress })) {
-            this.logger.debug('user exists');
-            throw new ConflictException('User already exist');
-        }
-        this.logger.debug('User not found, creating');
-        const createdItem = await this.userModel.create(user);
-        return createdItem;
-    }
+    const newUser = await this.userModel.create(dto);
+
+    const payload = {
+      user_id: newUser._id,
+      role: newUser.role,
+    };
+
+    return {
+      id: newUser.id,
+      name: newUser.username,
+      email: newUser.email,
+      profileImgUrl: newUser.profileImgUrl,
+      role: newUser.role,
+      token: this.jwtService.sign(payload),
+    };
+  }
 }

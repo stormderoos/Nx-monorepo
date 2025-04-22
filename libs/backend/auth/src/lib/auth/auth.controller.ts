@@ -14,7 +14,6 @@ import {
     IUserRegistration
 } from '@avans-nx-workshop/shared/api';
 import { CreateUserDto } from '@avans-nx-workshop/backend/dto';
-import { UserExistGuard } from '@avans-nx-workshop/backend/user';
 
 @Controller('auth')
 export class AuthController {
@@ -30,7 +29,6 @@ export class AuthController {
     }
 
     @Public()
-    @UseGuards(UserExistGuard)
     @Post('register')
     async register(@Body() user: CreateUserDto): Promise<IUserIdentity> {
         this.logger.log('Register');

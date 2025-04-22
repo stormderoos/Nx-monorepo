@@ -1,51 +1,37 @@
-import { IEntity } from 'libs/share-a-meal/common/src/lib/entity/entity.model';
-import { IMeal } from './meal.interface';
-import { IToken, IUserRegistration } from './auth.interface';
-import { Id } from './id.type';
-
 export enum UserRole {
-    Guest = 'Guest',
-    Admin = 'Admin',
-    Unknown = 'Unknown'
+  User = "user",
+  ClubOwner = "clubowner",
+  Admin = "admin"
 }
 
-export enum UserGender {
-    Male = 'Male',
-    Female = 'Female',
-    None = 'None',
-    Unknown = 'Unknown'
+export enum UserGender{
+  Male = 'male',
+  Female = 'female',
+  Unknown = ''
 }
 
-/**
- * Minimal user information
- */
-
-export interface IUserIdentity extends IEntity {
-    name: string;
-    emailAddress: string;
-    profileImgUrl: string;
-    role: UserRole;
-    token?: string;
+export interface IUser {
+  id: string;
+  username: string; 
+  email: string; 
+  password: string; 
+  role: UserRole; 
+  gender: UserGender;
+  profileImgUrl: string;
 }
 
-/**
- * All user information, excl. domain entities
- */
-export interface IUserInfo extends IUserRegistration {
-    _id: Id;
-    profileImgUrl: string;
-    role: UserRole;
-    gender: UserGender;
-    isActive: boolean;
+
+export interface IUserIdentity {
+  id: string;
+  name: string;
+  email: string;
+  profileImgUrl?: string;
+  role: string;
+  token: string;
 }
 
-/**
- * All user information, incl. domain entities
- */
-export interface IUser extends IUserInfo {
-    meals: IMeal[];
-}
+export type ICreateUser = Pick<IUser, 'username' | 'email' | 'password' | 'role' | 'profileImgUrl' | 'gender'>;
 
-export type ICreateUser = Pick<IUser, 'name' | 'password' | 'emailAddress'>;
-export type IUpdateUser = Partial<Omit<IUser, 'id'>>;
-export type IUpsertUser = IUser;
+export type IUpdateUser = Partial<Omit<IUser, 'id' >>;
+
+export type IUserInfo = IUser;
